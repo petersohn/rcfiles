@@ -106,6 +106,122 @@ zstyle ':completion:newest-files:*' menu select yes
 zstyle ':completion:newest-files:*' sort false
 zstyle ':completion:newest-files:*' matcher-list 'b:=*' # important
 
+function only-local-history-up () {
+        zle set-local-history 1
+        zle up-history
+        zle set-local-history 0
+}
+function only-local-history-down () {
+        zle set-local-history 1
+        zle down-history
+        zle set-local-history 0
+}
+zle -N only-local-history-up
+zle -N only-local-history-down
+
+
+# Custom widget to store a command line in history
+# without executing it
+commit-to-history() {
+  print -s ${(z)BUFFER}
+  zle send-break
+}
+zle -N commit-to-history
+
+
+# Bindings
+bindkey "^X^H" commit-to-history
+bindkey "^Xh" push-line
+bindkey -M viins "^X^H" commit-to-history
+bindkey -M viins "^Xh" push-line
+
+bindkey '^Xt' tmux-pane-words-prefix
+bindkey '^X^X' tmux-pane-words-anywhere
+bindkey -M viins '^Xt' tmux-pane-words-prefix
+bindkey -M viins '^X^X' tmux-pane-words-anywhere
+
+bindkey '^Xr' newest-files
+bindkey -M viins '^Xr' newest-files
+
+bindkey -M vicmd 'K' only-local-history-up
+bindkey -M vicmd 'J' only-local-history-down
+
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+bindkey -M vicmd '^r' redo
+bindkey -M vicmd 'u' undo
+bindkey -M viins 'jj' vi-cmd-mode
+
+
+# Enabling vim text-objects (ciw and alike) for vi-mode
+#source ~/.opp.zsh/opp.zsh
+
+# Simpulate the delete key I got used to
+real-delete-char()
+{
+	zle vi-forward-char
+	zle backward-delete-char
+}
+zle -N real-delete-char
+
+# Bind generic keys properly for VI-MODE.
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -A key
+key[Home]=${terminfo[khome]}
+key[End]=${terminfo[kend]}
+key[Insert]=${terminfo[kich1]}
+key[Delete]=${terminfo[kdch1]}
+key[PageUp]=${terminfo[kpp]}
+key[PageDown]=${terminfo[knp]}
+# vi cmd mode
+[[ -n "${key[Home]}"     ]]  && bindkey -M vicmd  "${key[Home]}"     beginning-of-line
+[[ -n "${key[End]}"      ]]  && bindkey -M vicmd  "${key[End]}"      end-of-line
+[[ -n "${key[Insert]}"   ]]  && bindkey -M vicmd  "${key[Insert]}"   vi-insert
+[[ -n "${key[Delete]}"   ]]  && bindkey -M vicmd  "${key[Delete]}"   real-delete-char
+[[ -n "${key[PageUp]}"   ]]  && bindkey -M vicmd  "${key[PageUp]}"   only-local-history-up
+[[ -n "${key[PageDown]}" ]]  && bindkey -M vicmd  "${key[PageDown]}" only-local-history-down
+# vi insert mode
+[[ -n "${key[Home]}"     ]]  && bindkey -M viins  "${key[Home]}"     beginning-of-line
+[[ -n "${key[End]}"      ]]  && bindkey -M viins  "${key[End]}"      end-of-line
+[[ -n "${key[Insert]}"   ]]  && bindkey -M viins  "${key[Insert]}"   vi-insert
+[[ -n "${key[Delete]}"   ]]  && bindkey -M viins  "${key[Delete]}"   real-delete-char
+[[ -n "${key[PageUp]}"   ]]  && bindkey -M viins  "${key[PageUp]}"   only-local-history-up
+[[ -n "${key[PageDown]}" ]]  && bindkey -M viins  "${key[PageDown]}" only-local-history-down
+
+# After entering insert mode because of hitting a or A,
+# I can't backspace past the point where I entered insert mode.
+# So simulate vim instead of vi in case of insert mode
+bindkey -M viins "^W" backward-kill-word
+bindkey -M viins "^?" backward-delete-char      # Control-h also deletes the previous char
+bindkey -M viins "^U" backward-kill-line
+
+bindkey -M viins "^[a" accept-and-hold
+
+nothing(){}
+zle -N nothing
+bindkey -M viins "é" nothing
+bindkey -M viins "á" nothing
+bindkey -M viins "ű" nothing
+bindkey -M viins "ő" nothing
+bindkey -M viins "ú" nothing
+bindkey -M viins "ü" nothing
+bindkey -M viins "ó" nothing
+bindkey -M viins "ö" nothing
+
+# By defult Esc is handled as a prefix, zsh waits a key after that,
+# this results shit behaviour in vicmd mode.
+bindkey -M vicmd "^[" nothing
+
+# Report CPU usage for commands running longer than 10 seconds
+REPORTTIME=10
+
+# Esc does nothing in vicmd
+bindkey -M vicmd "^[" nothing
+
 if [ -e ~/.common_zsh_bash.rc ]; then
 	source ~/.common_zsh_bash.rc
 fi
