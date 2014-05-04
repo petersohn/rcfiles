@@ -17,7 +17,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="candy-egbomrt"
+ZSH_THEME="candy"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -60,8 +60,6 @@ compinit
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-#plugins=(git)
-#plugins=(git screen extract zsh-syntax-highlighting colorize)
 plugins=(git screen zsh-syntax-highlighting history-substring-search)
 PER_DIRECTORY_HISTORY_DEFAULT_GLOBAL_HISTORY=true
 
@@ -158,70 +156,6 @@ bindkey -M viins 'jj' vi-cmd-mode
 
 # Enabling vim text-objects (ciw and alike) for vi-mode
 #source ~/.opp.zsh/opp.zsh
-
-# Simpulate the delete key I got used to
-real-delete-char()
-{
-	zle vi-forward-char
-	zle backward-delete-char
-}
-zle -N real-delete-char
-
-# Bind generic keys properly for VI-MODE.
-# create a zkbd compatible hash;
-# to add other keys to this hash, see: man 5 terminfo
-typeset -A key
-key[Home]=${terminfo[khome]}
-key[End]=${terminfo[kend]}
-key[Insert]=${terminfo[kich1]}
-key[Delete]=${terminfo[kdch1]}
-key[PageUp]=${terminfo[kpp]}
-key[PageDown]=${terminfo[knp]}
-# vi cmd mode
-[[ -n "${key[Home]}"     ]]  && bindkey -M vicmd  "${key[Home]}"     beginning-of-line
-[[ -n "${key[End]}"      ]]  && bindkey -M vicmd  "${key[End]}"      end-of-line
-[[ -n "${key[Insert]}"   ]]  && bindkey -M vicmd  "${key[Insert]}"   vi-insert
-[[ -n "${key[Delete]}"   ]]  && bindkey -M vicmd  "${key[Delete]}"   real-delete-char
-[[ -n "${key[PageUp]}"   ]]  && bindkey -M vicmd  "${key[PageUp]}"   only-local-history-up
-[[ -n "${key[PageDown]}" ]]  && bindkey -M vicmd  "${key[PageDown]}" only-local-history-down
-# vi insert mode
-[[ -n "${key[Home]}"     ]]  && bindkey -M viins  "${key[Home]}"     beginning-of-line
-[[ -n "${key[End]}"      ]]  && bindkey -M viins  "${key[End]}"      end-of-line
-[[ -n "${key[Insert]}"   ]]  && bindkey -M viins  "${key[Insert]}"   vi-insert
-[[ -n "${key[Delete]}"   ]]  && bindkey -M viins  "${key[Delete]}"   real-delete-char
-[[ -n "${key[PageUp]}"   ]]  && bindkey -M viins  "${key[PageUp]}"   only-local-history-up
-[[ -n "${key[PageDown]}" ]]  && bindkey -M viins  "${key[PageDown]}" only-local-history-down
-
-# After entering insert mode because of hitting a or A,
-# I can't backspace past the point where I entered insert mode.
-# So simulate vim instead of vi in case of insert mode
-bindkey -M viins "^W" backward-kill-word
-bindkey -M viins "^?" backward-delete-char      # Control-h also deletes the previous char
-bindkey -M viins "^U" backward-kill-line
-
-bindkey -M viins "^[a" accept-and-hold
-
-nothing(){}
-zle -N nothing
-bindkey -M viins "é" nothing
-bindkey -M viins "á" nothing
-bindkey -M viins "ű" nothing
-bindkey -M viins "ő" nothing
-bindkey -M viins "ú" nothing
-bindkey -M viins "ü" nothing
-bindkey -M viins "ó" nothing
-bindkey -M viins "ö" nothing
-
-# By defult Esc is handled as a prefix, zsh waits a key after that,
-# this results shit behaviour in vicmd mode.
-bindkey -M vicmd "^[" nothing
-
-# Report CPU usage for commands running longer than 10 seconds
-REPORTTIME=10
-
-# Esc does nothing in vicmd
-bindkey -M vicmd "^[" nothing
-
 if [ -e ~/.common_zsh_bash.rc ]; then
 	source ~/.common_zsh_bash.rc
 fi
