@@ -53,7 +53,6 @@ Plugin 'gmarik/vundle'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'fholgado/minibufexpl.vim'
 Plugin 'BufOnly.vim'
 Plugin 'headerguard'
 Plugin 'Valloric/YouCompleteMe'
@@ -63,6 +62,8 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 Plugin 'vim-jp/cpp-vim'
 Plugin 'bkad/CamelCaseMotion'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/YankRing.vim'
 " IDE stuff in a separate file
 "if $VIMIDE == "ide"
 	"source ~/.vimrc.ide
@@ -80,22 +81,6 @@ autocmd CursorHold * checktime
 autocmd CursorHoldI * checktime
 " Automatically fix whitspace errors in case of C++ files.
 autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
-
-
-" Mini BufExplorer
-map <Leader>e :MBEFocus<cr>
-map <Leader>m :MBEToggle<cr>
-let g:miniBufExplorerAutoStart = 0
-let g:miniBufExplBRSplit = 0
-let g:miniBufExplShowBufNumbers = 0
-"hi link MBENormal Identifier
-hi link MBEChanged WarningMsg
-hi link MBEVisibleNormal airline_x
-hi link MBEVisibleChanged airline_x_red
-"hi MBEVisibleNormal term=bold,underline cterm=bold,underline ctermfg=10
-"hi MBEVisibleChanged term=bold,underline cterm=bold,underline ctermfg=9
-hi link MBEVisibleActiveNormal airline_b
-hi link MBEVisibleActiveChanged airline_warning
 
 
 " Airline config
@@ -121,6 +106,11 @@ set wildignore+=*lastrun*
 
 " Taglist config
 let Tlist_Show_One_File = 1
+
+" YankRing
+let g:yankring_min_element_length = 2
+let g:yankring_max_element_length = 4194304 " 4M
+nnoremap <silent> <Leader>p :YRShow<CR>
 
 
 " EasyGrep
@@ -212,6 +202,21 @@ if &term =~ '^screen'
   execute "set <xDown>=\e[1;*B"
   execute "set <xRight>=\e[1;*C"
   execute "set <xLeft>=\e[1;*D"
+endif
+
+"(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
+if has("user_commands")
+	command! -bang -nargs=? -complete=file W w<bang> <args>
+	command! -bang -nargs=? -complete=file Wq wq<bang> <args>
+	command! -bang -nargs=? -complete=file WQ wq<bang> <args>
+	command! -bang Wa wa<bang>
+	command! -bang WA wa<bang>
+	command! -bang Q q<bang>
+	command! -bang Qa qa<bang>
+	command! -bang QA qa<bang>
+	"TODO X is reserved for encryption
+	command! -bang Xa xa<bang>
+	command! -bang XA xa<bang>
 endif
 
 
