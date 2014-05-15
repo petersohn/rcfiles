@@ -64,6 +64,7 @@ Plugin 'vim-jp/cpp-vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/YankRing.vim'
+Plugin 'vim-scripts/TeTrIs.vim'
 " IDE stuff in a separate file
 "if $VIMIDE == "ide"
 	"source ~/.vimrc.ide
@@ -187,6 +188,8 @@ vnoremap <C-S> <ESC>l
 
 map <Leader>h :nohl<CR>
 map <Leader>H :let @/ = ""<CR>
+map <Leader>[ :cp<CR>
+map <Leader>] :cn<CR>
 
 
 " TMUX compatiblity for
