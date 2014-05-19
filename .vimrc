@@ -51,6 +51,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Plugin 'gmarik/vundle'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'bling/vim-airline'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'BufOnly.vim'
@@ -65,6 +66,7 @@ Plugin 'bkad/CamelCaseMotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'jlanzarotta/bufexplorer'
 " IDE stuff in a separate file
 "if $VIMIDE == "ide"
 	"source ~/.vimrc.ide
@@ -141,7 +143,7 @@ endfunction
 " YouCompleteMe
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
-let g:ycm_global_ycm_extra_conf = '/home/egbomrt/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = $HOME.'/.ycm_extra_conf.py'
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_key_invoke_completion = '<C-Space>'
 let g:ycm_confirm_extra_conf = 0
