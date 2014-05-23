@@ -129,7 +129,7 @@ let g:EasyGrepOpenWindowOnMatch=1
 let g:EasyGrepJumpToMatch=0
 
 " a.vim
-let g:alternateSearchPath="sfr:../include,sfr:../src,sfr:../source,sfr:../../source,sfr:../../src,sfr:../../include"
+let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,sfr:..,sfr:../..,sfr:../../.."
 
 " In case of vimdiff, use a different colorscheme
 "if &diff
