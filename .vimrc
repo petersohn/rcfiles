@@ -66,6 +66,7 @@ Plugin 'bkad/CamelCaseMotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'vim-scripts/a.vim'
 Plugin 'jlanzarotta/bufexplorer'
 " IDE stuff in a separate file
 "if $VIMIDE == "ide"
@@ -127,6 +128,8 @@ let g:EasyGrepFilesToExclude='build/*'
 let g:EasyGrepOpenWindowOnMatch=1
 let g:EasyGrepJumpToMatch=0
 
+" a.vim
+let g:alternateSearchPath="sfr:../include,sfr:../src,sfr:../source,sfr:../../source,sfr:../../src,sfr:../../include"
 
 " In case of vimdiff, use a different colorscheme
 "if &diff
