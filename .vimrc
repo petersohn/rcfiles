@@ -90,6 +90,7 @@ autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 " Airline config
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 set laststatus=2
+let g:airline_theme="kalisi"
 
 " NERDTree config
 map <Leader>n :NERDTreeFocus<cr>
@@ -98,7 +99,6 @@ let g:NERDTreeDirArrows=0
 let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
 let g:NERDTreeIgnore = ['\.o$', '\.o-.*$']
-
 
 " CommandT config
 let g:CommandTNeverShowDotFiles = 1
