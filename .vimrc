@@ -195,6 +195,10 @@ map <Leader>h :nohl<CR>
 map <Leader>H :let @/ = ""<CR>
 map <Leader>[ :cp<CR>
 map <Leader>] :cn<CR>
+nnoremap <C-j> ddp
+nnoremap <C-k> ddkkp
+map <C-Down> <C-j>
+map <C-Up> <C-k>
 
 
 " TMUX compatiblity for
