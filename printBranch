@@ -1,0 +1,151 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $data = `git status -b --porcelain 2>/dev/null`;
+
+if ($? != 0) {
+    exit 1;
+}
+
+my @lines = split "\n", $data;
+
+
+my $branchName = "";
+my %firstStates;
+my %secondStates;
+my $numFiles = 0;
+
+# From git documentation:
+# ~~~~~~~~~~~~~~~~~~~~~~~
+#
+# X          Y     Meaning
+# -------------------------------------------------
+#           [MD]   not updated
+# M        [ MD]   updated in index
+# A        [ MD]   added to index
+# D         [ M]   deleted from index
+# R        [ MD]   renamed in index
+# C        [ MD]   copied in index
+# [MARC]           index and work tree matches
+# [ MARC]     M    work tree changed since index
+# [ MARC]     D    deleted in work tree
+# -------------------------------------------------
+# D           D    unmerged, both deleted
+# A           U    unmerged, added by us
+# U           D    unmerged, deleted by them
+# U           A    unmerged, added by them
+# D           U    unmerged, deleted by us
+# A           A    unmerged, both added
+# U           U    unmerged, both modified
+# -------------------------------------------------
+# ?           ?    untracked
+# !           !    ignored
+# -------------------------------------------------
+
+for my $line (@lines) {
+    if ($line =~ m'^## ((?!\.)(?!/)(?:(?!/\.)(?!\.\.)(?!//)(?!@\{)(?!\\)[^\040\177 ~^:?*[])+(?<!\.lock)(?<!/)(?<!\.))(\.\.\..*)?$') {
+        if ($line =~ /^\.\.\..*\[(?:ahead (\d+))?(?:, )?(?:behind (\d+))?\]/) {
+            my $ahead = $2;
+            my $behind = $3;
+            if ($ahead ne "" && $behind ne "") {
+                $branchName = "$1 [+$ahead][-$behind]";
+            } elsif ($ahead ne "") {
+                $branchName = "$1 [+$ahead]";
+            } elsif ($behind ne "") {
+                $branchName = "$1 [-$behind]";
+            } else {
+                # this shouldn't happen
+                $branchName = "$1 [?]";
+            }
+        } else {
+            $branchName = $1;
+        }
+    } else {
+        ++$firstStates{substr($line, 0, 1)};
+        ++$secondStates{substr($line, 1, 1)};
+        ++$numFiles;
+    }
+}
+
+my $color;
+my $symbolColor;
+my $symbol;
+
+my $IBlack = "\\e[0;90m";
+my $IRed = "\\e[0;91m";
+my $IGreen = "\\e[0;92m";
+my $IYellow = "\\e[0;93m";
+my $IBlue = "\\e[0;94m";
+my $IPurple = "\\e[0;95m";
+my $ICyan = "\\e[0;96m";
+my $IWhite = "\\e[0;97m";
+my $Color_Off = "\\e[0m";
+
+if ($numFiles == 0) {
+    $color = $IGreen;
+    $symbolColor = $IGreen;
+    $symbol = "";
+} else {
+    my $unmerged = ($firstStates{"U"} + $secondStates{"U"});
+    my $unknown = ($firstStates{"?"} + $secondStates{"?"});
+    my $firstAdded = $firstStates{"A"};
+    my $secondAdded = $secondStates{"A"};
+    my $firstDeleted = $firstStates{"D"};
+    my $secondDeleted = $secondStates{"D"};
+    my $firstUnmodified = $firstStates{" "};
+    my $secondUnmodified = $secondStates{" "};
+    my $firstModified = $firstStates{"M"};
+    my $secondModified = $secondStates{"M"};
+    my $renamed = $firstStates{"R"};
+    my $copied = $firstStates{"C"};
+
+    if ($unmerged > 0 || ($firstAdded > 0 && $secondAdded > 0) || ($firstDeleted > 0 && $secondDeleted > 0)) {
+        $color = $IPurple;
+        if ($unknown > 0) {
+            $symbolColor = $IRed;
+        } else {
+            $symbolColor = $IPurple;
+        }
+    } else {
+        if ($numFiles * 2 == $unknown) {
+            $color = $IGreen;
+        } else {
+            $color = $IYellow;
+        }
+
+        if ($secondUnmodified == $numFiles) {
+            $symbolColor = $IGreen;
+        } elsif ($unknown > 0) {
+            $symbolColor = $IRed;
+        } else {
+            $symbolColor = $IYellow;
+        }
+    }
+
+    if ($firstAdded + $secondAdded + $unknown > 0 && $firstDeleted + $secondDeleted > 0) {
+        $symbol = "\xB1 "; # +/- sign
+    } elsif ($firstDeleted + $secondDeleted > 0) {
+        $symbol = "- ";
+    } elsif ($firstAdded + $secondAdded + $unknown > 0) {
+        $symbol = "+ ";
+    } else {
+        $symbol = "* ";
+    }
+}
+
+if ($ARGV[0] eq "color") {
+    print $color;
+} elsif ($ARGV[0] eq "scolor") {
+    print $symbolColor;
+} elsif ($ARGV[0] eq "symbol") {
+    print $symbol;
+} elsif ($ARGV[0] eq "branch") {
+    print $branchName;
+} elsif ($ARGV[0] eq "all") {
+    print "$color\n$symbolColor\n$symbol\n$branchName\n";
+} else {
+    print $color, "(", $symbolColor, $symbol, $color, $branchName, ")", $Color_Off;
+}
+
+
