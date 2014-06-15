@@ -45,23 +45,22 @@ my $numFiles = 0;
 
 for my $line (@lines) {
     if ($line =~ m'^## ((?!\.)(?!/)(?:(?!/\.)(?!\.\.)(?!//)(?!@\{)(?!\\)[^\040\177 ~^:?*[])+(?<!\.lock)(?<!/)(?<!\.))(\.\.\..*)?$') {
-        if ($line =~ /^\.\.\..*\[(?:ahead (\d+))?(?:, )?(?:behind (\d+))?\]/) {
-            my $ahead = $2;
-            my $behind = $3;
+		$branchName = $1;
+        if ($line =~ /\.\.\..*\[(?:ahead (\d+))?(?:, )?(?:behind (\d+))?\]/) {
+            my $ahead = $1;
+            my $behind = $2;
             if ($ahead ne "" && $behind ne "") {
-                $branchName = "$1 [+$ahead][-$behind]";
+                $branchName .= " [+$ahead][-$behind]";
             } elsif ($ahead ne "") {
-                $branchName = "$1 [+$ahead]";
+                $branchName .= " [+$ahead]";
             } elsif ($behind ne "") {
-                $branchName = "$1 [-$behind]";
+                $branchName .= " [-$behind]";
             } else {
                 # this shouldn't happen
-                $branchName = "$1 [?]";
+                $branchName .= " [?]";
             }
-        } else {
-            $branchName = $1;
         }
-    } else {
+	} else {
         ++$firstStates{substr($line, 0, 1)};
         ++$secondStates{substr($line, 1, 1)};
         ++$numFiles;
