@@ -54,6 +54,8 @@ COMPLETION_WAITING_DOTS="true"
 # yyyy-mm-dd
 HIST_STAMPS="yyyy-mm-dd"
 
+fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
+
 autoload -U compinit
 compinit
 
@@ -160,3 +162,5 @@ if [ -e ~/.common_zsh_bash.rc ]; then
 	source ~/.common_zsh_bash.rc
 fi
 
+
+source "$HOME/.homesick/repos/homeshick/homeshick.sh"
