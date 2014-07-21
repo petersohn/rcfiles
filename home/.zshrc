@@ -162,5 +162,6 @@ if [ -e ~/.common_zsh_bash.rc ]; then
 	source ~/.common_zsh_bash.rc
 fi
 
+export REPORTTIME=5
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
