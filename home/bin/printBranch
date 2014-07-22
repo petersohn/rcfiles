@@ -60,11 +60,17 @@ for my $line (@lines) {
                 $branchName .= " [?]";
             }
         }
-	} else {
+	} elsif ($line !~ /^#/) {
         ++$firstStates{substr($line, 0, 1)};
         ++$secondStates{substr($line, 1, 1)};
         ++$numFiles;
     }
+}
+
+if ($branchName eq "") {
+	my $rev = `git rev-parse --short HEAD`;
+	chomp($rev);
+	$branchName = "<$rev>";
 }
 
 my $color;
