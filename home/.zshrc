@@ -54,6 +54,8 @@ COMPLETION_WAITING_DOTS="true"
 # yyyy-mm-dd
 HIST_STAMPS="yyyy-mm-dd"
 
+export MANPATH=$(manpath):$HOME/usr/share/man
+
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
 autoload -U compinit
