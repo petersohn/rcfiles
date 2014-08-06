@@ -52,6 +52,7 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
 Plugin 'bling/vim-airline'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'BufOnly.vim'
@@ -114,6 +115,7 @@ let Tlist_Show_One_File = 1
 " YankRing
 let g:yankring_min_element_length = 2
 let g:yankring_max_element_length = 4194304 " 4M
+let g:yankring_history_dir = "/tmp"
 nnoremap <silent> <Leader>p :YRShow<CR>
 
 
