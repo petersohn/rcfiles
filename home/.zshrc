@@ -1,13 +1,5 @@
 # FIX FOR OH MY ZSH GIT PROMPT SLOWNESS
 # http://marc-abramowitz.com/archives/2012/04/10/fix-for-oh-my-zsh-git-svn-prompt-slowness/
-function git_prompt_info2() {
-	if [ -n "$NO_GITSTATUS" ]; then
-		ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-		echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
-	else
-		echo -e "$(printBranch)"
-	fi
-}
 NO_GITSTATUS=
 
 # Path to your oh-my-zsh configuration.
