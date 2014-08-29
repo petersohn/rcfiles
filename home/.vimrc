@@ -32,6 +32,7 @@ set splitright
 set hidden
 set hlsearch
 
+:let mapleader = " "
 
 " Solarized colorscheme
 " http://stackoverflow.com/questions/12774141/strange-changing-background-color-in-vim-solarized
@@ -179,8 +180,6 @@ noremap <silent> <C-E> :LustyJuggler<CR>
 " vim-session
 :let g:session_autosave = 'no'
 :let g:session_autoload = 'no'
-
-
 
 " Custom mappings
 " Moving lines up and down
