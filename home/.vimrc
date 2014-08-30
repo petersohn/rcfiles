@@ -32,7 +32,7 @@ set splitright
 set hidden
 set hlsearch
 
-:let mapleader = " "
+":let mapleader = " "
 
 " Solarized colorscheme
 " http://stackoverflow.com/questions/12774141/strange-changing-background-color-in-vim-solarized
