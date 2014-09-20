@@ -120,26 +120,8 @@ let g:yankring_max_element_length = 4194304 " 4M
 let g:yankring_history_dir = "/tmp"
 nnoremap <silent> <Leader>p :YRShow<CR>
 
-
-" EasyGrep
-set grepprg=grep\ -n\ -P
-let g:EasyGrepMode=3
-let g:EasyGrepCommand=1
-let g:EasyGrepRecursive=1
-" let g:EasyGrepIgnoreCase=1
-let g:EasyGrepDefaultUserPattern='*.cpp *.hpp *.cxx *.hxx *.cc *.hh *.c++ *.inl Makefile *.tup'
-let g:EasyGrepFilesToExclude='build/*'
-let g:EasyGrepOpenWindowOnMatch=1
-let g:EasyGrepJumpToMatch=0
-
 " a.vim
 let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../.."
-
-" In case of vimdiff, use a different colorscheme
-"if &diff
-"    colorscheme evening
-"endif
-
 
 " Headerguard
 function! g:HeaderguardName()
