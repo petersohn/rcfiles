@@ -54,6 +54,7 @@ Plugin 'gmarik/vundle'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'bling/vim-airline'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'BufOnly.vim'
@@ -89,6 +90,7 @@ autocmd CursorHoldI * checktime
 " Automatically fix whitspace errors in case of C++ files.
 autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 
+let g:nerdtree_tabs_open_on_console_startup = 1
 
 " Airline config
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
