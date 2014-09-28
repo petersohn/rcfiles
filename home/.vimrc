@@ -177,8 +177,8 @@ nnoremap <C-S> i
 inoremap <C-S> <ESC>l
 vnoremap <C-S> <ESC>l
 
-map <Leader>h :nohl<CR>
-map <Leader>H :let @/ = ""<CR>
+map <silent> <Leader>h :nohl<CR>
+map <silent> <Leader>H :let @/ = ""<CR>
 map <Leader>[ :cp<CR>
 map <Leader>] :cn<CR>
 nmap <silent> <Leader>g :vimgrep // **/*.[ch]*<CR>
