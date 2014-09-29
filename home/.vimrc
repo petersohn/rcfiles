@@ -31,6 +31,7 @@ set splitright
 " Allow hiding an unsaved buffer
 set hidden
 set hlsearch
+set incsearch
 
 ":let mapleader = " "
 
