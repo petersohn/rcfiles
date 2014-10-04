@@ -91,6 +91,8 @@ autocmd CursorHoldI * checktime
 " Automatically fix whitspace errors in case of C++ files.
 autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 
+autocmd BufNewFile,BufRead *.md   set syntax=markdown
+
 let g:nerdtree_tabs_open_on_console_startup = 1
 
 " Airline config
