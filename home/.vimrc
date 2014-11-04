@@ -33,6 +33,9 @@ set hidden
 set hlsearch
 set incsearch
 
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
+
 ":let mapleader = " "
 
 " Solarized colorscheme
