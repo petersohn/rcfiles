@@ -47,6 +47,7 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 export MANPATH=$(manpath):$HOME/usr/share/man
+export PATH=$HOME/bin:$PATH
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
