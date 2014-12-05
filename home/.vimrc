@@ -76,6 +76,7 @@ Plugin 'vim-scripts/TeTrIs.vim'
 Plugin 'vim-scripts/a.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'tmhedberg/matchit'
 " IDE stuff in a separate file
 "if $VIMIDE == "ide"
 	"source ~/.vimrc.ide
