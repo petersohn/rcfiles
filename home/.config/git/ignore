@@ -2,3 +2,5 @@
 .nfs*
 *~
 *.orig
+callgrind.out.*
+*.pyc
