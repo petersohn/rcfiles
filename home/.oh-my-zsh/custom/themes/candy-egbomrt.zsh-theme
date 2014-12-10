@@ -10,7 +10,13 @@ function git_prompt_info2() {
 	fi
 }
 
-PROMPT=$'%{$fg_bold[green]%}%m %{$fg[blue]%}%D{[%H:%M:%S]} %{$reset_color%}%{$fg[white]%}[%~]%{$reset_color%} %(?.%{$fg[green]%}.%{$fg[red]%})[%?]%{$reset_color%} $(git_prompt_info2)\
+function cdf_info() {
+	if [ -n "$CDF_USERENVIRONMENT" ]; then
+		echo "%{$fg_bold[white]%}[$CDF_USERENVIRONMENT] %{$reset_color%}"
+	fi
+}
+
+PROMPT=$'%{$fg_bold[green]%}%m %{$fg[blue]%}%D{[%H:%M:%S]} $(cdf_info)%{$reset_color%}%{$fg[white]%}[%~]%{$reset_color%} %(?.%{$fg[green]%}.%{$fg[red]%})[%?]%{$reset_color%} $(git_prompt_info2)\
 %{$fg[blue]%}->%(?.%{$fg[green]%}.%{$fg[red]%}) %#%{$reset_color%} '
 
 PS2='%_ >'
