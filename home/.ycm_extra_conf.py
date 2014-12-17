@@ -60,10 +60,14 @@ flags = [
 '-isystem', '/System/Library/Frameworks/Python.framework/Headers',
 '-isystem', '/usr/include',
 '-isystem', '/usr/local/include',
-'-isystem', '/usr/include/i386-linux-gnu/c++/4.9'
-'-isystem', '/usr/include/c++/4.9'
-'-isystem', '/usr/include/i386-linux-gnu/c++/4.8'
-'-isystem', '/usr/include/c++/4.8'
+'-isystem', '/usr/include/i386-linux-gnu/c++/4.9',
+'-isystem', '/usr/include/c++/4.9',
+'-isystem', '/usr/include/i386-linux-gnu/c++/4.8',
+'-isystem', '/usr/include/c++/4.8',
+'-I', './src',
+'-I', './source',
+'-I', './include',
+'-I', './inc'
 ]
 
 
