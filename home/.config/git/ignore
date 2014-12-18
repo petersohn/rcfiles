@@ -4,3 +4,5 @@
 *.orig
 callgrind.out.*
 *.pyc
+.ycm_extra_conf.py
+
