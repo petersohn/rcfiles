@@ -77,6 +77,7 @@ Plugin 'vim-scripts/a.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'tmhedberg/matchit'
+Plugin 'ciaranm/detectindent'
 " IDE stuff in a separate file
 "if $VIMIDE == "ide"
 	"source ~/.vimrc.ide
@@ -187,6 +188,11 @@ if &term =~ '^screen'
   execute "set <xRight>=\e[1;*C"
   execute "set <xLeft>=\e[1;*D"
 endif
+
+" detectindent
+:autocmd BufReadPost * :DetectIndent
+:let g:detectindent_preferred_expandtab = 0
+:let g:detectindent_preferred_indent = 4
 
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has("user_commands")
