@@ -1,5 +1,5 @@
-" Generic Editor Configs
 set number
+" Generic Editor Configs
 " Highlight search results (turn off :nohlsearch)
 "set hlsearch
 set scrolloff=2
@@ -78,6 +78,7 @@ Plugin 'jlanzarotta/bufexplorer'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'tmhedberg/matchit'
 Plugin 'ciaranm/detectindent'
+Plugin 'lyuts/vim-rtags'
 " IDE stuff in a separate file
 "if $VIMIDE == "ide"
 	"source ~/.vimrc.ide
