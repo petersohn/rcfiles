@@ -174,6 +174,8 @@ noremap <silent> <C-E> :LustyJuggler<CR>
 :let g:session_autosave = 'no'
 :let g:session_autoload = 'no'
 
+" vim-rtags
+noremap <Leader>ro :call rtags#ProjectOpen(expand('%:p:h'))<CR>
 
 " TMUX compatiblity for
 " keys combined with modifiers such as Shift, Control, and Alt.
