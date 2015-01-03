@@ -12,8 +12,10 @@ vnoremap <C-S> <ESC>l
 
 map <silent> <Leader>h :nohl<CR>
 map <silent> <Leader>H :let @/ = ""<CR>
-map <Leader>[ :cp<CR>
-map <Leader>] :cn<CR>
+map <Leader>[ :cprev<CR>
+map <Leader>] :cnext<CR>
+map <Leader>{ :lprev<CR>
+map <Leader>} :lnext<CR>
 nmap <silent> <Leader>g :vimgrep // **/*.[ch]*<CR>
 nnoremap <C-j> ddp
 nnoremap <C-k> ddkkp
