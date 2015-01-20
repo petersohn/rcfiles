@@ -159,4 +159,7 @@ fi
 
 export REPORTTIME=5
 
+HISTSIZE=1000000
+SAVEHIST=1000000
+
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
