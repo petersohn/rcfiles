@@ -33,6 +33,10 @@ set hidden
 set hlsearch
 set incsearch
 
+set title
+set t_ts=k
+set t_fs=\
+
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 
