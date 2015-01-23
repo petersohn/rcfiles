@@ -34,8 +34,10 @@ set hlsearch
 set incsearch
 
 set title
-set t_ts=k
-set t_fs=\
+if match($TERM, "^screen") == 0
+	set t_ts=k
+	set t_fs=\
+endif
 set titlestring=%t%m\ -\ VIM
 
 let g:xml_syntax_folding=1
