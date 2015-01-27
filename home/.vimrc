@@ -59,9 +59,9 @@ colorscheme solarized
 
 " Vundle stuff
 filetype off " required!
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Plugin 'gmarik/vundle'
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
@@ -87,11 +87,8 @@ Plugin 'tmhedberg/matchit'
 Plugin 'ciaranm/detectindent'
 Plugin 'lyuts/vim-rtags'
 Plugin 'matthiasvegh/clighter'
-" IDE stuff in a separate file
-"if $VIMIDE == "ide"
-	"source ~/.vimrc.ide
-	"echo "VIMIDE"
-"endif
+call vundle#end()
+
 filetype plugin indent on " required!
 
 " Pathogen
