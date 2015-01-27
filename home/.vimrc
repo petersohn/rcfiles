@@ -205,6 +205,10 @@ endif
 :let g:detectindent_preferred_expandtab = 0
 :let g:detectindent_preferred_indent = 4
 
+" clighter
+let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
+hi link clighterNamespace Constant
+
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has("user_commands")
 	command! -bang -nargs=? -complete=file W w<bang> <args>
