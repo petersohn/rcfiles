@@ -86,6 +86,7 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'tmhedberg/matchit'
 Plugin 'ciaranm/detectindent'
 Plugin 'lyuts/vim-rtags'
+Plugin 'matthiasvegh/clighter'
 " IDE stuff in a separate file
 "if $VIMIDE == "ide"
 	"source ~/.vimrc.ide
