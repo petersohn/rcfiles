@@ -124,8 +124,8 @@ let g:lightline = {
       \   'mode': 'MyMode',
       \   'ctrlpmark': 'CtrlPMark',
       \ },
-	  \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
+	  \ 'separator': { 'left': '>', 'right': '<' },
+      \ 'subseparator': { 'left': '>', 'right': '<' }
       \ }
 
 function! MyModified()
