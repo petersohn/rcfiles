@@ -32,6 +32,7 @@ set splitright
 set hidden
 set hlsearch
 set incsearch
+set foldmethod=marker
 
 set title
 if match($TERM, "^screen") == 0
@@ -45,28 +46,18 @@ au FileType xml setlocal foldmethod=syntax
 
 ":let mapleader = " "
 
-" Solarized colorscheme
-" http://stackoverflow.com/questions/12774141/strange-changing-background-color-in-vim-solarized
-":set t_ut=
-let g:solarized_termtrans=1
-"let g:solarized_termcolors=256
-"let g:solarized_degrade=1
-"let g:solarized_contrast="high"
-"let g:solarized_visibility="high"
-set background=dark
-colorscheme solarized
-
 
 " Vundle stuff
 filetype off " required!
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'bling/vim-airline'
+Plugin 'itchyny/lightline.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'BufOnly.vim'
 Plugin 'headerguard'
@@ -79,7 +70,6 @@ Plugin 'vim-jp/cpp-vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/YankRing.vim'
-Plugin 'vim-scripts/TeTrIs.vim'
 Plugin 'vim-scripts/a.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'ConradIrwin/vim-bracketed-paste'
@@ -94,6 +84,17 @@ filetype plugin indent on " required!
 " Pathogen
 execute pathogen#infect()
 
+" Solarized colorscheme
+" http://stackoverflow.com/questions/12774141/strange-changing-background-color-in-vim-solarized
+":set t_ut=
+let g:solarized_termtrans=1
+"let g:solarized_termcolors=256
+"let g:solarized_degrade=1
+"let g:solarized_contrast="high"
+"let g:solarized_visibility="high"
+set background=dark
+colorscheme solarized
+
 " Auto commands
 " Check whether a file has been changed by an other process then vim.
 autocmd BufEnter * checktime
@@ -105,6 +106,124 @@ autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 autocmd BufNewFile,BufRead *.md   set syntax=markdown
 
 let g:nerdtree_tabs_open_on_console_startup = 1
+
+" lightline
+" {{{
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'MyFugitive',
+      \   'filename': 'MyFilename',
+      \   'fileformat': 'MyFileformat',
+      \   'filetype': 'MyFiletype',
+      \   'fileencoding': 'MyFileencoding',
+      \   'mode': 'MyMode',
+      \   'ctrlpmark': 'CtrlPMark',
+      \ },
+	  \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
+
+function! MyModified()
+  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'help' && &readonly ? 'RO' : ''
+endfunction
+
+function! MyFilename()
+  let fname = expand('%:t')
+  return fname == 'ControlP' ? g:lightline.ctrlp_item :
+        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft == 'unite' ? unite#get_status_string() :
+        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  try
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+      let mark = ' '  " edit here for cool mark
+      let _ = fugitive#head()
+      return strlen(_) ? mark._ : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  let fname = expand('%:t')
+  return fname == '__Tagbar__' ? 'Tagbar' :
+        \ fname == 'ControlP' ? 'CtrlP' :
+        \ fname == '__Gundo__' ? 'Gundo' :
+        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ &ft == 'unite' ? 'Unite' :
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! CtrlPMark()
+  if expand('%:t') =~ 'ControlP'
+    call lightline#link('iR'[g:lightline.ctrlp_regex])
+    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
+          \ , g:lightline.ctrlp_next], 0)
+  else
+    return ''
+  endif
+endfunction
+
+let g:ctrlp_status_func = {
+  \ 'main': 'CtrlPStatusFunc_1',
+  \ 'prog': 'CtrlPStatusFunc_2',
+  \ }
+
+function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
+  let g:lightline.ctrlp_regex = a:regex
+  let g:lightline.ctrlp_prev = a:prev
+  let g:lightline.ctrlp_item = a:item
+  let g:lightline.ctrlp_next = a:next
+  return lightline#statusline(0)
+endfunction
+
+function! CtrlPStatusFunc_2(str)
+  return lightline#statusline(0)
+endfunction
+
+let g:tagbar_status_func = 'TagbarStatusFunc'
+
+function! TagbarStatusFunc(current, sort, fname, ...) abort
+    let g:lightline.fname = a:fname
+  return lightline#statusline(0)
+endfunction
+
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
+" }}}
 
 " Airline config
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
