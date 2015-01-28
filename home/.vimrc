@@ -78,6 +78,8 @@ Plugin 'lyuts/vim-rtags'
 Plugin 'matthiasvegh/clighter'
 Plugin 'rhysd/vim-clang-format'
 " Plugin 'kshenoy/vim-signature'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/unite.vim'
 call vundle#end()
 
 filetype plugin indent on " required!
@@ -325,6 +327,10 @@ endif
 " clighter
 let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
 hi link clighterNamespace Constant
+
+" unite
+nnoremap <silent> <C-t> :Unite -start-insert -buffer-name=files -winheight=10 file_rec/async<cr>
+nnoremap <Leader>f :Unite -auto-preview grep:.<cr>
 
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has("user_commands")
