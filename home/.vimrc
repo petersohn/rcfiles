@@ -98,6 +98,7 @@ let g:solarized_termtrans=1
 "let g:solarized_visibility="high"
 set background=dark
 colorscheme solarized
+set t_Co=256
 
 " Auto commands
 " Check whether a file has been changed by an other process then vim.
@@ -114,7 +115,7 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 " lightline
 " {{{
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
