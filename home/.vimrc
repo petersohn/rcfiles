@@ -44,6 +44,7 @@ set titlestring=%t%m\ -\ VIM
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 
+set t_Co=256
 ":let mapleader = " "
 
 
@@ -126,9 +127,7 @@ let g:lightline = {
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
       \   'ctrlpmark': 'CtrlPMark',
-      \ },
-	  \ 'separator': { 'left': '>', 'right': '<' },
-      \ 'subseparator': { 'left': '>', 'right': '<' }
+      \ }
       \ }
 
 function! MyModified()
