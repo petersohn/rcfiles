@@ -76,6 +76,8 @@ Plugin 'tmhedberg/matchit'
 Plugin 'ciaranm/detectindent'
 Plugin 'lyuts/vim-rtags'
 Plugin 'matthiasvegh/clighter'
+Plugin 'rhysd/vim-clang-format'
+" Plugin 'kshenoy/vim-signature'
 call vundle#end()
 
 filetype plugin indent on " required!
