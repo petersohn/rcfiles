@@ -82,6 +82,7 @@ Plugin 'rhysd/vim-clang-format'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
 Plugin 'tmux-plugins/vim-tmux'
+Plugin 'vim-scripts/bash-support.vim'
 call vundle#end()
 
 filetype plugin indent on " required!
