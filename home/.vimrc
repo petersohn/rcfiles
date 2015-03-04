@@ -84,6 +84,7 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'vim-scripts/bash-support.vim'
+Plugin 'rhysd/committia.vim'
 call vundle#end()
 
 filetype plugin indent on " required!
