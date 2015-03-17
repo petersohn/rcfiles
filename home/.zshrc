@@ -162,4 +162,7 @@ export REPORTTIME=5
 HISTSIZE=1000000
 SAVEHIST=1000000
 
+alias gy=NO_GITSTATUS=
+alias gn=NO_GITSTATUS="yes"
+
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
