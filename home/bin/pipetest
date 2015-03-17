@@ -1,0 +1,11 @@
+#!/bin/bash
+
+input=/dev/stdin
+i=0
+
+for arg in "$@"; do
+    output="output.$((++i))"
+    eval "$arg" <"$input" >"$output"
+    input="$output"
+done
+
