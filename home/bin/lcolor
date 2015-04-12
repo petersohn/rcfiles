@@ -15,41 +15,30 @@ Options:
 _END_
 }
 
-cleanup() {
-    if [ -n "$tmpdir" ]; then
-        rm -rf "$tmpdir"
-    fi
-}
-
-interrupted() {
-    cleanup
-    exit 128
-}
-
 # -------- Main body --------
 
 colors=(Red Green Yellow Blue Purple Cyan White IRed IGreen IYellow IBlue IPurple ICyan IWhite)
 
 flags=
-sedargs=
+sedargs=()
 pattern=
 parprefix='\'
 while getopts ":hip:r" Option; do
     case $Option in
     h)
-	    print_usage
-	    exit
-	    ;;
-	i)
-	    flags+=I
-	    ;;
+	print_usage
+	exit
+	;;
+    i)
+	flags+=I
+	;;
     p)
         pattern="$OPTARG"
         ;;
-	r)
-        sedargs+="-r"
-	    parprefix=
-	    ;;
+    r)
+        sedargs+=(-r)
+	parprefix=
+    ;;
     esac
 done
 
@@ -64,31 +53,14 @@ openpar="$parprefix("
 closepar="$parprefix)"
 match="^.*${openpar}${pattern}${closepar}.*$"
 
-tmpdir=$(mktemp -d -t lcolor.XXXXXXXX)
-
-trap interrupted SIGTERM
-trap interrupted SIGINT
-trap interrupted SIGHUP
-
-pipe="$tmpdir/pipe.0"
-mkfifo "$pipe"
-cat "$@" >"$pipe" &
 i=0
-
+args=()
 while read -r line; do
     color_index=$((i % ${#colors[@]}))
     ((++i))
-    prevpipe="$pipe"
-    pipe="$tmpdir/pipe.$i"
     color="${colors[color_index]}"
-    mkfifo "$pipe"
-    hl -l "$color" "$line" <"$prevpipe" >"$pipe" &
-done < <(cat "$@" | sed $sedargs -n "s/${match}/\\1/${flags}p" | sort | uniq | sed 's/[][*.\]/\\&/g')
+    args+=("$color" "$line")
+done < <(cat "$@" | sed "${sedargs[@]}" -n "s/${match}/\\1/${flags}p" | sort | uniq | sed 's/[][*.\]/\\&/g')
 
-cat "$pipe"
-
-wait
-result=$?
-cleanup
-exit $result
+cat "$@" | hl -l "${args[@]}"
 

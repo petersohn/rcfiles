@@ -82,7 +82,7 @@ print_usage() {
 Highlights parts of the text.
 
 Usage: $0 -h
-       $0 [options] color pattern
+       $0 [options] color1 pattern1 [color2 pattern2 ...]
 
 Options:
     -h        This help message.
@@ -100,7 +100,7 @@ _END_
 # -------- Main body --------
 
 flags=g
-args=-u
+args=(-u)
 parprefix='\'
 prefix=
 postfix=
@@ -112,14 +112,14 @@ while getopts ":hilr" Option; do
 	    exit
 	    ;;
 	i)
-	    flags=${flags}I
+	    flags+=I
 	    ;;
 	l)
 	    prefix='^.*'
 	    postfix='.*$'
 	    ;;
 	r)
-	    args="$args -r"
+	    args+=(-r)
 	    parprefix=
 	    ;;
     esac
@@ -128,19 +128,23 @@ done
 shift $(($OPTIND - 1))
 
 
-coloridx=$1
-exp=$2
-color=${!coloridx}
 openpar="$parprefix("
 closepar="$parprefix)"
 
-if [ -z $color ]; then
-    echo "Invalid color."
-    exit 1
-fi
+while [ $# -gt 0 ]; do
+    coloridx="$1"
+    pattern="$2"
+    color="${!coloridx}"
 
-match="${openpar}${prefix}${openpar}${exp}${closepar}${postfix}${closepar}"
-xpr="s/${match}/${color}\\${matchindex}${Color_Off}/${flags}"
-#echo "$xpr"
-sed $args -e "$xpr"
+    if [ -z $color ]; then
+	echo "Invalid color."
+	exit 1
+    fi
+
+    match="${openpar}${prefix}${openpar}${pattern}${closepar}${postfix}${closepar}"
+    args+=(-e "s/${match}/${color}\\${matchindex}${Color_Off}/${flags}")
+    shift 2
+done
+
+sed "${args[@]}"
 
