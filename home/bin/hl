@@ -78,19 +78,23 @@ On_IWhite=`echo -e '\e[0;107m'`   # White
 # -------- Functions --------
 
 print_usage() {
-    echo "Highlights parts of the text."
-    echo "Usage: $0 -h" 
-    echo "       $0 [options] color pattern"
-    echo "Options:"
-    echo "    -h        This help message."
-    echo "    -i        Case insensitive pattern."
-    echo "    -l        Highlight the whole line containing the pattern."
-    echo "    -r        Interpret the pattern as extended regular expression."
-    echo
-    echo "Color format: [Flags]ColorName"
-    echo "    where ColorName = Black|Red|Greem|Yellow|Blue|Purple|Cyan|White"
-    echo "      Flags = B|I|U|On_|BI|On_I"
-    echo "        B = bold  I = High intensity  U = Underline  On_ = Background"
+    cat <<_END_
+Highlights parts of the text.
+
+Usage: $0 -h
+       $0 [options] color pattern
+
+Options:
+    -h        This help message.
+    -i        Case insensitive pattern.
+    -l        Highlight the whole line containing the pattern.
+    -r        Interpret the pattern as extended regular expression.
+
+Color format: [Flags]ColorName
+    where ColorName = Black|Red|Greem|Yellow|Blue|Purple|Cyan|White
+      Flags = B|I|U|On_|BI|On_I
+        B = bold  I = High intensity  U = Underline  On_ = Background
+_END_
 }
 
 # -------- Main body --------
@@ -103,7 +107,7 @@ postfix=
 matchindex=1
 while getopts ":hilr" Option; do
     case $Option in
-        h) 
+        h)
 	    print_usage
 	    exit
 	    ;;
