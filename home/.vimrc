@@ -76,8 +76,8 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'tmhedberg/matchit'
 Plugin 'ciaranm/detectindent'
 Plugin 'lyuts/vim-rtags'
-Plugin 'bbchung/clighter'
-Plugin 'matthiasvegh/ycmlighter'
+"Plugin 'bbchung/clighter'
+" Plugin 'matthiasvegh/ycmlighter'
 Plugin 'rhysd/vim-clang-format'
 " Plugin 'kshenoy/vim-signature'
 Plugin 'Shougo/vimproc.vim'
@@ -325,7 +325,7 @@ endif
 
 " detectindent
 :autocmd BufReadPost * :DetectIndent
-:let g:detectindent_preferred_expandtab = 0
+:let g:detectindent_preferred_expandtab = 1
 :let g:detectindent_preferred_indent = 4
 
 " clighter
