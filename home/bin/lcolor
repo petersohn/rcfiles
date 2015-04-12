@@ -32,7 +32,6 @@ colors=(Red Green Yellow Blue Purple Cyan White IRed IGreen IYellow IBlue IPurpl
 
 flags=
 sedargs=
-hlargs=
 pattern=
 parprefix='\'
 while getopts ":hip:r" Option; do
@@ -43,14 +42,12 @@ while getopts ":hip:r" Option; do
 	    ;;
 	i)
 	    flags+=I
-        hlargs+="-i"
 	    ;;
     p)
         pattern="$OPTARG"
         ;;
 	r)
         sedargs+="-r"
-        hlargs+="-r"
 	    parprefix=
 	    ;;
     esac
@@ -78,15 +75,15 @@ mkfifo "$pipe"
 cat "$@" >"$pipe" &
 i=0
 
-while read line; do
+while read -r line; do
     color_index=$((i % ${#colors[@]}))
     ((++i))
     prevpipe="$pipe"
     pipe="$tmpdir/pipe.$i"
     color="${colors[color_index]}"
     mkfifo "$pipe"
-    hl -l "$color" $hlargs "$line" <"$prevpipe" >"$pipe" &
-done < <(cat "$@" | sed $sedargs -n "s/${match}/\\1/${flags}p" | sort | uniq)
+    hl -l "$color" "$line" <"$prevpipe" >"$pipe" &
+done < <(cat "$@" | sed $sedargs -n "s/${match}/\\1/${flags}p" | sort | uniq | sed 's/[][*.\]/\\&/g')
 
 cat "$pipe"
 
