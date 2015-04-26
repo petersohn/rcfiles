@@ -61,7 +61,7 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'itchyny/lightline.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'BufOnly.vim'
-Plugin 'headerguard'
+Plugin 'petersohn/vim-headerguard'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'moll/vim-bbye'
 Plugin 'xolox/vim-misc'
@@ -115,6 +115,8 @@ autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 autocmd BufNewFile,BufRead *.md   set syntax=markdown
 
 let g:nerdtree_tabs_open_on_console_startup = 1
+
+let g:headerguard_cpp_line_comments = 1
 
 " lightline
 " {{{
