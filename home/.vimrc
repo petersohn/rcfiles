@@ -116,8 +116,6 @@ autocmd BufNewFile,BufRead *.md   set syntax=markdown
 
 let g:nerdtree_tabs_open_on_console_startup = 1
 
-let g:headerguard_cpp_line_comments = 1
-
 " lightline
 " {{{
 let g:lightline = {
@@ -269,8 +267,10 @@ let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src
 
 " Headerguard
 function! g:HeaderguardName()
-	return toupper(expand('%:gs/[^0-9a-zA-Z_]/_/g'))
+  return toupper(substitute(expand('%:gs/[^0-9a-zA-Z_]/_/g'), '\v.*(src|source|include|incl)_', '', ''))
 endfunction
+let g:headerguard_use_cpp_comments = 1
+
 
 
 " YouCompleteMe
