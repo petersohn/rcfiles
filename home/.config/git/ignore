@@ -5,4 +5,6 @@
 callgrind.out.*
 *.pyc
 .ycm_extra_conf.py
-
+ycm_jsondb_config.py
+ycm_jsondb_core.py
+compile_commands.json
