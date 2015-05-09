@@ -33,6 +33,7 @@ set hidden
 set hlsearch
 set incsearch
 set foldmethod=marker
+set expandtab
 
 set title
 if match($TERM, "^screen") == 0
