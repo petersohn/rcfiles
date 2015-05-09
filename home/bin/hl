@@ -108,20 +108,20 @@ matchindex=1
 while getopts ":hilr" Option; do
     case $Option in
         h)
-	    print_usage
-	    exit
-	    ;;
-	i)
-	    flags+=I
-	    ;;
-	l)
-	    prefix='^.*'
-	    postfix='.*$'
-	    ;;
-	r)
-	    args+=(-r)
-	    parprefix=
-	    ;;
+        print_usage
+        exit
+        ;;
+    i)
+        flags+=I
+        ;;
+    l)
+        prefix='^.*'
+        postfix='.*$'
+        ;;
+    r)
+        args+=(-r)
+        parprefix=
+        ;;
     esac
 done
 
@@ -137,8 +137,8 @@ while [ $# -gt 0 ]; do
     color="${!coloridx}"
 
     if [ -z $color ]; then
-	echo "Invalid color."
-	exit 1
+        echo "Invalid color."
+        exit 1
     fi
 
     match="${openpar}${prefix}${openpar}${pattern}${closepar}${postfix}${closepar}"

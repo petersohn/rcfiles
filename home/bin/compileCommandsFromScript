@@ -1,0 +1,90 @@
+#!/bin/bash
+
+print_usage() {
+    cat <<_END_
+Generate a compile_commands.json file from a build script.
+
+Usage: $0 -h
+       $0 [options] build_script
+
+Options:
+    -h        This help message.
+
+    -c        The name of the compiler. More can be added. If none is given,
+              it is gcc and g++.
+_END_
+}
+
+_generateCompileCommandForFile() {
+    local input=
+    local outputCommand=clang++
+    for arg in "$@"; do
+        if [[ -z "$input" && "$arg" != -* && -e "$arg" && ( "$arg" == *.cpp || "$arg" == *.c || "$arg" == *.cc ) ]]; then
+            input=$(readlink -e "$arg")
+        fi
+
+        outputCommand+=" '${arg//\'/\'\\\'\'}'"
+    done
+
+    if [ -z "$input" ]; then
+        return
+    fi
+
+    local comma=
+    if [ -z "$firstLine" ]; then
+        comma=,
+    else
+        firstLine=
+    fi
+
+    cat <<_END_
+$comma{
+    "directory": "$PWD",
+    "command": "$outputCommand",
+    "file": "${input}"
+}
+_END_
+
+}
+
+# -------- Main body --------
+
+compilers=()
+while getopts "hc:" Option; do
+    case $Option in
+    h)
+        print_usage
+        exit
+        ;;
+    c)
+        compilers+=("$OPTARG")
+        ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+if [ ${#compilers[@]} -eq 0 ]; then
+    compilers=(gcc g++)
+fi
+
+dir="$PWD"
+firstLine=yes
+
+buildScript="$1"
+if [ ! -e "$buildScript" ]; then
+    echo "Build script does not exist" >&2
+    exit 1
+fi
+
+sedCommands=()
+for compiler in "${compilers[@]}"; do
+    sedCommands+=(-e "s/^$compiler/_generateCompileCommandForFile/")
+done
+
+(
+    echo '['
+    source <(sed "${sedCommands[@]}" "$buildScript")
+    echo ']'
+)
+
