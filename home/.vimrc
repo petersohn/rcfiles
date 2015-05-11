@@ -334,6 +334,7 @@ endif
 " clighter
 let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
 hi link clighterNamespace Constant
+let g:clighter_occurrences_mode=1
 
 " unite
 nnoremap <silent> <C-t> :Unite -start-insert -buffer-name=files -winheight=10 file_rec/async<cr>
