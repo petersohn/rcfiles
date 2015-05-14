@@ -1,6 +1,6 @@
-set number
 " Generic Editor Configs
 " Highlight search results (turn off :nohlsearch)
+set number
 "set hlsearch
 set scrolloff=2
 set autoindent
@@ -87,6 +87,7 @@ Plugin 'Shougo/unite.vim'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'vim-scripts/bash-support.vim'
 Plugin 'rhysd/committia.vim'
+Plugin 'martong/vim-compiledb-path'
 call vundle#end()
 
 filetype plugin indent on " required!
