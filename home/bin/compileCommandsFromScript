@@ -23,7 +23,7 @@ _generateCompileCommandForFile() {
             input=$(readlink -e "$arg")
         fi
 
-        outputCommand+=" '${arg//\'/\'\\\'\'}'"
+        outputCommand+=" $arg"
     done
 
     if [ -z "$input" ]; then
