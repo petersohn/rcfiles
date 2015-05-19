@@ -83,11 +83,11 @@ Plugin 'bbchung/clighter'
 Plugin 'rhysd/vim-clang-format'
 " Plugin 'kshenoy/vim-signature'
 Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/unite.vim'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'vim-scripts/bash-support.vim'
 Plugin 'rhysd/committia.vim'
 Plugin 'martong/vim-compiledb-path'
+Plugin 'ctrlpvim/ctrlp.vim'
 call vundle#end()
 
 filetype plugin indent on " required!
