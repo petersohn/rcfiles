@@ -11,7 +11,7 @@ Options:
     -h        This help message.
 
     -c        The name of the compiler. More can be added. If none is given,
-              it is gcc and g++.
+              it is gcc, g++, clang and clang++.
 _END_
 }
 
@@ -65,7 +65,7 @@ done
 shift $(($OPTIND - 1))
 
 if [ ${#compilers[@]} -eq 0 ]; then
-    compilers=(gcc g++)
+    compilers=(gcc g++ clang clang++)
 fi
 
 dir="$PWD"
@@ -79,12 +79,12 @@ fi
 
 sedCommands=()
 for compiler in "${compilers[@]}"; do
-    sedCommands+=(-e "s/^$compiler/_generateCompileCommandForFile/")
+    sedCommands+=(-e "s/^\w*${compiler}/_generateCompileCommandForFile/p")
 done
 
 (
     echo '['
-    source <(sed "${sedCommands[@]}" "$buildScript")
+    source <(sed -n -e '/^\w*cd/p' "${sedCommands[@]}" "$buildScript")
     echo ']'
 )
 
