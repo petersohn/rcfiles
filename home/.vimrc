@@ -1,4 +1,5 @@
 " Generic Editor Configs
+set nocompatible
 " Highlight search results (turn off :nohlsearch)
 set number
 "set hlsearch
@@ -19,7 +20,6 @@ set showmatch
 "set magic
 " Required to be able to use keypad keys and map missed escape sequences
 set esckeys
-set nocompatible
 "set timeoutlen=1000 ttimeoutlen=10
 " make backspace work like most other apps
 set backspace=2
