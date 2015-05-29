@@ -129,7 +129,7 @@ if ($numFiles == 0) {
     }
 
     if ($firstAdded + $secondAdded + $unknown > 0 && $firstDeleted + $secondDeleted > 0) {
-        $symbol = "\xB1 "; # +/- sign
+        $symbol = "± "; # +/- sign
     } elsif ($firstDeleted + $secondDeleted > 0) {
         $symbol = "- ";
     } elsif ($firstAdded + $secondAdded + $unknown > 0) {
