@@ -73,6 +73,7 @@ Plugin 'jlanzarotta/bufexplorer'
 Plugin 'petersohn/vim-rtags'
 Plugin 'martong/vim-compiledb-path'
 Plugin 'moll/vim-bbye'
+Plugin 'nacitar/a.vim'
 Plugin 'rhysd/committia.vim'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/nerdtree'
@@ -85,7 +86,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-jp/cpp-vim'
-Plugin 'vim-scripts/a.vim'
 Plugin 'vim-scripts/bash-support.vim'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'xolox/vim-misc'
@@ -95,7 +95,7 @@ call vundle#end()
 filetype plugin indent on " required!
 
 " Pathogen
-execute pathogen#infect()
+" execute pathogen#infect()
 
 " Solarized colorscheme
 " http://stackoverflow.com/questions/12774141/strange-changing-background-color-in-vim-solarized
