@@ -343,6 +343,9 @@ let g:clighter_occurrences_mode=1
 " ctrlp
 let g:ctrlp_map = '<c-t>'
 
+map <silent> <Leader>h :nohl<CR>
+map <silent> <Leader>H :let @/ = ""<CR>
+
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has("user_commands")
 	command! -bang -nargs=? -complete=file W w<bang> <args>
