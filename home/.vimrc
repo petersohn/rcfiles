@@ -339,6 +339,7 @@ endif
 let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
 hi link clighterNamespace Constant
 let g:clighter_occurrences_mode=1
+nmap <silent> <Leader>w :call clighter#Rename()<CR>
 
 " ctrlp
 let g:ctrlp_map = '<c-t>'
