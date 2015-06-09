@@ -90,6 +90,7 @@ Plugin 'vim-scripts/bash-support.vim'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 call vundle#end()
 
 filetype plugin indent on " required!
