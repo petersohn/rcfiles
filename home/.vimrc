@@ -67,7 +67,6 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'drmikehenry/vim-headerguard'
 Plugin 'itchyny/lightline.vim'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'jlanzarotta/bufexplorer'
 "Plugin 'lyuts/vim-rtags'
 Plugin 'petersohn/vim-rtags'
@@ -119,8 +118,6 @@ autocmd CursorHoldI * checktime
 autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 
 autocmd BufNewFile,BufRead *.md   set syntax=markdown
-
-let g:nerdtree_tabs_open_on_console_startup = 1
 
 " lightline
 " {{{
@@ -250,6 +247,10 @@ let g:NERDTreeDirArrows=0
 let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
 let g:NERDTreeIgnore = ['\.o$', '\.o-.*$']
+let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeWinSize = 50
+
+" let g:nerdtree_tabs_open_on_console_startup = 1
 
 " CommandT config
 let g:CommandTNeverShowDotFiles = 1
