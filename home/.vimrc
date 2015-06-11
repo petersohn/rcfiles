@@ -67,7 +67,9 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'drmikehenry/vim-headerguard'
 Plugin 'itchyny/lightline.vim'
+Plugin 'jaxbot/semantic-highlight.vim'
 Plugin 'jlanzarotta/bufexplorer'
+Plugin 'justincampbell/vim-eighties'
 "Plugin 'lyuts/vim-rtags'
 Plugin 'petersohn/vim-rtags'
 Plugin 'martong/vim-compiledb-path'
@@ -78,6 +80,7 @@ Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
+Plugin 'solarnz/thrift.vim'
 Plugin 'tmhedberg/matchit'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'tpope/vim-fugitive'
@@ -345,6 +348,9 @@ nmap <silent> <Leader>w :call clighter#Rename()<CR>
 
 " ctrlp
 let g:ctrlp_map = '<c-t>'
+
+" vim-eighties
+let g:eighties_bufname_additional_patterns = ['fugitiveblame']
 
 map <silent> <Leader>h :nohl<CR>
 map <silent> <Leader>H :let @/ = ""<CR>
