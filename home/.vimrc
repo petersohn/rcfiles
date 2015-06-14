@@ -49,6 +49,8 @@ set t_Co=256
 ":let mapleader = " "
 
 
+let g:vundle_default_git_proto = 'git'
+
 " Vundle stuff
 filetype off " required!
 set rtp+=~/.vim/bundle/Vundle.vim/
@@ -95,8 +97,6 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 call vundle#end()
-
-let g:vundle_default_git_proto = 'git'
 
 filetype plugin indent on " required!
 
