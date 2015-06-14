@@ -96,6 +96,8 @@ Plugin 'xolox/vim-session'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 call vundle#end()
 
+let g:vundle_default_git_proto = 'git'
+
 filetype plugin indent on " required!
 
 " Pathogen
