@@ -153,8 +153,10 @@ bindkey -M viins 'jj' vi-cmd-mode
 
 # Enabling vim text-objects (ciw and alike) for vi-mode
 #source ~/.opp.zsh/opp.zsh
-if [ -e ~/.common_zsh_bash.rc ]; then
-	source ~/.common_zsh_bash.rc
+
+ZSHRC_LOCAL=$HOME/.zshrc.local
+if [ -e $ZSHRC_LOCAL ]; then
+  source $ZSHRC_LOCAL
 fi
 
 export REPORTTIME=5
