@@ -88,13 +88,13 @@ Plugin 'tmhedberg/matchit'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-repeat'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-jp/cpp-vim'
 Plugin 'vim-scripts/bash-support.vim'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 call vundle#end()
 
@@ -130,7 +130,7 @@ autocmd BufNewFile,BufRead *.md   set syntax=markdown
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'], ['obsession'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
@@ -141,8 +141,19 @@ let g:lightline = {
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
       \   'ctrlpmark': 'CtrlPMark',
+      \   'obsession': 'MyObsession'
       \ }
       \ }
+
+function! MyObsession()
+  if exists("g:this_obsession") && filereadable(g:this_obsession)
+    return "Session"
+  elseif !empty(v:this_session) && filereadable(g:this_session)
+    return "[ Session ]"
+  else
+    return "[ No session ]"
+  endif
+endfunction
 
 function! MyModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'

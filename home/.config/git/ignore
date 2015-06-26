@@ -9,3 +9,4 @@ ycm_jsondb_config.py
 ycm_jsondb_core.py
 compile_commands.json
 .clang_format
+Session.vim
