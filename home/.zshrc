@@ -138,6 +138,8 @@ bindkey -M viins '^X^X' tmux-pane-words-anywhere
 bindkey '^Xr' newest-files
 bindkey -M viins '^Xr' newest-files
 
+bindkey -M emacs "^[[1;5A" only-local-history-up    # [CTRL] + Cursor up
+bindkey -M emacs "^[[1;5B" only-local-history-down  # [CTRL] + Cursor down
 bindkey -M vicmd 'K' only-local-history-up
 bindkey -M vicmd 'J' only-local-history-down
 
@@ -149,7 +151,6 @@ bindkey -M vicmd 'j' history-substring-search-down
 bindkey -M vicmd '^r' redo
 bindkey -M vicmd 'u' undo
 bindkey -M viins 'jj' vi-cmd-mode
-
 
 # Enabling vim text-objects (ciw and alike) for vi-mode
 #source ~/.opp.zsh/opp.zsh
