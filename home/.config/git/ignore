@@ -8,5 +8,5 @@ callgrind.out.*
 ycm_jsondb_config.py
 ycm_jsondb_core.py
 compile_commands.json
-.clang_format
+.clang-format
 Session.vim
