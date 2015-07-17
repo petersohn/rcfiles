@@ -147,11 +147,11 @@ let g:lightline = {
 
 function! MyObsession()
   if exists("g:this_obsession") && filereadable(g:this_obsession)
-    return "Session"
+    return "S"
   elseif !empty(v:this_session) && filereadable(g:this_session)
-    return "[ Session ]"
+    return "[ S ]"
   else
-    return "[ No session ]"
+    return "[ X ]"
   endif
 endfunction
 
