@@ -63,6 +63,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'bbchung/clighter'
 "Plugin 'petersohn/clighter'
 Plugin 'bkad/CamelCaseMotion'
+Plugin 'bronson/vim-crosshairs'
+Plugin 'bronson/vim-toggle-wrap'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'ciaranm/detectindent'
@@ -373,6 +375,10 @@ let g:eighties_bufname_additional_patterns = ['fugitiveblame']
 
 map <silent> <Leader>h :nohl<CR>
 map <silent> <Leader>H :let @/ = ""<CR>
+
+" vim-crosshairs
+
+set cursorline
 
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has("user_commands")
