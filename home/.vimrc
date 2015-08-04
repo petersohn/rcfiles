@@ -361,11 +361,11 @@ let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStruct
 hi link clighterNamespace Constant
 let g:clighter_occurrences_mode=1
 nmap <silent> <Leader>w :call clighter#Rename()<CR>
-hi link clighterNamespace Constant
-hi link clighterNamespaceRef clighterNamespace
 hi link clighterMemberRefExprCall clighterMemberRefExprVar
 autocmd FileType c,cpp,objc hi clighterMemberRefExprVar term=NONE cterm=NONE ctermfg=187 gui=NONE
 autocmd FileType c,cpp,objc hi clighterMacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
+autocmd FileType c,cpp,objc hi clighterNamespace term=NONE cterm=NONE ctermfg=60 gui=NONE
+autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
 
 " ctrlp
 let g:ctrlp_map = '<c-t>'
