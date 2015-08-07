@@ -107,7 +107,7 @@ postfix=
 matchindex=1
 while getopts ":hilr" Option; do
     case $Option in
-        h)
+    h)
         print_usage
         exit
         ;;
