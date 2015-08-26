@@ -45,7 +45,7 @@ my $numFiles = 0;
 
 for my $line (@lines) {
     if ($line =~ m'^## ((?!\.)(?!/)(?:(?!/\.)(?!\.\.)(?!//)(?!@\{)(?!\\)[^\040\177 ~^:?*[])+(?<!\.lock)(?<!/)(?<!\.))(\.\.\..*)?$') {
-		$branchName = $1;
+        $branchName = $1;
         if ($line =~ /\.\.\..*\[(?:ahead (\d+))?(?:, )?(?:behind (\d+))?\]/) {
             my $ahead = $1;
             my $behind = $2;
@@ -60,7 +60,7 @@ for my $line (@lines) {
                 $branchName .= " [?]";
             }
         }
-	} elsif ($line !~ /^#/) {
+    } elsif ($line !~ /^#/) {
         ++$firstStates{substr($line, 0, 1)};
         ++$secondStates{substr($line, 1, 1)};
         ++$numFiles;
@@ -68,9 +68,9 @@ for my $line (@lines) {
 }
 
 if ($branchName eq "") {
-	my $rev = `git rev-parse --short HEAD`;
-	chomp($rev);
-	$branchName = "<$rev>";
+    my $rev = `git rev-parse --short HEAD`;
+    chomp($rev);
+    $branchName = "<$rev>";
 }
 
 my $color;

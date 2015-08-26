@@ -66,7 +66,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 function module() {
-	eval `/app/modules/0/bin/modulecmd zsh "$@"`
+  eval `/app/modules/0/bin/modulecmd zsh "$@"`
 }
 # Make solarized colors applied for directories as well (ls).
 eval `dircolors ~/dircolors-solarized/dircolors.ansi-universal`

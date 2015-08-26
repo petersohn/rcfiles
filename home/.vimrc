@@ -37,8 +37,8 @@ set expandtab
 
 set title
 if match($TERM, "^screen") == 0
-	set t_ts=k
-	set t_fs=\
+  set t_ts=k
+  set t_fs=\
 endif
 set titlestring=%t%m\ -\ VIM
 
@@ -382,17 +382,17 @@ set cursorline
 
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has("user_commands")
-	command! -bang -nargs=? -complete=file W w<bang> <args>
-	command! -bang -nargs=? -complete=file Wq wq<bang> <args>
-	command! -bang -nargs=? -complete=file WQ wq<bang> <args>
-	command! -bang Wa wa<bang>
-	command! -bang WA wa<bang>
-	command! -bang Q q<bang>
-	command! -bang Qa qa<bang>
-	command! -bang QA qa<bang>
-	"TODO X is reserved for encryption
-	command! -bang Xa xa<bang>
-	command! -bang XA xa<bang>
+  command! -bang -nargs=? -complete=file W w<bang> <args>
+  command! -bang -nargs=? -complete=file Wq wq<bang> <args>
+  command! -bang -nargs=? -complete=file WQ wq<bang> <args>
+  command! -bang Wa wa<bang>
+  command! -bang WA wa<bang>
+  command! -bang Q q<bang>
+  command! -bang Qa qa<bang>
+  command! -bang QA qa<bang>
+  "TODO X is reserved for encryption
+  command! -bang Xa xa<bang>
+  command! -bang XA xa<bang>
 endif
 
 
