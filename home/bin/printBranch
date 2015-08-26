@@ -50,11 +50,11 @@ for my $line (@lines) {
             my $ahead = $1;
             my $behind = $2;
             if ($ahead ne "" && $behind ne "") {
-                $branchName .= " [+$ahead][-$behind]";
+                $branchName .= " [▲$ahead][▼$behind]";
             } elsif ($ahead ne "") {
-                $branchName .= " [+$ahead]";
+                $branchName .= " [▲$ahead]";
             } elsif ($behind ne "") {
-                $branchName .= " [-$behind]";
+                $branchName .= " [▼$behind]";
             } else {
                 # this shouldn't happen
                 $branchName .= " [?]";
