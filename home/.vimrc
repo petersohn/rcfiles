@@ -395,4 +395,7 @@ if has("user_commands")
   command! -bang XA xa<bang>
 endif
 
+if !empty(glob("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
 
