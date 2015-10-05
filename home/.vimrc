@@ -34,6 +34,8 @@ set hlsearch
 set incsearch
 set foldmethod=marker
 set expandtab
+set list
+set listchars=tab:»\ 
 
 set title
 if match($TERM, "^screen") == 0
