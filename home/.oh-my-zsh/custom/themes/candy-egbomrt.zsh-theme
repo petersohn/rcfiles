@@ -10,19 +10,13 @@ function git_prompt_info2() {
     fi
 }
 
-function cdf_info() {
-    if [ -n "$CDF_USERENVIRONMENT" ]; then
-        echo "[%{$fg_no_bold[magenta]%}$CDF_USERENVIRONMENT %{$fg_bold[white]%}$(basename $CDF_WORKSPACE)%{$reset_color%}]"
+function get_extra_info() {
+    if type get_extra_prompt_info >/dev/null 2>&1; then
+        get_extra_prompt_info
     fi
 }
 
-function essim_info() {
-    if [ -n "$ESSIM_WORKSPACE" ]; then
-        echo "[%{$fg_no_bold[blue]%}$(basename $(dirname $ESSIM_WORKSPACE))%{$reset_color%}]"
-    fi
-}
-
-PROMPT=$'%{$fg[blue]%}╭%{$fg_bold[green]%}%m %{$fg[blue]%}%D{[%H:%M:%S]} %{$reset_color%}$(cdf_info)$(essim_info)%{$fg[white]%}[%~]%{$reset_color%} %(?.%{$fg[green]%}.%{$fg[red]%})[%?]%{$reset_color%} $(git_prompt_info2)\
+PROMPT=$'%{$fg[blue]%}╭%{$fg_bold[green]%}%m %{$fg[blue]%}%D{[%H:%M:%S]} %{$reset_color%}$(get_extra_info)%{$fg[white]%}[%~]%{$reset_color%} %(?.%{$fg[green]%}.%{$fg[red]%})[%?]%{$reset_color%} $(git_prompt_info2)\
 %{$fg[blue]%}╰▶%(?.%{$fg[green]%}.%{$fg[red]%}) %#%{$reset_color%} '
 
 PS2='%_ >'
