@@ -36,6 +36,7 @@ set foldmethod=marker
 set expandtab
 set list
 set listchars=tab:»\ 
+set history=10000
 
 set title
 if match($TERM, "^screen") == 0
