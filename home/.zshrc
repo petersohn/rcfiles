@@ -58,7 +58,7 @@ compinit
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # NOTE safe-paste conflicts with zsh-syntax-highlighting.
-plugins=(git screen zsh-syntax-highlighting history-substring-search colored-man-pages dircycle mosh vundle jump)
+plugins=(git screen zsh-syntax-highlighting history-substring-search dircycle mosh vundle jump)
 PER_DIRECTORY_HISTORY_DEFAULT_GLOBAL_HISTORY=true
 
 source $ZSH/oh-my-zsh.sh
