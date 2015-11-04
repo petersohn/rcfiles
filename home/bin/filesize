@@ -1,0 +1,16 @@
+#!/bin/bash
+
+declare -A filesizes
+declare -A numbers
+
+while read file; do
+    type=$(file -e elf "$file" | sed -r "s/^.{${#file}}: //" )
+    size=$(stat -c %s "$file")
+    (( filesizes["$type"] += size ))
+    (( ++numbers["$type"] ))
+done < <(find "$@")
+
+for type in "${!filesizes[@]}"; do
+    echo "${numbers[$type]} x $type = ${filesizes[$type]}"
+done
+
