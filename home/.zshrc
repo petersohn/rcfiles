@@ -69,9 +69,19 @@ source $ZSH/oh-my-zsh.sh
 function module() {
   eval `/app/modules/0/bin/modulecmd zsh "$@"`
 }
+
 # Make solarized colors applied for directories as well (ls).
 eval `dircolors ~/dircolors-solarized/dircolors.ansi-universal`
 
+function gcd() {
+  local git_dir
+  git_dir=$(git rev-parse --show-toplevel)
+  local result=$?
+  if [[ $result != 0 ]]; then
+    return $result
+  fi
+  cd "$git_dir/$1"
+}
 
 #  Completion from tmux pane
 _tmux_pane_words() {
