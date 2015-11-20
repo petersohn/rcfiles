@@ -16,7 +16,7 @@ function get_extra_info() {
     fi
 }
 
-PROMPT=$'%{$fg[blue]%}╭%{$fg_bold[green]%}%m %{$fg[blue]%}%D{[%H:%M:%S]} %{$reset_color%}$(get_extra_info)%{$fg[white]%}[%~]%{$reset_color%} %(?.%{$fg[green]%}.%{$fg[red]%})[%?]%{$reset_color%} $(git_prompt_info2)\
+PROMPT=$'%{$fg[blue]%}╭%{$fg_bold[green]%}%m %{$fg[blue]%}%D{[%H:%M:%S]} %{$reset_color%}$(get_extra_info)%{$fg[white]%}[%~]%{$reset_color%} %(?.%{$fg[green]%}.%{$bg[red]$fg[white]%})[%?]%{$reset_color%} $(git_prompt_info2)\
 %{$fg[blue]%}╰▶%(?.%{$fg[green]%}.%{$fg[red]%}) %#%{$reset_color%} '
 
 PS2='%_ >'
