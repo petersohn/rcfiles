@@ -381,10 +381,10 @@ map <silent> <Leader>H :let @/ = ""<CR>
 
 " vim-crosshairs
 set cursorline
-highlight CursorLine ctermbg=8
+highlight CursorLine ctermbg=238
 
 
-highlight ColorColumn ctermbg=8
+highlight ColorColumn ctermbg=238
 
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has("user_commands")
