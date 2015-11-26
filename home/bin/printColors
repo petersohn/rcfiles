@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+length=$(tput cols)
+numbersPerLine=$((length / 4))
+for ((i=0; i<256; ++i)); do
+    if [[ $(( i % numbersPerLine )) == 0 ]]; then
+        echo
+    fi
+    printf '\e[38;5;%im%4i ' $i $i
+done
+echo -e '\e[0m'
+
+
