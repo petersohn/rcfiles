@@ -1,0 +1,48 @@
+#!/bin/bash
+
+print_usage() {
+    cat <<_END_
+Run sed to a list of files. Unlike sed -i, only modify files when they are
+actually changed.
+
+Usage:
+    $0 -h | --help
+    $0 sed_args -- files
+_END_
+}
+
+if [[ $1 == -h || $1 == --help ]]; then
+    print_usage
+    exit
+fi
+
+sedArgs=()
+
+while [ $# -gt 0 -a "$1" != '--' ]; do
+    sedArgs+=("$1")
+    shift
+done
+
+if [ $# -gt 0 ]; then
+    shift
+fi
+
+if [ $# -eq 0 ]; then
+    echo "No files!" >&2
+    exit 1
+fi
+
+for file in "$@"; do
+    tmpFile="$file"
+    while [ -e "$tmpFile" ]; do
+        tmpFile+='~'
+    done
+    sed "${sedArgs[@]}" "$file" >"$tmpFile"
+    if ! cmp --quiet "$file" "$tmpFile"; then
+        rm -f "$file"
+        mv "$tmpFile" "$file"
+    else
+        rm -f "$tmpFile"
+    fi
+done
+
