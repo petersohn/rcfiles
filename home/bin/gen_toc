@@ -17,7 +17,7 @@ def anchor(c, toc_type):
       return '.'
     else:
       return ''
-  elif c in [':', '`', '?', '(', ')']:
+  elif not (c.isalnum() or c in ['_', '-']):
     return ''
   else:
     return c.lower()
@@ -29,7 +29,7 @@ class Header:
   def __init__(self, s, prev_anchors, toc_type):
     [pre, title] = s.split(' ', 1)
     self.depth = len(pre) - 1
-    self.title = title.strip()
+    self.title = title.strip().rstrip('# ')
     self.anchor = ''.join([anchor(c, toc_type) for c in self.title])
     if self.anchor in prev_anchors:
       i = 1
@@ -72,7 +72,8 @@ def generate_doc(f, doc, toc_title, toc_type, min_depth):
         in_toc = True
         if toc_type != 'none':
           f.write(s + '\n')
-          f.write(generate_toc(collect_headers(doc, toc_type), toc_title, min_depth))
+          headers = collect_headers(doc, toc_type)
+          f.write(generate_toc(headers, toc_title, min_depth))
           f.write('\n')
       else:
         f.write(s)
@@ -108,6 +109,13 @@ def main():
     default='1',
     help='The minimum depth of the title to put in the TOC. Depth 0 is the first level (h1).'
   )
+  parser.add_option(
+    '-T', '--toc-title',
+    action='store',
+    dest='title',
+    default='Table of contents',
+    help='The title of the table of contents chapter.'
+  )
 
   (options, args) = parser.parse_args()
   if options.output == None:
@@ -118,13 +126,12 @@ def main():
   elif not options.type in accepted_types:
     parser.error('Invalid type: %s' % (options.type))
   else:
-    toc_title = 'Table of contents'
     doc = open(options.input, 'r').readlines()
     if options.output == '-':
       f = sys.stdout
     else:
       f = open(options.output, 'w')
-    generate_doc(f, doc, toc_title, options.type, options.min_depth)
+    generate_doc(f, doc, options.title, options.type, options.min_depth)
 
 if __name__ == '__main__':
   main()
