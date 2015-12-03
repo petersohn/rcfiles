@@ -78,6 +78,7 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'jaxbot/semantic-highlight.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'justincampbell/vim-eighties'
+Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'lyuts/vim-rtags'
 "Plugin 'petersohn/vim-rtags'
 Plugin 'martong/vim-compiledb-path'
@@ -372,6 +373,31 @@ autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
 
 " ctrlp
 let g:ctrlp_map = '<c-t>'
+
+" rainbow_parentheses
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+let g:rbpt_colorpairs = [
+    \ ['224', 'RoyalBlue3'],
+    \ ['219', 'SeaGreen3'],
+    \ ['217', 'DarkOrchid3'],
+    \ ['213', 'firebrick3'],
+    \ ['211', 'RoyalBlue3'],
+    \ ['205', 'SeaGreen3'],
+    \ ['203', 'DarkOrchid3'],
+    \ ['208', 'firebrick3'],
+    \ ['210', 'RoyalBlue3'],
+    \ ['214', 'SeaGreen3'],
+    \ ['216', 'DarkOrchid3'],
+    \ ['220', 'firebrick3'],
+    \ ['222', 'RoyalBlue3'],
+    \ ['226', 'SeaGreen3'],
+    \ ['228', 'DarkOrchid3'],
+    \ ['230', 'firebrick3'],
+    \ ]
 
 " vim-eighties
 let g:eighties_bufname_additional_patterns = ['fugitiveblame']
