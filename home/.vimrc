@@ -74,6 +74,7 @@ Plugin 'ciaranm/detectindent'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'drmikehenry/vim-headerguard'
+Plugin 'itchyny/landscape.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'jaxbot/semantic-highlight.vim'
 Plugin 'jlanzarotta/bufexplorer'
@@ -134,7 +135,7 @@ autocmd BufNewFile,BufRead *.md   set syntax=markdown
 " lightline
 " {{{
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'], ['obsession'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
