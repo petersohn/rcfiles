@@ -90,6 +90,7 @@ Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
+Plugin 'sjl/gundo.vim'
 Plugin 'solarnz/thrift.vim'
 Plugin 'tmhedberg/matchit'
 Plugin 'tmux-plugins/vim-tmux'
@@ -374,6 +375,10 @@ autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
 
 " ctrlp
 let g:ctrlp_map = '<c-t>'
+
+" Gundo
+nnoremap <F5> :GundoToggle<CR>
+let g:gundo_close_on_revert = 1
 
 " rainbow_parentheses
 au VimEnter * RainbowParenthesesToggle
