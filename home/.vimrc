@@ -108,9 +108,6 @@ call vundle#end()
 
 filetype plugin indent on " required!
 
-" Pathogen
-" execute pathogen#infect()
-
 " Solarized colorscheme
 " http://stackoverflow.com/questions/12774141/strange-changing-background-color-in-vim-solarized
 ":set t_ut=
@@ -133,7 +130,8 @@ autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 
 autocmd BufNewFile,BufRead *.md   set syntax=markdown
 
-" lightline
+
+" ---- lightline ----
 " {{{
 let g:lightline = {
       \ 'colorscheme': 'wombat',
@@ -260,12 +258,8 @@ let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 " }}}
 
-" Airline config
-set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
-set laststatus=2
-let g:airline_theme="kalisi"
 
-" NERDTree config
+" ---- NERDTree ----
 map <Leader>n :NERDTreeFocus<cr>
 map <Leader>f :NERDTreeFind<cr>
 let g:NERDTreeDirArrows=0
@@ -275,9 +269,8 @@ let g:NERDTreeIgnore = ['\.o$', '\.o-.*$']
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeWinSize = 50
 
-" let g:nerdtree_tabs_open_on_console_startup = 1
 
-" CommandT config
+" ---- CommandT ----
 let g:CommandTNeverShowDotFiles = 1
 set wildignore+=*.o
 set wildignore+=*build*
@@ -285,27 +278,25 @@ set wildignore+=*lastrun*
 "set wildignore+=*test*
 
 
-" Taglist config
-let Tlist_Show_One_File = 1
-
-" YankRing
+" ---- YankRing ----
 let g:yankring_min_element_length = 2
 let g:yankring_max_element_length = 4194304 " 4M
 let g:yankring_history_dir = "/tmp"
 nnoremap <silent> <Leader>p :YRShow<CR>
 
-" a.vim
+
+" ---- a.vim ----
 let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../.."
 
-" Headerguard
+
+" ---- Headerguard ----
 function! g:HeaderguardName()
   return toupper(substitute(expand('%:gs/[^0-9a-zA-Z_]/_/g'), '\v.*(src|source|include|incl)_', '', ''))
 endfunction
 let g:headerguard_use_cpp_comments = 1
 
 
-
-" YouCompleteMe
+" ---- YouCompleteMe ----
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
 let g:ycm_global_ycm_extra_conf = $HOME.'/.ycm_extra_conf.py'
@@ -330,16 +321,7 @@ map <Leader>y :YcmDiags<cr>
 "map <F5> :YcmCompleter GoToDeclaration<CR>
 
 
-" Lusty Juggler
-let g:LustyJugglerAltTabMode = 1
-noremap <silent> <C-E> :LustyJuggler<CR>
-
-
-" vim-session
-:let g:session_autosave = 'no'
-:let g:session_autoload = 'no'
-
-" vim-rtags
+" ---- vim-rtags ----
 noremap <Leader>ro :call rtags#ProjectOpen(expand('%:p'))<CR>
 
 " TMUX compatiblity for
@@ -357,12 +339,14 @@ if &term =~ '^screen'
   execute "set <xLeft>=\e[1;*D"
 endif
 
-" detectindent
+
+" ---- detectindent ----
 :autocmd BufReadPost * :DetectIndent
 :let g:detectindent_preferred_expandtab = 1
 :let g:detectindent_preferred_indent = 4
 
-" clighter
+
+" ---- clighter ----
 let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
 hi link clighterNamespace Constant
 let g:clighter_occurrences_mode=1
@@ -373,14 +357,17 @@ autocmd FileType c,cpp,objc hi clighterMacroInstantiation term=NONE cterm=NONE c
 autocmd FileType c,cpp,objc hi clighterNamespace term=NONE cterm=NONE ctermfg=60 gui=NONE
 autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
 
-" ctrlp
+
+" ---- ctrlp ----
 let g:ctrlp_map = '<c-t>'
 
-" Gundo
+
+" ---- Gundo ----
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_close_on_revert = 1
 
-" rainbow_parentheses
+
+" ---- rainbow_parentheses ----
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
@@ -405,18 +392,21 @@ let g:rbpt_colorpairs = [
     \ ['230', 'firebrick3'],
     \ ]
 
-" vim-eighties
+
+" ---- vim-eighties ----
 let g:eighties_bufname_additional_patterns = ['fugitiveblame']
 
 map <silent> <Leader>h :nohl<CR>
 map <silent> <Leader>H :let @/ = ""<CR>
 
-" vim-crosshairs
+
+" ---- vim-crosshairs ----
 set cursorline
 highlight CursorLine ctermbg=8
-
-
 highlight ColorColumn ctermbg=8
+
+
+" --------
 
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has("user_commands")
