@@ -134,7 +134,12 @@ closepar="$parprefix)"
 while [ $# -gt 0 ]; do
     coloridx="$1"
     pattern="$2"
-    color="${!coloridx}"
+
+    if [[ $coloridx =~ [0-9]+ ]]; then
+        color=$(printf '\e[38;5;%im' $coloridx)
+    else
+        color="${!coloridx}"
+    fi
 
     if [ -z $color ]; then
         echo "Invalid color."
