@@ -374,22 +374,25 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 let g:rbpt_colorpairs = [
-    \ ['224', 'RoyalBlue3'],
-    \ ['219', 'SeaGreen3'],
-    \ ['217', 'DarkOrchid3'],
-    \ ['213', 'firebrick3'],
-    \ ['211', 'RoyalBlue3'],
-    \ ['205', 'SeaGreen3'],
-    \ ['203', 'DarkOrchid3'],
-    \ ['208', 'firebrick3'],
-    \ ['210', 'RoyalBlue3'],
-    \ ['214', 'SeaGreen3'],
-    \ ['216', 'DarkOrchid3'],
-    \ ['220', 'firebrick3'],
-    \ ['222', 'RoyalBlue3'],
-    \ ['226', 'SeaGreen3'],
-    \ ['228', 'DarkOrchid3'],
-    \ ['230', 'firebrick3'],
+    \ ['197', 'RoyalBlue3'],
+    \ ['207', 'SeaGreen3'],
+    \ [' 48', 'DarkOrchid3'],
+    \ [' 45', 'firebrick3'],
+    \      
+    \ ['160', 'RoyalBlue3'],
+    \ ['129', 'SeaGreen3'],
+    \ [' 40', 'DarkOrchid3'],
+    \ [' 39', 'firebrick3'],
+    \      
+    \ ['124', 'RoyalBlue3'],
+    \ [' 99', 'SeaGreen3'],
+    \ [' 34', 'DarkOrchid3'],
+    \ [' 33', 'firebrick3'],
+    \      
+    \ [' 88', 'RoyalBlue3'],
+    \ [' 93', 'SeaGreen3'],
+    \ [' 28', 'DarkOrchid3'],
+    \ [' 27', 'firebrick3']
     \ ]
 
 
