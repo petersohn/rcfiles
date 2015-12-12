@@ -35,7 +35,7 @@ set incsearch
 set foldmethod=marker
 set expandtab
 set list
-set listchars=tab:»\ 
+set listchars=tab:»\
 set history=10000
 
 set title
@@ -74,12 +74,12 @@ Plugin 'ciaranm/detectindent'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'drmikehenry/vim-headerguard'
+Plugin 'eapache/rainbow_parentheses.vim'
 Plugin 'itchyny/landscape.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'jaxbot/semantic-highlight.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'justincampbell/vim-eighties'
-Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'lyuts/vim-rtags'
 "Plugin 'petersohn/vim-rtags'
 Plugin 'martong/vim-compiledb-path'
@@ -374,25 +374,25 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 let g:rbpt_colorpairs = [
-    \ ['197', 'RoyalBlue3'],
-    \ ['207', 'SeaGreen3'],
-    \ [' 48', 'DarkOrchid3'],
-    \ [' 45', 'firebrick3'],
-    \      
-    \ ['160', 'RoyalBlue3'],
-    \ ['129', 'SeaGreen3'],
-    \ [' 40', 'DarkOrchid3'],
-    \ [' 39', 'firebrick3'],
-    \      
-    \ ['124', 'RoyalBlue3'],
-    \ [' 99', 'SeaGreen3'],
-    \ [' 34', 'DarkOrchid3'],
-    \ [' 33', 'firebrick3'],
-    \      
-    \ [' 88', 'RoyalBlue3'],
-    \ [' 93', 'SeaGreen3'],
-    \ [' 28', 'DarkOrchid3'],
-    \ [' 27', 'firebrick3']
+    \ [' 27', 'RoyalBlue3'],
+    \ [' 28', 'SeaGreen3'],
+    \ [' 93', 'DarkOrchid3'],
+    \ [' 88', 'firebrick3'],
+    \
+    \ [' 33', 'RoyalBlue3'],
+    \ [' 34', 'SeaGreen3'],
+    \ [' 99', 'DarkOrchid3'],
+    \ ['124', 'firebrick3'],
+    \
+    \ [' 39', 'RoyalBlue3'],
+    \ [' 40', 'SeaGreen3'],
+    \ ['129', 'DarkOrchid3'],
+    \ ['160', 'firebrick3'],
+    \
+    \ [' 45', 'RoyalBlue3'],
+    \ [' 48', 'SeaGreen3'],
+    \ ['207', 'DarkOrchid3'],
+    \ ['197', 'firebrick3']
     \ ]
 
 
