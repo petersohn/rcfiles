@@ -373,6 +373,7 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
+let g:rbpt_max = 32
 let g:rbpt_colorpairs = [
     \ [' 27', 'RoyalBlue3'],
     \ [' 28', 'SeaGreen3'],
