@@ -377,22 +377,22 @@ let g:rbpt_colorpairs = [
     \ [' 27', 'RoyalBlue3'],
     \ [' 28', 'SeaGreen3'],
     \ [' 93', 'DarkOrchid3'],
-    \ [' 88', 'firebrick3'],
+    \ ['100', 'firebrick3'],
     \
     \ [' 33', 'RoyalBlue3'],
     \ [' 34', 'SeaGreen3'],
     \ [' 99', 'DarkOrchid3'],
-    \ ['124', 'firebrick3'],
+    \ ['142', 'firebrick3'],
     \
     \ [' 39', 'RoyalBlue3'],
     \ [' 40', 'SeaGreen3'],
     \ ['129', 'DarkOrchid3'],
-    \ ['160', 'firebrick3'],
+    \ ['178', 'firebrick3'],
     \
     \ [' 45', 'RoyalBlue3'],
     \ [' 48', 'SeaGreen3'],
     \ ['207', 'DarkOrchid3'],
-    \ ['197', 'firebrick3']
+    \ ['220', 'firebrick3']
     \ ]
 
 
