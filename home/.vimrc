@@ -133,6 +133,14 @@ autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 autocmd BufNewFile,BufRead *.md   set syntax=markdown
 
 
+" ---- CommandT ----
+let g:CommandTNeverShowDotFiles = 1
+set wildignore+=*.o
+set wildignore+=*build*
+set wildignore+=*lastrun*
+"set wildignore+=*test*
+
+
 " ---- lightline ----
 " {{{
 let g:lightline = {
@@ -272,14 +280,6 @@ let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeWinSize = 50
 
 
-" ---- CommandT ----
-let g:CommandTNeverShowDotFiles = 1
-set wildignore+=*.o
-set wildignore+=*build*
-set wildignore+=*lastrun*
-"set wildignore+=*test*
-
-
 " ---- YankRing ----
 let g:yankring_min_element_length = 2
 let g:yankring_max_element_length = 4194304 " 4M
@@ -289,63 +289,6 @@ nnoremap <silent> <Leader>p :YRShow<CR>
 
 " ---- a.vim ----
 let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../.."
-
-
-" ---- Headerguard ----
-function! g:HeaderguardName()
-  return toupper(substitute(expand('%:gs/[^0-9a-zA-Z_]/_/g'), '\v.*(src|source|include|incl)_', '', ''))
-endfunction
-let g:headerguard_use_cpp_comments = 1
-
-
-" ---- YouCompleteMe ----
-"let g:ycm_server_use_vim_stdout = 1
-"let g:ycm_server_log_level = 'debug'
-let g:ycm_global_ycm_extra_conf = $HOME.'/.ycm_extra_conf.py'
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_key_invoke_completion = '<C-Space>'
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
-let g:ycm_auto_trigger = 0
-"let g:ycm_semantic_triggers =  {
-"  \   'c' : ['->', '.'],
-"  \   'objc' : ['->', '.'],
-"  \   'perl' : ['->'],
-"  \   'php' : ['->', '::'],
-"  \   'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb,elixir,go' : ['.'],
-"  \   'lua' : ['.', ':'],
-"  \   'erlang' : [':'],
-"  \ }
-
-map gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-map <Leader>y :YcmDiags<cr>
-"map <F4> :YcmCompleter GoToDefinition<CR>
-"map <F5> :YcmCompleter GoToDeclaration<CR>
-
-
-" ---- vim-rtags ----
-noremap <Leader>ro :call rtags#ProjectOpen(expand('%:p'))<CR>
-
-" TMUX compatiblity for
-" keys combined with modifiers such as Shift, Control, and Alt.
-" See http://www.reddit.com/r/vim/comments/1a29vk/_/c8tze8p
-if &term =~ '^screen'
-  " Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
-  execute "set t_kP=\e[5;*~"
-  execute "set t_kN=\e[6;*~"
-
-  " Arrow keys http://unix.stackexchange.com/a/34723
-  execute "set <xUp>=\e[1;*A"
-  execute "set <xDown>=\e[1;*B"
-  execute "set <xRight>=\e[1;*C"
-  execute "set <xLeft>=\e[1;*D"
-endif
-
-
-" ---- detectindent ----
-:autocmd BufReadPost * :DetectIndent
-:let g:detectindent_preferred_expandtab = 1
-:let g:detectindent_preferred_indent = 4
 
 
 " ---- clighter ----
@@ -364,9 +307,22 @@ autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
 let g:ctrlp_map = '<c-t>'
 
 
+" ---- detectindent ----
+:autocmd BufReadPost * :DetectIndent
+:let g:detectindent_preferred_expandtab = 1
+:let g:detectindent_preferred_indent = 4
+
+
 " ---- Gundo ----
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_close_on_revert = 1
+
+
+" ---- Headerguard ----
+function! g:HeaderguardName()
+  return toupper(substitute(expand('%:gs/[^0-9a-zA-Z_]/_/g'), '\v.*(src|source|include|incl)_', '', ''))
+endfunction
+let g:headerguard_use_cpp_comments = 1
 
 
 " ---- rainbow_parentheses ----
@@ -399,6 +355,12 @@ let g:rbpt_colorpairs = [
     \ ]
 
 
+" ---- vim-crosshairs ----
+set cursorline
+highlight CursorLine ctermbg=8
+highlight ColorColumn ctermbg=8
+
+
 " ---- vim-eighties ----
 let g:eighties_bufname_additional_patterns = ['fugitiveblame']
 
@@ -406,10 +368,48 @@ map <silent> <Leader>h :nohl<CR>
 map <silent> <Leader>H :let @/ = ""<CR>
 
 
-" ---- vim-crosshairs ----
-set cursorline
-highlight CursorLine ctermbg=8
-highlight ColorColumn ctermbg=8
+" ---- vim-rtags ----
+noremap <Leader>ro :call rtags#ProjectOpen(expand('%:p'))<CR>
+
+" TMUX compatiblity for
+" keys combined with modifiers such as Shift, Control, and Alt.
+" See http://www.reddit.com/r/vim/comments/1a29vk/_/c8tze8p
+if &term =~ '^screen'
+  " Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
+  execute "set t_kP=\e[5;*~"
+  execute "set t_kN=\e[6;*~"
+
+  " Arrow keys http://unix.stackexchange.com/a/34723
+  execute "set <xUp>=\e[1;*A"
+  execute "set <xDown>=\e[1;*B"
+  execute "set <xRight>=\e[1;*C"
+  execute "set <xLeft>=\e[1;*D"
+endif
+
+
+" ---- YouCompleteMe ----
+"let g:ycm_server_use_vim_stdout = 1
+"let g:ycm_server_log_level = 'debug'
+let g:ycm_global_ycm_extra_conf = $HOME.'/.ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_key_invoke_completion = '<C-Space>'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_auto_trigger = 0
+"let g:ycm_semantic_triggers =  {
+"  \   'c' : ['->', '.'],
+"  \   'objc' : ['->', '.'],
+"  \   'perl' : ['->'],
+"  \   'php' : ['->', '::'],
+"  \   'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb,elixir,go' : ['.'],
+"  \   'lua' : ['.', ':'],
+"  \   'erlang' : [':'],
+"  \ }
+
+map gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <Leader>y :YcmDiags<cr>
+"map <F4> :YcmCompleter GoToDefinition<CR>
+"map <F5> :YcmCompleter GoToDeclaration<CR>
 
 
 " --------
