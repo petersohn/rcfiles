@@ -28,6 +28,6 @@ sleep $timespan
 DOWNKB=$(( (br2 - br1) / timespan / 1024 ))
 UPKB=$(( (bt2 - bt1) / timespan / 1024 ))
 
-echo "D ${DOWNKB}KB/s | U ${UPKB}KB/s"
+echo "D ${DOWNKB} KB/s | U ${UPKB} KB/s"
 
 exit 0
