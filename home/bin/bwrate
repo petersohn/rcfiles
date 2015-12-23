@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+timespan=1
+
+getBytes() {
+    local rx=0
+    local tx=0
+    for iface in /sys/class/net/*; do
+        rx+=$(( $(cat /sys/class/net/$iface/statistics/rx_bytes) ))
+        tx+=$(( $(cat /sys/class/net/$iface/statistics/tx_bytes) ))
+    done
+    echo $rx
+    echo $tx
+}
+
+{
+    read br1
+    read bt1
+} < <(getBytes)
+
+sleep $timespan
+
+{
+    read br2
+    read bt2
+} < <(getBytes)
+
+DOWNKB=$(( (br2 - br1) / timespan / 1024 ))
+UPKB=$(( (bt2 - bt1) / timespan / 1024 ))
+
+echo "D ${DOWNKB}KB/s | U ${UPKB}KB/s"
+
+exit 0
