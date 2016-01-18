@@ -79,7 +79,7 @@ fi
 
 sedCommands=()
 for compiler in "${compilers[@]}"; do
-    sedCommands+=(-e "s/^\w*${compiler}/_generateCompileCommandForFile/p")
+    sedCommands+=(-e "s/^\S*${compiler}/_generateCompileCommandForFile/p")
 done
 
 (
