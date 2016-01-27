@@ -35,7 +35,7 @@ set incsearch
 set foldmethod=marker
 set expandtab
 set list
-set listchars=tab:»\
+set listchars=tab:»\ 
 set history=10000
 
 set title
@@ -364,8 +364,8 @@ highlight ColorColumn ctermbg=8
 " ---- vim-eighties ----
 let g:eighties_bufname_additional_patterns = ['fugitiveblame']
 
-map <silent> <Leader>h :nohl<CR>
-map <silent> <Leader>H :let @/ = ""<CR>
+map <Leader>h :nohl<CR>
+map <Leader>H :let @/ = ""<CR>
 
 
 " ---- vim-rtags ----
