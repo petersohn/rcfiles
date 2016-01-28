@@ -14,6 +14,7 @@ my @lines = split "\n", $data;
 my $branchName = "";
 my %firstStates;
 my %secondStates;
+my %bothStates;
 my $numFiles = 0;
 
 # From git documentation:
@@ -61,9 +62,14 @@ for my $line (@lines) {
             }
         }
     } elsif ($line !~ /^#/) {
-        ++$firstStates{substr($line, 0, 1)};
-        ++$secondStates{substr($line, 1, 1)};
+        my $first = substr($line, 0, 1);
+        my $second = substr($line, 1, 1);
+        ++$firstStates{$first};
+        ++$secondStates{$second};
         ++$numFiles;
+        if ($first eq $second) {
+            ++$bothStates{$first};
+        }
     }
 }
 
@@ -104,8 +110,10 @@ if ($numFiles == 0) {
     my $secondModified = $secondStates{"M"};
     my $renamed = $firstStates{"R"};
     my $copied = $firstStates{"C"};
+    my $bothAdded = $bothStates{"A"};
+    my $bothDeleted = $bothStates{"D"};
 
-    if ($unmerged > 0 || ($firstAdded > 0 && $secondAdded > 0) || ($firstDeleted > 0 && $secondDeleted > 0)) {
+    if ($unmerged > 0 || $bothAdded > 0 || $bothDeleted > 0) {
         $color = $IPurple;
         if ($unknown > 0) {
             $symbolColor = $IRed;
@@ -128,11 +136,13 @@ if ($numFiles == 0) {
         }
     }
 
-    if ($firstAdded + $secondAdded + $unknown > 0 && $firstDeleted + $secondDeleted > 0) {
-        $symbol = "± "; # +/- sign
-    } elsif ($firstDeleted + $secondDeleted > 0) {
+    my $added = $firstAdded + $secondAdded + $unknown;
+    my $deleted = $firstDeleted + $secondDeleted;
+    if ($added > 0 && $deleted > 0) {
+        $symbol = "± ";
+    } elsif ($deleted > 0) {
         $symbol = "- ";
-    } elsif ($firstAdded + $secondAdded + $unknown > 0) {
+    } elsif ($added > 0) {
         $symbol = "+ ";
     } else {
         $symbol = "* ";
