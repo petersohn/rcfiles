@@ -93,6 +93,7 @@ Plugin        'bronson/vim-crosshairs'
 Plugin 'justincampbell/vim-eighties'
 Plugin          'tpope/vim-fugitive'
 Plugin    'drmikehenry/vim-headerguard'
+Plugin          'tpope/vim-markdown'
 Plugin          'xolox/vim-misc'
 Plugin          'tpope/vim-obsession'
 Plugin          'tpope/vim-repeat'
@@ -366,6 +367,10 @@ let g:eighties_bufname_additional_patterns = ['fugitiveblame']
 
 map <Leader>h :nohl<CR>
 map <Leader>H :let @/ = ""<CR>
+
+
+" ---- vim-markdown ----
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'cpp']
 
 
 " ---- vim-rtags ----
