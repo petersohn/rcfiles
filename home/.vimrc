@@ -76,6 +76,7 @@ Plugin       'ctrlpvim/ctrlp.vim'
 Plugin          'rhysd/committia.vim'
 Plugin            'sjl/gundo.vim'
 Plugin        'itchyny/lightline.vim'
+Plugin    'vim-scripts/lighttpd-syntax'
 Plugin      'tmhedberg/matchit'
 Plugin     'scrooloose/nerdcommenter'
 Plugin     'scrooloose/nerdtree'
@@ -324,6 +325,10 @@ function! g:HeaderguardName()
   return toupper(substitute(expand('%:gs/[^0-9a-zA-Z_]/_/g'), '\v.*(src|source|include|incl)_', '', ''))
 endfunction
 let g:headerguard_use_cpp_comments = 1
+
+
+" ---- lighttpd-syntax ----
+autocmd BufNewFile,BufReadPost /etc/lighttpd/*.conf,lighttpd.conf set filetype=lighttpd
 
 
 " ---- rainbow_parentheses ----
