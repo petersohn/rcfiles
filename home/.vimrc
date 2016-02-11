@@ -66,7 +66,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin        'nacitar/a.vim'
 Plugin    'vim-scripts/bash-support.vim'
 Plugin    'jlanzarotta/bufexplorer'
-Plugin                'BufOnly.vim'
 Plugin        'ciaranm/detectindent'
 Plugin           'bkad/CamelCaseMotion'
 Plugin        'bbchung/clighter'
@@ -101,7 +100,6 @@ Plugin          'tpope/vim-repeat'
 Plugin          'lyuts/vim-rtags'
 "Plugin     'petersohn/vim-rtags'
 Plugin          'tpope/vim-surround'
-Plugin        'bronson/vim-toggle-wrap'
 Plugin   'tmux-plugins/vim-tmux'
 Plugin        'bronson/vim-trailing-whitespace'
 Plugin        'bronson/vim-visual-star-search'
@@ -134,6 +132,9 @@ autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 
 autocmd BufNewFile,BufRead *.md   set syntax=markdown
 
+
+" ---- CamelCaseMotion ----
+call camelcasemotion#CreateMotionMappings(',')
 
 " ---- CommandT ----
 let g:CommandTNeverShowDotFiles = 1
@@ -282,13 +283,6 @@ let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeWinSize = 50
 
 
-" ---- YankRing ----
-let g:yankring_min_element_length = 2
-let g:yankring_max_element_length = 4194304 " 4M
-let g:yankring_history_dir = "/tmp"
-nnoremap <silent> <Leader>p :YRShow<CR>
-
-
 " ---- a.vim ----
 let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../.."
 
@@ -361,6 +355,11 @@ let g:rbpt_colorpairs = [
     \ ]
 
 
+" ---- semantic-highlight ----
+:nnoremap <Leader>s :SemanticHighlightToggle<cr>
+let g:semanticTermColors = [27, 28, 93, 100, 33, 34, 99, 142, 39, 40, 129, 178, 45, 48, 207, 220]
+
+
 " ---- vim-crosshairs ----
 set cursorline
 highlight CursorLine ctermbg=8
@@ -395,6 +394,12 @@ if &term =~ '^screen'
   execute "set <xRight>=\e[1;*C"
   execute "set <xLeft>=\e[1;*D"
 endif
+
+
+" ---- YankRing ----
+let g:yankring_min_element_length = 2
+let g:yankring_max_element_length = 4194304 " 4M
+nnoremap <silent> <Leader>p :YRShow<CR>
 
 
 " ---- YouCompleteMe ----
