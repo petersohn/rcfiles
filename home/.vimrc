@@ -362,9 +362,8 @@ let g:semanticTermColors = [27, 28, 93, 100, 33, 34, 99, 142, 39, 40, 129, 178, 
 " ---- syntastic ----
 let g:syntastic_c_checkers=['ycm']
 let g:syntastic_cpp_checkers=['ycm']
-let g:syntastic_sh_checkers = ['sh', 'checkbashisms']
+let g:syntastic_sh_checkers = ['sh']
 let g:syntastic_python_checkers = ['python', 'flake8']
-let g:syntastic_enable_signs = 1
 let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_always_populate_loc_list = 1
