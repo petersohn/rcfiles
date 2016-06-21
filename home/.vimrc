@@ -458,3 +458,4 @@ if !empty(glob("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
+nnoremap <silent> <Leader>J :%!python -m json.tool<CR>
