@@ -279,8 +279,9 @@ map <Leader>f :NERDTreeFind<cr>
 let g:NERDTreeDirArrows=0
 let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
-let g:NERDTreeIgnore = ['\.o$', '\.o-.*$', '\.pyc$']
+let g:NERDTreeIgnore = ['\.o$', '\.o-.*$', '\.pyc$', '^\..*\.sw.$']
 let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeShowHidden = 1
 let g:NERDTreeWinSize = 50
 
 
