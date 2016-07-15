@@ -138,11 +138,13 @@ autocmd BufNewFile,BufRead *.md   set syntax=markdown
 call camelcasemotion#CreateMotionMappings(',')
 
 " ---- CommandT ----
+"  {{{
 let g:CommandTNeverShowDotFiles = 1
 set wildignore+=*.o
 set wildignore+=*build*
 set wildignore+=*lastrun*
 "set wildignore+=*test*
+" }}}
 
 
 " ---- lightline ----
@@ -274,6 +276,7 @@ let g:vimshell_force_overwrite_statusline = 0
 
 
 " ---- NERDTree ----
+"  {{{
 map <Leader>n :NERDTreeFocus<cr>
 map <Leader>f :NERDTreeFind<cr>
 let g:NERDTreeDirArrows=0
@@ -283,6 +286,7 @@ let g:NERDTreeIgnore = ['\.o$', '\.o-.*$', '\.pyc$', '^\..*\.sw.$']
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeWinSize = 50
+" }}}
 
 
 " ---- a.vim ----
@@ -290,6 +294,7 @@ let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src
 
 
 " ---- clighter ----
+"  {{{
 let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
 hi link clighterNamespace Constant
 let g:clighter_occurrences_mode=1
@@ -299,6 +304,7 @@ autocmd FileType c,cpp,objc hi clighterMemberRefExprVar term=NONE cterm=NONE cte
 autocmd FileType c,cpp,objc hi clighterMacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
 autocmd FileType c,cpp,objc hi clighterNamespace term=NONE cterm=NONE ctermfg=60 gui=NONE
 autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
+" }}}
 
 
 " ---- ctrlp ----
@@ -306,21 +312,27 @@ let g:ctrlp_map = '<c-t>'
 
 
 " ---- detectindent ----
+"  {{{
 :autocmd BufReadPost * :DetectIndent
 :let g:detectindent_preferred_expandtab = 1
 :let g:detectindent_preferred_indent = 4
+" }}}
 
 
 " ---- Gundo ----
+"  {{{
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_close_on_revert = 1
+" }}}
 
 
 " ---- Headerguard ----
+"  {{{
 function! g:HeaderguardName()
   return toupper(substitute(expand('%:gs/[^0-9a-zA-Z_]/_/g'), '\v.*(src|source|include|incl)_', '', ''))
 endfunction
 let g:headerguard_use_cpp_comments = 1
+" }}}
 
 
 " ---- lighttpd-syntax ----
@@ -328,6 +340,7 @@ autocmd BufNewFile,BufReadPost /etc/lighttpd/*.conf,lighttpd.conf set filetype=l
 
 
 " ---- rainbow_parentheses ----
+"  {{{
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
@@ -355,13 +368,17 @@ let g:rbpt_colorpairs = [
     \ ['207', 'DarkOrchid3'],
     \ ['220', 'firebrick3']
     \ ]
+" }}}
 
 
 " ---- semantic-highlight ----
+"  {{{
 :nnoremap <Leader>s :SemanticHighlightToggle<cr>
 let g:semanticTermColors = [27, 28, 93, 100, 33, 34, 99, 142, 39, 40, 129, 178, 45, 48, 207, 220]
+" }}}
 
 " ---- syntastic ----
+"  {{{
 let g:syntastic_c_checkers=['ycm']
 let g:syntastic_cpp_checkers=['ycm']
 let g:syntastic_sh_checkers = ['sh']
@@ -370,18 +387,23 @@ let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
+" }}}
 
 " ---- vim-crosshairs ----
+"  {{{
 set cursorline
 highlight CursorLine ctermbg=8
 highlight ColorColumn ctermbg=8
+" }}}
 
 
 " ---- vim-eighties ----
+"  {{{
 let g:eighties_bufname_additional_patterns = ['fugitiveblame']
 
 map <Leader>h :nohl<CR>
 map <Leader>H :let @/ = ""<CR>
+" }}}
 
 
 " ---- vim-markdown ----
@@ -389,6 +411,7 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'cpp']
 
 
 " ---- vim-rtags ----
+"  {{{
 noremap <Leader>ro :call rtags#ProjectOpen(expand('%:p'))<CR>
 
 " TMUX compatiblity for
@@ -405,15 +428,19 @@ if &term =~ '^screen'
   execute "set <xRight>=\e[1;*C"
   execute "set <xLeft>=\e[1;*D"
 endif
+" }}}
 
 
 " ---- YankRing ----
+"  {{{
 let g:yankring_min_element_length = 2
 let g:yankring_max_element_length = 4194304 " 4M
 nnoremap <silent> <Leader>p :YRShow<CR>
+" }}}
 
 
 " ---- YouCompleteMe ----
+"  {{{
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
 let g:ycm_global_ycm_extra_conf = $HOME.'/.ycm_extra_conf.py'
@@ -436,6 +463,7 @@ map gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <Leader>y :YcmDiags<cr>
 "map <F4> :YcmCompleter GoToDefinition<CR>
 "map <F5> :YcmCompleter GoToDeclaration<CR>
+" }}}
 
 
 " --------
