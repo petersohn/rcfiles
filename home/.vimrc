@@ -38,6 +38,7 @@ set list
 set listchars=tab:»\ 
 set history=10000
 set mouse=a
+set autoread
 
 set title
 if match($TERM, "^screen") == 0
