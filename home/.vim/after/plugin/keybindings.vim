@@ -24,4 +24,5 @@ map <C-Up> <C-k>
 nmap Y y$
 nnoremap <silent> <Leader>J :%!python -m json.tool<CR>
 inoremap <Tab> <ESC>
+vnoremap <Tab> <ESC>
 
