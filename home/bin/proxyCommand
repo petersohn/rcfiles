@@ -1,0 +1,15 @@
+#!/bin/bash
+
+command=$(basename "$0")
+proxy_command=$(readlink -e "$0")
+
+echo "$(date '+%Y-%m-%d %T') $PWD: $@" >>~/"${command}.log"
+
+for i in $(which -a "$command"); do
+    if [[ $(readlink -e "$i") !=  $proxy_command ]]; then
+        "$i" "$@"
+        exit $?
+    fi
+done
+exit 1
+
