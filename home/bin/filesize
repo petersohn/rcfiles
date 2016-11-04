@@ -3,7 +3,7 @@
 declare -A filesizes
 declare -A numbers
 
-while read file; do
+while read -r file; do
     type=$(file -e elf "$file" | sed -r "s/^.{${#file}}: //" )
     size=$(stat -c %s "$file")
     (( filesizes["$type"] += size ))

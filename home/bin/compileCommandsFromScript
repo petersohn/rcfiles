@@ -62,13 +62,12 @@ while getopts "hc:" Option; do
     esac
 done
 
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [ ${#compilers[@]} -eq 0 ]; then
     compilers=(gcc g++ clang clang++)
 fi
 
-dir="$PWD"
 firstLine=yes
 
 buildScript="$1"
@@ -84,6 +83,7 @@ done
 
 (
     echo '['
+    # shellcheck source=/dev/null
     source <(sed -n -e '/^\w*cd/p' "${sedCommands[@]}" "$buildScript")
     echo ']'
 )

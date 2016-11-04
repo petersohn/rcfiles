@@ -2,7 +2,7 @@
 
 filename="$1"
 tmpfile="$filename~"
-while [ -e "$output" ]; do
+while [ -e "$tmpfile" ]; do
     tmpfile+='~'
 done
 
@@ -11,6 +11,7 @@ set -e
 mv "$filename" "$tmpfile"
 
 while IFS= read -r line; do
+    # shellcheck disable=SC1003
     if [[ $line == *'\' ]]; then
         if [[ $line =~ (.{79})( *)'\' ]]; then
             echo "${BASH_REMATCH[1]}\\"
@@ -19,7 +20,7 @@ while IFS= read -r line; do
 
         outputLine="${line:0:$(( ${#line} - 1 ))}"
         length=${#outputLine}
-        while [ $length -lt 79 ]; do
+        while [ "$length" -lt 79 ]; do
             outputLine+=' '
             length=${#outputLine}
         done

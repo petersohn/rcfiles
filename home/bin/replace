@@ -18,7 +18,7 @@ fi
 
 sedArgs=()
 
-while [ $# -gt 0 -a "$1" != '--' ]; do
+while [ $# -gt 0 ] && [ "$1" != '--' ]; do
     sedArgs+=("$1")
     shift
 done

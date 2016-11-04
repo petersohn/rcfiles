@@ -3,77 +3,80 @@
 
 # -------- Color names --------
 # Reset
-Color_Off=`echo -e '\e[0m'`       # Text Reset
+Color_Off=$(echo -e '\e[0m')       # Text Reset
 
-# Regular Colors
-Black=`echo -e '\e[0;30m'`        # Black
-Red=`echo -e '\e[0;31m'`          # Red
-Green=`echo -e '\e[0;32m'`        # Green
-Yellow=`echo -e '\e[0;33m'`       # Yellow
-Blue=`echo -e '\e[0;34m'`         # Blue
-Purple=`echo -e '\e[0;35m'`       # Purple
-Cyan=`echo -e '\e[0;36m'`         # Cyan
-White=`echo -e '\e[0;37m'`        # White
+#shellcheck disable=SC2034
+{
+    # Regular Colors
+    Black=$(echo -e '\e[0;30m')        # Black
+    Red=$(echo -e '\e[0;31m')          # Red
+    Green=$(echo -e '\e[0;32m')        # Green
+    Yellow=$(echo -e '\e[0;33m')       # Yellow
+    Blue=$(echo -e '\e[0;34m')         # Blue
+    Purple=$(echo -e '\e[0;35m')       # Purple
+    Cyan=$(echo -e '\e[0;36m')         # Cyan
+    White=$(echo -e '\e[0;37m')        # White
 
-# Bold
-BBlack=`echo -e '\e[1;30m'`       # Black
-BRed=`echo -e '\e[1;31m'`         # Red
-BGreen=`echo -e '\e[1;32m'`       # Green
-BYellow=`echo -e '\e[1;33m'`      # Yellow
-BBlue=`echo -e '\e[1;34m'`        # Blue
-BPurple=`echo -e '\e[1;35m'`      # Purple
-BCyan=`echo -e '\e[1;36m'`        # Cyan
-BWhite=`echo -e '\e[1;37m'`       # White
+    # Bold
+    BBlack=$(echo -e '\e[1;30m')       # Black
+    BRed=$(echo -e '\e[1;31m')         # Red
+    BGreen=$(echo -e '\e[1;32m')       # Green
+    BYellow=$(echo -e '\e[1;33m')      # Yellow
+    BBlue=$(echo -e '\e[1;34m')        # Blue
+    BPurple=$(echo -e '\e[1;35m')      # Purple
+    BCyan=$(echo -e '\e[1;36m')        # Cyan
+    BWhite=$(echo -e '\e[1;37m')       # White
 
-# Underline
-UBlack=`echo -e '\e[4;30m'`       # Black
-URed=`echo -e '\e[4;31m'`         # Red
-UGreen=`echo -e '\e[4;32m'`       # Green
-UYellow=`echo -e '\e[4;33m'`      # Yellow
-UBlue=`echo -e '\e[4;34m'`        # Blue
-UPurple=`echo -e '\e[4;35m'`      # Purple
-UCyan=`echo -e '\e[4;36m'`        # Cyan
-UWhite=`echo -e '\e[4;37m'`       # White
+    # Underline
+    UBlack=$(echo -e '\e[4;30m')       # Black
+    URed=$(echo -e '\e[4;31m')         # Red
+    UGreen=$(echo -e '\e[4;32m')       # Green
+    UYellow=$(echo -e '\e[4;33m')      # Yellow
+    UBlue=$(echo -e '\e[4;34m')        # Blue
+    UPurple=$(echo -e '\e[4;35m')      # Purple
+    UCyan=$(echo -e '\e[4;36m')        # Cyan
+    UWhite=$(echo -e '\e[4;37m')       # White
 
-# Background
-On_Black=`echo -e '\e[40m'`       # Black
-On_Red=`echo -e '\e[41m'`         # Red
-On_Green=`echo -e '\e[42m'`       # Green
-On_Yellow=`echo -e '\e[43m'`      # Yellow
-On_Blue=`echo -e '\e[44m'`        # Blue
-On_Purple=`echo -e '\e[45m'`      # Purple
-On_Cyan=`echo -e '\e[46m'`        # Cyan
-On_White=`echo -e '\e[47m'`       # White
+    # Background
+    On_Black=$(echo -e '\e[40m')       # Black
+    On_Red=$(echo -e '\e[41m')         # Red
+    On_Green=$(echo -e '\e[42m')       # Green
+    On_Yellow=$(echo -e '\e[43m')      # Yellow
+    On_Blue=$(echo -e '\e[44m')        # Blue
+    On_Purple=$(echo -e '\e[45m')      # Purple
+    On_Cyan=$(echo -e '\e[46m')        # Cyan
+    On_White=$(echo -e '\e[47m')       # White
 
-# High Intensty
-IBlack=`echo -e '\e[0;90m'`       # Black
-IRed=`echo -e '\e[0;91m'`         # Red
-IGreen=`echo -e '\e[0;92m'`       # Green
-IYellow=`echo -e '\e[0;93m'`      # Yellow
-IBlue=`echo -e '\e[0;94m'`        # Blue
-IPurple=`echo -e '\e[0;95m'`      # Purple
-ICyan=`echo -e '\e[0;96m'`        # Cyan
-IWhite=`echo -e '\e[0;97m'`       # White
+    # High Intensty
+    IBlack=$(echo -e '\e[0;90m')       # Black
+    IRed=$(echo -e '\e[0;91m')         # Red
+    IGreen=$(echo -e '\e[0;92m')       # Green
+    IYellow=$(echo -e '\e[0;93m')      # Yellow
+    IBlue=$(echo -e '\e[0;94m')        # Blue
+    IPurple=$(echo -e '\e[0;95m')      # Purple
+    ICyan=$(echo -e '\e[0;96m')        # Cyan
+    IWhite=$(echo -e '\e[0;97m')       # White
 
-# Bold High Intensty
-BIBlack=`echo -e '\e[1;90m'`      # Black
-BIRed=`echo -e '\e[1;91m'`        # Red
-BIGreen=`echo -e '\e[1;92m'`      # Green
-BIYellow=`echo -e '\e[1;93m'`     # Yellow
-BIBlue=`echo -e '\e[1;94m'`       # Blue
-BIPurple=`echo -e '\e[1;95m'`     # Purple
-BICyan=`echo -e '\e[1;96m'`       # Cyan
-BIWhite=`echo -e '\e[1;97m'`      # White
+    # Bold High Intensty
+    BIBlack=$(echo -e '\e[1;90m')      # Black
+    BIRed=$(echo -e '\e[1;91m')        # Red
+    BIGreen=$(echo -e '\e[1;92m')      # Green
+    BIYellow=$(echo -e '\e[1;93m')     # Yellow
+    BIBlue=$(echo -e '\e[1;94m')       # Blue
+    BIPurple=$(echo -e '\e[1;95m')     # Purple
+    BICyan=$(echo -e '\e[1;96m')       # Cyan
+    BIWhite=$(echo -e '\e[1;97m')      # White
 
-# High Intensty backgrounds
-On_IBlack=`echo -e '\e[0;100m'`   # Black
-On_IRed=`echo -e '\e[0;101m'`     # Red
-On_IGreen=`echo -e '\e[0;102m'`   # Green
-On_IYellow=`echo -e '\e[0;103m'`  # Yellow
-On_IBlue=`echo -e '\e[0;104m'`    # Blue
-On_IPurple=`echo -e '\e[10;95m'`  # Purple
-On_ICyan=`echo -e '\e[0;106m'`    # Cyan
-On_IWhite=`echo -e '\e[0;107m'`   # White
+    # High Intensty backgrounds
+    On_IBlack=$(echo -e '\e[0;100m')   # Black
+    On_IRed=$(echo -e '\e[0;101m')     # Red
+    On_IGreen=$(echo -e '\e[0;102m')   # Green
+    On_IYellow=$(echo -e '\e[0;103m')  # Yellow
+    On_IBlue=$(echo -e '\e[0;104m')    # Blue
+    On_IPurple=$(echo -e '\e[10;95m')  # Purple
+    On_ICyan=$(echo -e '\e[0;106m')    # Cyan
+    On_IWhite=$(echo -e '\e[0;107m')   # White
+}
 
 # -------- Functions --------
 
@@ -101,6 +104,7 @@ _END_
 
 flags=g
 args=(-u)
+# shellcheck disable=SC1003
 parprefix='\'
 prefix=
 postfix=
@@ -125,7 +129,7 @@ while getopts ":hilr" Option; do
     esac
 done
 
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 
 openpar="$parprefix("
@@ -136,12 +140,12 @@ while [ $# -gt 0 ]; do
     pattern="$2"
 
     if [[ $coloridx =~ [0-9]+ ]]; then
-        color=$(printf '\e[38;5;%im' $coloridx)
+        color=$(printf '\e[38;5;%im' "$coloridx")
     else
         color="${!coloridx}"
     fi
 
-    if [ -z $color ]; then
+    if [ -z "$color" ]; then
         echo "Invalid color."
         exit 1
     fi

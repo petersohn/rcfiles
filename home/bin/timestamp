@@ -1,6 +1,6 @@
 #!/bin/bash
 IFS=
 while read -r line; do
-    echo -n "`date '+%F %H:%M:%S.%N'`: "
+    echo -n "$(date '+%F %H:%M:%S.%N'): "
     echo "$line"
 done

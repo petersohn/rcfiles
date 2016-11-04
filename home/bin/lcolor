@@ -22,27 +22,28 @@ colors=(Red Green Yellow Blue Purple Cyan White IRed IGreen IYellow IBlue IPurpl
 flags=
 sedargs=()
 pattern=
+# shellcheck disable=SC1003
 parprefix='\'
 while getopts ":hip:r" Option; do
     case $Option in
     h)
-	print_usage
-	exit
-	;;
+        print_usage
+        exit
+        ;;
     i)
-	flags+=I
-	;;
+        flags+=I
+        ;;
     p)
         pattern="$OPTARG"
         ;;
     r)
         sedargs+=(-r)
-	parprefix=
+        parprefix=
     ;;
     esac
 done
 
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [ -z "$pattern" ]; then
     echo "Pattern is not given."
