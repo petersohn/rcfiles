@@ -383,6 +383,7 @@ let g:semanticTermColors = [27, 28, 93, 100, 33, 34, 99, 142, 39, 40, 129, 178, 
 let g:syntastic_c_checkers=['ycm']
 let g:syntastic_cpp_checkers=['ycm']
 let g:syntastic_sh_checkers = ['sh', 'shellcheck']
+let g:syntastic_sh_shellcheck_args = '-x'
 let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_highlighting = 1
