@@ -47,7 +47,7 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 export MANPATH=$(manpath):$HOME/usr/share/man
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/.vim/bundle/fzf/bin:$PATH
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
@@ -176,3 +176,12 @@ alias gn=NO_GITSTATUS="yes"
 alias tmux='TERM=screen-256color-bce LANG=en_US.UTF-8 nice -n 1 tmux -2'
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+
+source_if_available() {
+  if [ -e "$1" ]; then
+    source "$1"
+  fi
+}
+
+source_if_available ~/.vim/bundle/fzf/shell/completion.zsh
+source_if_available ~/.vim/bundle/fzf/shell/key-bindings.zsh

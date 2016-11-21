@@ -73,8 +73,9 @@ Plugin           'bkad/CamelCaseMotion'
 Plugin        'bbchung/clighter'
 "Plugin      'petersohn/clighter'
 Plugin         'vim-jp/cpp-vim'
-Plugin       'ctrlpvim/ctrlp.vim'
 Plugin          'rhysd/committia.vim'
+Plugin       'junegunn/fzf'
+Plugin       'junegunn/fzf.vim'
 Plugin            'sjl/gundo.vim'
 Plugin        'itchyny/lightline.vim'
 Plugin    'vim-scripts/lighttpd-syntax'
@@ -99,8 +100,8 @@ Plugin          'tpope/vim-markdown'
 Plugin          'xolox/vim-misc'
 Plugin          'tpope/vim-obsession'
 Plugin          'tpope/vim-repeat'
-"Plugin          'lyuts/vim-rtags'
-Plugin     'petersohn/vim-rtags'
+Plugin          'lyuts/vim-rtags'
+"Plugin     'petersohn/vim-rtags'
 Plugin          'tpope/vim-surround'
 Plugin   'tmux-plugins/vim-tmux'
 Plugin        'bronson/vim-trailing-whitespace'
@@ -147,6 +148,13 @@ set wildignore+=*lastrun*
 "set wildignore+=*test*
 " }}}
 
+" ---- Fzf ----
+" {{{
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+" }}}
 
 " ---- lightline ----
 " {{{
@@ -306,10 +314,6 @@ autocmd FileType c,cpp,objc hi clighterMacroInstantiation term=NONE cterm=NONE c
 autocmd FileType c,cpp,objc hi clighterNamespace term=NONE cterm=NONE ctermfg=60 gui=NONE
 autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
 " }}}
-
-
-" ---- ctrlp ----
-let g:ctrlp_map = '<c-t>'
 
 
 " ---- detectindent ----
