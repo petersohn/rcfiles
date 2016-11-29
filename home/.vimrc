@@ -82,7 +82,7 @@ Plugin    'vim-scripts/lighttpd-syntax'
 Plugin      'tmhedberg/matchit'
 Plugin     'scrooloose/nerdtree'
 Plugin        'Xuyuanp/nerdtree-git-plugin'
-Plugin        'eapache/rainbow_parentheses.vim'
+Plugin   'luochen1990/rainbow'
 Plugin         'mfukar/robotframework-vim'
 Plugin         'jaxbot/semantic-highlight.vim'
 Plugin     'scrooloose/syntastic'
@@ -344,37 +344,52 @@ let g:headerguard_use_cpp_comments = 1
 autocmd BufNewFile,BufReadPost /etc/lighttpd/*.conf,lighttpd.conf set filetype=lighttpd
 
 
-" ---- rainbow_parentheses ----
+" ---- rainbow ----
 "  {{{
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 
-let g:rbpt_max = 32
-let g:rbpt_colorpairs = [
-    \ [' 27', 'RoyalBlue3'],
-    \ [' 28', 'SeaGreen3'],
-    \ [' 93', 'DarkOrchid3'],
-    \ ['100', 'firebrick3'],
-    \
-    \ [' 33', 'RoyalBlue3'],
-    \ [' 34', 'SeaGreen3'],
-    \ [' 99', 'DarkOrchid3'],
-    \ ['142', 'firebrick3'],
-    \
-    \ [' 39', 'RoyalBlue3'],
-    \ [' 40', 'SeaGreen3'],
-    \ ['129', 'DarkOrchid3'],
-    \ ['178', 'firebrick3'],
-    \
-    \ [' 45', 'RoyalBlue3'],
-    \ [' 48', 'SeaGreen3'],
-    \ ['207', 'DarkOrchid3'],
-    \ ['220', 'firebrick3']
-    \ ]
-" }}}
-
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+    \   'ctermfgs': [
+    \       '27', '28', '93', '100',
+    \       '33', '34', '99', '142',
+    \       '39', '40', '129', '178',
+    \       '45', '48', '207', '220'],
+    \   'operators': '_,_',
+    \   'parentheses': [
+    \       'start=/(/ end=/)/ fold',
+    \       'start=/\[/ end=/\]/ fold',
+    \       'start=/{/ end=/}/ fold'],
+    \   'separately': {
+    \       '*': {},
+    \       'tex': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+    \       },
+    \       'lisp': {
+    \           'guifgs': [
+    \               'royalblue3', 'darkorange3',
+    \               'seagreen3', 'firebrick', 'darkorchid3'],
+    \       },
+    \       'vim': {
+    \           'parentheses': [
+    \               'start=/(/ end=/)/',
+    \               'start=/\[/ end=/\]/',
+    \               'start=/{/ end=/}/ fold',
+    \               'start=/(/ end=/)/ containedin=vimFuncBody',
+    \               'start=/\[/ end=/\]/ containedin=vimFuncBody',
+    \               'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+    \       },
+    \       'html': {
+    \           'parentheses': [
+    \               'start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+    \       },
+    \       'xml': {
+    \           'parentheses': [
+    \               'start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+    \       },
+    \       'css': 0,
+    \   }
+    \}
 
 " ---- semantic-highlight ----
 "  {{{
