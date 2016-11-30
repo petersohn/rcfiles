@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+function get_option() {
+    local result
+    result=$(tmux show-options -g "$1")
+    result=${result#"$1 \""}
+    result=${result%"\""}
+    echo "$result"
+}
+
+tmux set-option -g status-right "${1}$(get_option status-right)"
