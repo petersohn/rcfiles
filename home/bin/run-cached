@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 interval="$1"
 shift
 cache="$HOME/.run-cache/$*"
@@ -14,8 +16,18 @@ else
     time_since_last_run="$interval"
 fi
 
+result=0
 if (( time_since_last_run >= interval )); then
+    set +e
     "$@" >"$cache"
+    result=$?
+    set -e
+    if (( result != 0 )); then
+        rm "$cache"
+    fi
 fi
 
-cat "$cache"
+if (( result == 0 )); then
+    cat "$cache"
+fi
+exit "$result"
