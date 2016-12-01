@@ -3,7 +3,7 @@ use strict;
 
 sub help()
 {
-	print <<END;
+    print <<END;
 cinclude2dot v1.1 (C) Darxus\@ChaosReigns.com, francis\@flourish.org
 Released under the terms of the GNU General Public license.
 Download from http://www.flourish.org/cinclude2dot/
@@ -42,9 +42,9 @@ Command line options are:
 --src         Followed by a path to the source code, defaults to current directory
 
 END
-	exit 0;
+    exit 0;
 }
- 
+
 ##########################################################################
 # Version history:
 #
@@ -63,7 +63,7 @@ END
 
 ##########################################################################
 # Ideas for improvements:
-# 
+#
 # - Change the %links hash to store a count, and weigh the link by how often
 #   there was an include along that link.  Thicker lines mean stronger
 #   connections.
@@ -93,87 +93,87 @@ my $includelist = "";
 my $quotetypes = "both";
 my $src = '.';
 die if !GetOptions('paths' => \$paths, 'groups' => \$groups,
-		   'exclude=s' => \$exclude, 'merge=s' => \$merge,
-		   'include=s' => \$includelist, 'help' =>\$help,
-		   'debug' => \$debug, 'quotetypes=s' => \$quotetypes,
-		   'src=s' => \$src);
+           'exclude=s' => \$exclude, 'merge=s' => \$merge,
+           'include=s' => \$includelist, 'help' =>\$help,
+           'debug' => \$debug, 'quotetypes=s' => \$quotetypes,
+           'src=s' => \$src);
 my @includepaths = split(/,/,$includelist);
 help() if ($help);
 if ($merge ne "file" && $merge ne "module" && $merge ne "directory")
 {
-	die "Cluster parameter must be one of file, module or directory";
+    die "Cluster parameter must be one of file, module or directory";
 }
 if ($quotetypes ne "both" && $quotetypes ne "angle" && $quotetypes ne "quote")
 {
-	die "quotetypes parameter must be one of both, angle or quote";
+    die "quotetypes parameter must be one of both, angle or quote";
 }
 
 ##########################################################################
 # Tidies up a path or filename, removing excess ./ and ../ parts.
 # Parameters:
-# 	$_ - Path or filename to tidy
+#     $_ - Path or filename to tidy
 sub tidypath {
-	$_ = shift;
-	$_ = canonpath($_);
-	# Use only one type of slash
-	s:\\:/:g;
-	# Remove constructs like xyz/..
-	while (s:[^/]+?/\.\./::) {};
-	return $_;
+    $_ = shift;
+    $_ = canonpath($_);
+    # Use only one type of slash
+    s:\\:/:g;
+    # Remove constructs like xyz/..
+    while (s:[^/]+?/\.\./::) {};
+    return $_;
 }
 
 ##########################################################################
 # Searches file include path, and returns exact filename of file
-# Parameters: 
-# 	$inc - text from within the #include statement
+# Parameters:
+#     $inc - text from within the #include statement
 #   $file - filename the include was from
 sub include_search {
-	my ($inc, $file) = @_;
-	warn "include_search scanning for $inc from $file" if $debug;
+    my ($inc, $file) = @_;
+    warn "include_search scanning for $inc from $file" if $debug;
 
-	# Try relative to the including file
-	$_ = tidypath(dirname($file) . "/" . $inc);
-	warn "include_search trying $_ (dirname " . dirname($file) . ")" if $debug;
-	return $_ if (-e "$_");
+    # Try relative to the including file
+    $_ = tidypath(dirname($file) . "/" . $inc);
+    warn "include_search trying $_ (dirname " . dirname($file) . ")" if $debug;
+    return $_ if (-e "$_");
 
-	# Try user-specified include paths
-	my $item;
-	foreach $item (@includepaths)
-	{
-	  $_ = tidypath($item . "/" . $inc);
-	  warn "include_search trying $_" if $debug;
-	  return $_ if (-e "$_");
-	}
+    # Try user-specified include paths
+    my $item;
+    foreach $item (@includepaths)
+    {
+      $_ = tidypath($item . "/" . $inc);
+      warn "include_search trying $_" if $debug;
+      return $_ if (-e "$_");
+    }
 
-	# Try relative to current directory
-	$_ = $inc;
-	warn "include_search trying $_" if $debug;
-	return $_ if (-e "$_");
+    # Try relative to current directory
+    $_ = $inc;
+    warn "include_search trying $_" if $debug;
+    return $_ if (-e "$_");
 
-	warn "include_search failed for $inc from $file" if $debug;
-	return undef;
+    warn "include_search failed for $inc from $file" if $debug;
+    return undef;
 }
 
 ##########################################################################
 # Converts a filename to its display version
 # Parameters:
-# 	$_ - Filename for display
+#     $_ - Filename for display
 sub file_display {
-	$_ = shift;
-	$_ = basename($_) unless $paths;
-	if ($merge eq "module")
-	{
-        s/\.c$//; 
-        s/\.cc$//; 
+    $_ = shift;
+    $_ = basename($_) unless $paths;
+    if ($merge eq "module")
+    {
+        s/\.c$//;
+        s/\.cc$//;
         s/\.cxx$//;
         s/\.cpp$//;
-        s/\.C$//; 
-		s/\.h$//; 
+        s/\.C$//;
+        s/\.h$//;
         s/\.hpp$//;
         s/\.hxx$//;
-	}
-	s:/:/\\n:g;
-	return $_;
+    }
+    s:/:/\\n:g;
+    return $_;
 }
 
 ##########################################################################
@@ -189,7 +189,7 @@ digraph "source tree" {
     ratio="fill";
     fontsize="16";
     fontname="Helvetica";
-	clusterrank="local";
+    clusterrank="local";
 END
 #  nodesep="0.2";
 #    ranksep="0.3";
@@ -202,7 +202,8 @@ my $file;
 foreach $file (@files)
 {
   next if ($exclude ne "" and $file =~ m/$exclude/);
-	
+  warn "Processing $file" if $debug;
+
   chomp $file;
   #strip "./" off off $file
   $file =~ s#^./##g;
@@ -213,58 +214,64 @@ foreach $file (@files)
   {
 #    if ($line =~ m#^\#\s*include\s(\S+)#)
     my $regexp_include_line = '^\#\s*include\s+(\S+)';
-    if ($quotetypes eq "angle") 
+    if ($quotetypes eq "angle")
         { $regexp_include_line = '^\#\s*include\s+<(\S+)>'; }
-    elsif ($quotetypes eq "quote") 
+    elsif ($quotetypes eq "quote")
         { $regexp_include_line = '^\#\s*include\s+"(\S+)"'; }
     if ($line =~ m/$regexp_include_line/)
     {
       my $included = $1;
 
       # strip quotes & anglebrackets
-	  (my $rawincluded = $included) =~ s/[\<\>"]//g;
-	  my $includefile = include_search($rawincluded, $file);
+      (my $rawincluded = $included) =~ s/[\<\>"]//g;
+      my $includefile = include_search($rawincluded, $file);
 
-	  if (! defined $includefile)
-	  {
-		  $notfound{$included . " from " . $file} = 1;
-		  next;
-	  }
+      if (! defined $includefile)
+      {
+          $notfound{$included . " from " . $file} = 1;
+          next;
+      }
+      warn "Found $includefile" if $debug;
+      if (not $includefile ~~ @files)
+      {
+        warn "Adding to list $includefile" if $debug;
+        push @files, $includefile;
+      }
 
-	  if ($merge eq "directory")
-	  {
-		  my $from = dirname($file);
-		  my $to = dirname($includefile);
-		  $links{"	\"$from\" -> \"$to\"\n"} = 1 unless $from eq $to;
-	  }
-	  else
-	  {
-		  my $includefile_display = file_display($includefile);
-		  my $file_display = file_display($file);
+      if ($merge eq "directory")
+      {
+          my $from = dirname($file);
+          my $to = dirname($includefile);
+          $links{"    \"$from\" -> \"$to\"\n"} = 1 unless $from eq $to;
+      }
+      else
+      {
+          my $includefile_display = file_display($includefile);
+          my $file_display = file_display($file);
 
-		  if ($groups)
-		  {
-			  my $groupname = dirname($includefile);
-			  print <<END;
+          if ($groups)
+          {
+              my $groupname = dirname($includefile);
+              print <<END;
 subgraph "cluster$groupname" {
-	label="$groupname";
-	"$includefile_display";
+    label="$groupname";
+    "$includefile_display";
 }
 END
-			  $groupname = dirname($file);
-			  print <<END;
+              $groupname = dirname($file);
+              print <<END;
 subgraph "cluster$groupname" {
-	label="$groupname";
-	"$file_display";
+    label="$groupname";
+    "$file_display";
 }
 END
-		  }
+          }
 
           if ($file_display ne $includefile_display)
-		  {
-		      $links{"	\"$file_display\" -> \"$includefile_display\"\n"} = 1;
-		  }
-       }	
+          {
+              $links{"    \"$file_display\" -> \"$includefile_display\"\n"} = 1;
+          }
+       }
     }
   }
 
@@ -275,13 +282,13 @@ END
 my $item;
 foreach $item (keys %links)
 {
-	print $item;
+    print $item;
 }
 
 # Print names of not found files
 foreach $item (sort keys %notfound)
 {
-	print STDERR "Include file not found: " . $item . "\n";
+    print STDERR "Include file not found: " . $item . "\n";
 }
 
 print "}\n";
