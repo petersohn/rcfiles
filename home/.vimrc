@@ -70,7 +70,11 @@ Plugin    'vim-scripts/bash-support.vim'
 Plugin    'jlanzarotta/bufexplorer'
 Plugin        'ciaranm/detectindent'
 Plugin           'bkad/CamelCaseMotion'
-Plugin        'bbchung/clighter'
+if version >= 800
+  Plugin        'bbchung/clighter8'
+else
+  Plugin        'bbchung/clighter'
+endif
 "Plugin      'petersohn/clighter'
 Plugin         'vim-jp/cpp-vim'
 Plugin          'rhysd/committia.vim'
@@ -304,15 +308,26 @@ let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src
 
 " ---- clighter ----
 "  {{{
-let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
-hi link clighterNamespace Constant
-let g:clighter_occurrences_mode=1
-nmap <silent> <Leader>w :call clighter#Rename()<CR>
-hi link clighterMemberRefExprCall clighterMemberRefExprVar
-autocmd FileType c,cpp,objc hi clighterMemberRefExprVar term=NONE cterm=NONE ctermfg=187 gui=NONE
-autocmd FileType c,cpp,objc hi clighterMacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
-autocmd FileType c,cpp,objc hi clighterNamespace term=NONE cterm=NONE ctermfg=60 gui=NONE
-autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
+
+if version >= 800
+  if $LIBCLANG_PATH != ''
+    let g:clighter8_libclang_path = $LIBCLANG_PATH
+  endif
+
+  let g:clighter8_highlight_whitelist = ['clighter8MacroInstantiation', 'clighter8StructDecl', 'clighter8ClassDecl', 'clighter8EnumDecl', 'clighter8EnumConstantDecl', 'clighter8TypeRef', 'clighter8DeclRefExpr', 'clighter8Namespace', 'clighter8NamespaceRef', 'clighter8MemberRefExpr']
+  autocmd FileType c,cpp,objc hi clighter8MemberRefExpr term=NONE cterm=NONE ctermfg=187 gui=NONE
+  autocmd FileType c,cpp,objc hi clighter8MacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
+  autocmd FileType c,cpp,objc hi clighter8Namespace term=NONE cterm=NONE ctermfg=60 gui=NONE
+  autocmd FileType c,cpp,objc hi link clighter8NamespaceRef clighter8Namespace
+else
+  let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
+  let g:clighter_occurrences_mode=1
+  hi link clighterMemberRefExprCall clighterMemberRefExprVar
+  autocmd FileType c,cpp,objc hi clighterMemberRefExprVar term=NONE cterm=NONE ctermfg=187 gui=NONE
+  autocmd FileType c,cpp,objc hi clighterMacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
+  autocmd FileType c,cpp,objc hi clighterNamespace term=NONE cterm=NONE ctermfg=60 gui=NONE
+  autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
+endif
 " }}}
 
 
