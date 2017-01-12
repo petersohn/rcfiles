@@ -29,7 +29,7 @@ antigen bundle vundle
 antigen bundle jump
 antigen bundle pip
 antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle history-substring-search
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme petersohn/zsh-theme themes/zsh-theme
