@@ -28,12 +28,15 @@ antigen bundle mosh
 antigen bundle vundle
 antigen bundle jump
 antigen bundle pip
-antigen bundle command-not-found
 antigen bundle zsh-users/zsh-completions
 antigen bundle history-substring-search
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme petersohn/zsh-theme themes/zsh-theme
+
+if [ -e "$HOME/.antigen.local" ]; then
+  source "$HOME/.antigen.local"
+fi
 
 antigen apply
 
