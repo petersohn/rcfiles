@@ -1,3 +1,9 @@
+source_if_available() {
+  if [ -e "$1" ]; then
+    source "$1"
+  fi
+}
+
 # FIX FOR OH MY ZSH GIT PROMPT SLOWNESS
 # http://marc-abramowitz.com/archives/2012/04/10/fix-for-oh-my-zsh-git-svn-prompt-slowness/
 NO_GITSTATUS=
@@ -34,9 +40,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme petersohn/zsh-theme themes/zsh-theme
 
-if [ -e "$HOME/.antigen.local" ]; then
-  source "$HOME/.antigen.local"
-fi
+source_if_available "$HOME/.antigen.local"
 
 antigen apply
 
@@ -156,12 +160,6 @@ alias gn=NO_GITSTATUS="yes"
 alias tmux='TERM=screen-256color-bce LANG=en_US.UTF-8 nice -n 1 tmux -2'
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-
-source_if_available() {
-  if [ -e "$1" ]; then
-    source "$1"
-  fi
-}
 
 source_if_available ~/.vim/bundle/fzf/shell/completion.zsh
 source_if_available ~/.vim/bundle/fzf/shell/key-bindings.zsh
