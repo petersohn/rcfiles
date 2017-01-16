@@ -28,12 +28,14 @@ source $HOME/.zsh/antigen/antigen.zsh
 antigen use oh-my-zsh
 
 antigen bundle git
+antigen bundle docker
 antigen bundle screen
 antigen bundle dircycle
 antigen bundle mosh
 antigen bundle vundle
 antigen bundle jump
 antigen bundle pip
+antigen bundle sudo
 antigen bundle zsh-users/zsh-completions
 antigen bundle history-substring-search
 antigen bundle zsh-users/zsh-syntax-highlighting
