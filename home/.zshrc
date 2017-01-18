@@ -39,6 +39,7 @@ antigen bundle sudo
 antigen bundle zsh-users/zsh-completions
 antigen bundle history-substring-search
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle supercrabtree/k
 
 antigen theme petersohn/zsh-theme themes/zsh-theme
 
