@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+
+import argparse
+import http.client
+import json
+import os
+import re
+import urllib.parse
+import ssl
+import sys
+
+
+def create_https_connection(*args, **kwargs):
+    return http.client.HTTPSConnection(
+        *args, context=ssl.create_default_context(), **kwargs)
+
+
+class Http:
+    connection_factories = {
+        'http': http.client.HTTPConnection,
+        'https': create_https_connection}
+
+    def __init__(self, cache_filename, auth):
+        self.__connections = {}
+        self.__cache_filename = cache_filename
+        self.__auth = auth
+        if os.path.exists(cache_filename):
+            with open(cache_filename, mode='r', encoding='UTF-8') as f:
+                self.__cache = json.load(f)
+        else:
+            self.__cache = {}
+        self.__cache_hits = 0
+        self.__cache_misses = 0
+
+    def read_url(self, url, return_next=False):
+        if return_next:
+            _get_result = lambda result, next: (result, next)
+        else:
+            _get_result = lambda result, next: result
+        parsed_url = urllib.parse.urlparse(
+            url, scheme='https', allow_fragments=False)
+        path = parsed_url.path + '?' + parsed_url.query
+        connection = self._get_connection(
+            parsed_url.scheme, parsed_url.hostname, parsed_url.port)
+        headers = {'User-Agent': 'curl/7.47.0',
+                   'Connection': 'keep-alive'}
+        cache_entry = self.__cache.get(url)
+        if cache_entry:
+            headers['If-None-Match'] = cache_entry['ETag']
+        if self.__auth:
+            headers['Authorization'] = 'token ' + self.__auth
+        response = self._send_request(
+            connection, path, headers=headers)
+        link_header = response.getheader('Link')
+        next_page = None
+        if link_header:
+            match = re.search(r'<([^>]+)>; rel="next"', link_header)
+            if match:
+                next_page = match.group(1)
+        # h = response.getheaders()
+        # h.sort()
+        # for hh in h:
+        #     print(hh)
+        if response.status in [301, 302, 307]:
+            return read_url(response.getheader('Location'), return_next)
+        elif response.status == 304:
+            self.__cache_hits += 1
+            return _get_result(cache_entry['content'], cache_entry['next_page'])
+        elif response.status != 200:
+            # print(url)
+            # print(headers)
+            # print(response.read())
+            raise http.client.HTTPException(
+                str(response.status) + ' ' + response.reason)
+
+        self.__cache_misses += 1
+        content = json.loads(response.read().decode(
+            response.headers.get_content_charset()))
+        etag = response.getheader('ETag')
+        if etag:
+            self.__cache[url] = {
+                'ETag': response.getheader('ETag'),
+                'content': content,
+                'next_page': next_page}
+            self._save_cache()
+        return _get_result(content, next_page)
+
+
+    def read_list(self, url):
+        while url:
+            page, url = self.read_url(url, True)
+            for element in page:
+                yield element
+
+
+    def get_cache_info(self):
+        return self.__cache_hits, self.__cache_misses
+
+
+    def _send_request(self, connection, path, headers, retries=3):
+        try:
+            connection.request('GET', path, headers=headers)
+            return connection.getresponse()
+        except http.client.HTTPException:
+            connection.close()
+            if retries == 0:
+                raise
+            return self._send_request(connection, path, headers, retries - 1)
+        except:
+            connection.close()
+            raise
+
+
+    def _save_cache(self):
+        os.makedirs(os.path.dirname(self.__cache_filename), exist_ok=True)
+        try:
+            with open(self.__cache_filename, mode='w', encoding='UTF-8') as f:
+                 json.dump(self.__cache, f)
+        except:
+            try:
+                os.remove(self.__cache_filename)
+            except OSError:
+                pass
+
+
+    def _get_cache_filename(self, parsed_url):
+        return os.path.join(self.__cache_path,
+            parsed_url.scheme, parsed_url.netloc, parsed_url.path)
+
+
+    def _get_connection(self, scheme, hostname, port):
+        key = scheme, hostname, port
+        if key in self.__connections:
+            return self.__connections[key]
+        connection = Http.connection_factories[scheme](
+            hostname, port, timeout=10)
+        self.__connections[key] = connection
+        return connection
+
+
+def find_forks(http_object, url, level):
+    for fork in http_object.read_list(url):
+        print(level * '  ', fork['full_name'], sep='')
+        find_forks(http_object, fork['forks_url'], level + 1)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='Find forks for a github repository.')
+    parser.add_argument(
+        '--auth', type=str, nargs='?', help='The OAuth token, if any.')
+    parser.add_argument(
+        '--cache', type=str, nargs='?', help='The file to store cache')
+    parser.add_argument(
+        'name', type=str, nargs=1,
+        help='The name of the github repository in username/repo format.')
+    args = parser.parse_args()
+
+    if args.cache:
+        cache = args.cache
+    else:
+        cache = os.path.join(os.environ['HOME'], '.cache', 'find-forks')
+    http_object = Http(cache, args.auth)
+    find_forks(
+            http_object,
+            'https://api.github.com/repos/' + args.name[0] + '/forks', 0)
+    cache_hits, cache_misses = http_object.get_cache_info()
+    print('Cache hits:', cache_hits, 'Cache misses:', cache_misses,
+          file=sys.stderr)
