@@ -39,6 +39,7 @@ set listchars=tab:»\
 set history=10000
 set mouse=a
 set autoread
+set noswapfile
 
 set title
 if match($TERM, "^screen") == 0
