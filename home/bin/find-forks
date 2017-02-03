@@ -8,6 +8,7 @@ import re
 import urllib.parse
 import ssl
 import sys
+import traceback
 
 
 def create_https_connection(*args, **kwargs):
@@ -51,6 +52,10 @@ class Http:
             headers['Authorization'] = 'token ' + self.__auth
         response = self._send_request(
             connection, path, headers=headers)
+        content = response.read()
+        charset = response.headers.get_content_charset()
+        if charset:
+            content = content.decode(charset)
         link_header = response.getheader('Link')
         next_page = None
         if link_header:
@@ -69,13 +74,11 @@ class Http:
         elif response.status != 200:
             # print(url)
             # print(headers)
-            # print(response.read())
             raise http.client.HTTPException(
                 str(response.status) + ' ' + response.reason)
 
         self.__cache_misses += 1
-        content = json.loads(response.read().decode(
-            response.headers.get_content_charset()))
+        content = json.loads(content)
         etag = response.getheader('ETag')
         if etag:
             self.__cache[url] = {
@@ -102,6 +105,7 @@ class Http:
             connection.request('GET', path, headers=headers)
             return connection.getresponse()
         except http.client.HTTPException:
+            traceback.print_exc()
             connection.close()
             if retries == 0:
                 raise
