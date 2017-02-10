@@ -316,8 +316,10 @@ if version >= 800
     let g:clighter8_libclang_path = $LIBCLANG_PATH
   endif
 
-  let g:clighter8_highlight_whitelist = ['clighter8MacroInstantiation', 'clighter8StructDecl', 'clighter8ClassDecl', 'clighter8EnumDecl', 'clighter8EnumConstantDecl', 'clighter8TypeRef', 'clighter8DeclRefExpr', 'clighter8Namespace', 'clighter8NamespaceRef', 'clighter8MemberRefExpr']
+  let g:clighter8_highlight_whitelist = ['clighter8MacroInstantiation', 'clighter8StructDecl', 'clighter8ClassDecl', 'clighter8EnumDecl', 'clighter8EnumConstantDecl', 'clighter8TypeRef', 'clighter8DeclRefExpr', 'clighter8Namespace', 'clighter8NamespaceRef', 'clighter8MemberRefExpr', 'clighter8VarDecl']
   autocmd FileType c,cpp,objc hi clighter8MemberRefExpr term=NONE cterm=NONE ctermfg=187 gui=NONE
+  autocmd FileType c,cpp,objc hi clighter8DeclRefExpr term=NONE cterm=NONE ctermfg=184 gui=NONE
+  autocmd FileType c,cpp,objc hi clighter8VarDecl term=NONE cterm=NONE ctermfg=178 gui=NONE
   autocmd FileType c,cpp,objc hi clighter8MacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
   autocmd FileType c,cpp,objc hi clighter8Namespace term=NONE cterm=NONE ctermfg=60 gui=NONE
   autocmd FileType c,cpp,objc hi link clighter8NamespaceRef clighter8Namespace
