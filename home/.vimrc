@@ -318,11 +318,13 @@ if version >= 800
 
   let g:clighter8_highlight_whitelist = ['clighter8MacroInstantiation', 'clighter8StructDecl', 'clighter8ClassDecl', 'clighter8EnumDecl', 'clighter8EnumConstantDecl', 'clighter8TypeRef', 'clighter8DeclRefExpr', 'clighter8Namespace', 'clighter8NamespaceRef', 'clighter8MemberRefExpr', 'clighter8VarDecl']
   autocmd FileType c,cpp,objc hi clighter8MemberRefExpr term=NONE cterm=NONE ctermfg=187 gui=NONE
-  autocmd FileType c,cpp,objc hi clighter8DeclRefExpr term=NONE cterm=NONE ctermfg=184 gui=NONE
-  autocmd FileType c,cpp,objc hi clighter8VarDecl term=NONE cterm=NONE ctermfg=178 gui=NONE
+  autocmd FileType c,cpp,objc hi clighter8DeclRefExpr term=NONE cterm=NONE ctermfg=73 gui=NONE
+  autocmd FileType c,cpp,objc hi clighter8VarDecl term=NONE cterm=NONE ctermfg=37 gui=NONE
   autocmd FileType c,cpp,objc hi clighter8MacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
   autocmd FileType c,cpp,objc hi clighter8Namespace term=NONE cterm=NONE ctermfg=60 gui=NONE
   autocmd FileType c,cpp,objc hi link clighter8NamespaceRef clighter8Namespace
+  autocmd FileType c,cpp,objc hi clighter8TemplateTypeParameter term=NONE cterm=NONE ctermfg=59 gui=NONE
+  autocmd FileType c,cpp,objc hi clighter8TemplateRef term=NONE cterm=NONE ctermfg=102 gui=NONE
 else
   let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
   let g:clighter_occurrences_mode=1
