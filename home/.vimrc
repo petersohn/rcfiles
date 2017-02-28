@@ -93,6 +93,7 @@ Plugin         'jaxbot/semantic-highlight.vim'
 Plugin     'scrooloose/syntastic'
 Plugin         'tomtom/tcomment_vim'
 Plugin        'solarnz/thrift.vim'
+Plugin        'maralla/validator.vim'
 Plugin           'moll/vim-bbye'
 Plugin    'ConradIrwin/vim-bracketed-paste'
 Plugin          'rhysd/vim-clang-format'
@@ -142,8 +143,13 @@ autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 autocmd BufNewFile,BufRead *.md   set syntax=markdown
 
 
+" ---- a.vim ----
+let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../.."
+
+
 " ---- CamelCaseMotion ----
 call camelcasemotion#CreateMotionMappings(',')
+
 
 " ---- CommandT ----
 "  {{{
@@ -154,6 +160,7 @@ set wildignore+=*lastrun*
 "set wildignore+=*test*
 " }}}
 
+
 " ---- Fzf ----
 " {{{
 let g:fzf_action = {
@@ -161,6 +168,7 @@ let g:fzf_action = {
   \ 'ctrl-s': 'split',
   \ 'ctrl-v': 'vsplit' }
 " }}}
+
 
 " ---- lightline ----
 " {{{
@@ -304,10 +312,6 @@ let g:NERDTreeWinSize = 50
 " }}}
 
 
-" ---- a.vim ----
-let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../.."
-
-
 " ---- clighter ----
 "  {{{
 
@@ -407,6 +411,8 @@ let g:rainbow_conf = {
     \       'css': 0,
     \   }
     \}
+" }}}
+
 
 " ---- semantic-highlight ----
 "  {{{
@@ -414,18 +420,20 @@ let g:rainbow_conf = {
 let g:semanticTermColors = [27, 28, 93, 100, 33, 34, 99, 142, 39, 40, 129, 178, 45, 48, 207, 220]
 " }}}
 
+
 " ---- syntastic ----
 "  {{{
 let g:syntastic_c_checkers=['ycm']
 let g:syntastic_cpp_checkers=['ycm']
-let g:syntastic_sh_checkers = ['sh', 'shellcheck']
-let g:syntastic_sh_shellcheck_args = '-x'
-let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_sh_checkers = []
+" let g:syntastic_sh_shellcheck_args = '-x'
+let g:syntastic_python_checkers = []
 let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 " }}}
+
 
 " ---- vim-crosshairs ----
 "  {{{
@@ -501,6 +509,14 @@ map gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <Leader>y :YcmDiags<cr>
 "map <F4> :YcmCompleter GoToDefinition<CR>
 "map <F5> :YcmCompleter GoToDeclaration<CR>
+" }}}
+
+
+" ---- validator ----
+"  {{{
+let g:validator_python_checkers = ['python', 'flake8']
+let g:validator_sh_checkers = ['sh', 'shellcheck']
+let validator_sh_shellcheck_args = '-x'
 " }}}
 
 
