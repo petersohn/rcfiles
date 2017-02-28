@@ -1,5 +1,6 @@
+scriptencoding utf-8
+
 " Generic Editor Configs
-set nocompatible
 " Highlight search results (turn off :nohlsearch)
 set number
 "set hlsearch
@@ -42,14 +43,13 @@ set autoread
 set noswapfile
 
 set title
-if match($TERM, "^screen") == 0
+if match($TERM, '^screen') == 0
   set t_ts=k
   set t_fs=\
 endif
 set titlestring=%t%m\ -\ VIM
 
 let g:xml_syntax_folding=1
-au FileType xml setlocal foldmethod=syntax
 
 set t_Co=256
 ":let mapleader = " "
@@ -71,7 +71,7 @@ Plugin    'vim-scripts/bash-support.vim'
 Plugin    'jlanzarotta/bufexplorer'
 Plugin        'ciaranm/detectindent'
 Plugin           'bkad/CamelCaseMotion'
-if version >= 800
+if v:version >= 800
   Plugin        'bbchung/clighter8'
 else
   Plugin        'bbchung/clighter'
@@ -134,17 +134,21 @@ set t_Co=256
 
 " Auto commands
 " Check whether a file has been changed by an other process then vim.
-autocmd BufEnter * checktime
-autocmd CursorHold * checktime
-autocmd CursorHoldI * checktime
-" Automatically fix whitspace errors in case of C++ files.
-autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
+augroup vimrc
+  autocmd!
+  autocmd BufEnter * checktime
+  autocmd CursorHold * checktime
+  autocmd CursorHoldI * checktime
+  " Automatically fix whitspace errors in case of C++ files.
+  autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 
-autocmd BufNewFile,BufRead *.md   set syntax=markdown
+  autocmd BufNewFile,BufRead *.md   set syntax=markdown
+  autocmd FileType xml setlocal foldmethod=syntax
+augroup END
 
 
 " ---- a.vim ----
-let g:alternateSearchPath="reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../.."
+let g:alternateSearchPath='reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../..'
 
 
 " ---- CamelCaseMotion ----
@@ -191,17 +195,17 @@ let g:lightline = {
       \ }
 
 function! MyObsession()
-  if exists("g:this_obsession") && filereadable(g:this_obsession)
-    return "S"
+  if exists('g:this_obsession') && filereadable(g:this_obsession)
+    return 'S'
   elseif !empty(v:this_session) && filereadable(g:this_session)
-    return "[ S ]"
+    return '[ S ]'
   else
-    return "[ X ]"
+    return '[ X ]'
   endif
 endfunction
 
 function! MyModified()
-  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &ft =~# 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
@@ -210,15 +214,15 @@ endfunction
 
 function! MyFilename()
   let fname = expand('%:t')
-  return fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
+  return fname ==# 'ControlP' ? g:lightline.ctrlp_item :
+        \ fname ==# '__Tagbar__' ? g:lightline.fname :
+        \ fname =~# '__Gundo\|NERD_tree' ? '' :
+        \ &ft ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft ==# 'unite' ? unite#get_status_string() :
+        \ &ft ==# 'vimshell' ? vimshell#get_status_string() :
+        \ ('' !=# MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ ('' !=# fname ? fname : '[No Name]') .
+        \ ('' !=# MyModified() ? ' ' . MyModified() : '')
 endfunction
 
 function! MyFugitive()
@@ -247,19 +251,19 @@ endfunction
 
 function! MyMode()
   let fname = expand('%:t')
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
+  return fname ==# '__Tagbar__' ? 'Tagbar' :
+        \ fname ==# 'ControlP' ? 'CtrlP' :
+        \ fname ==# '__Gundo__' ? 'Gundo' :
+        \ fname ==# '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname =~# 'NERD_tree' ? 'NERDTree' :
+        \ &ft ==# 'unite' ? 'Unite' :
+        \ &ft ==# 'vimfiler' ? 'VimFiler' :
+        \ &ft ==# 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
 function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP'
+  if expand('%:t') =~# 'ControlP'
     call lightline#link('iR'[g:lightline.ctrlp_regex])
     return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
           \ , g:lightline.ctrlp_next], 0)
@@ -315,35 +319,41 @@ let g:NERDTreeWinSize = 50
 " ---- clighter ----
 "  {{{
 
-if version >= 800
-  if $LIBCLANG_PATH != ''
+if v:version >= 800
+  if $LIBCLANG_PATH !=# ''
     let g:clighter8_libclang_path = $LIBCLANG_PATH
   endif
 
   let g:clighter8_highlight_whitelist = ['clighter8MacroInstantiation', 'clighter8StructDecl', 'clighter8ClassDecl', 'clighter8EnumDecl', 'clighter8EnumConstantDecl', 'clighter8TypeRef', 'clighter8DeclRefExpr', 'clighter8Namespace', 'clighter8NamespaceRef', 'clighter8MemberRefExpr', 'clighter8VarDecl']
-  autocmd FileType c,cpp,objc hi clighter8MemberRefExpr term=NONE cterm=NONE ctermfg=187 gui=NONE
-  autocmd FileType c,cpp,objc hi clighter8DeclRefExpr term=NONE cterm=NONE ctermfg=73 gui=NONE
-  autocmd FileType c,cpp,objc hi clighter8VarDecl term=NONE cterm=NONE ctermfg=37 gui=NONE
-  autocmd FileType c,cpp,objc hi clighter8MacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
-  autocmd FileType c,cpp,objc hi clighter8Namespace term=NONE cterm=NONE ctermfg=60 gui=NONE
-  autocmd FileType c,cpp,objc hi link clighter8NamespaceRef clighter8Namespace
-  autocmd FileType c,cpp,objc hi clighter8TemplateTypeParameter term=NONE cterm=NONE ctermfg=59 gui=NONE
-  autocmd FileType c,cpp,objc hi clighter8TemplateRef term=NONE cterm=NONE ctermfg=102 gui=NONE
+  augroup vimrc
+    autocmd FileType c,cpp,objc hi clighter8MemberRefExpr term=NONE cterm=NONE ctermfg=187 gui=NONE
+    autocmd FileType c,cpp,objc hi clighter8DeclRefExpr term=NONE cterm=NONE ctermfg=73 gui=NONE
+    autocmd FileType c,cpp,objc hi clighter8VarDecl term=NONE cterm=NONE ctermfg=37 gui=NONE
+    autocmd FileType c,cpp,objc hi clighter8MacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
+    autocmd FileType c,cpp,objc hi clighter8Namespace term=NONE cterm=NONE ctermfg=60 gui=NONE
+    autocmd FileType c,cpp,objc hi link clighter8NamespaceRef clighter8Namespace
+    autocmd FileType c,cpp,objc hi clighter8TemplateTypeParameter term=NONE cterm=NONE ctermfg=59 gui=NONE
+    autocmd FileType c,cpp,objc hi clighter8TemplateRef term=NONE cterm=NONE ctermfg=102 gui=NONE
+  augroup END
 else
   let g:clighter_highlight_groups = ['clighterMacroInstantiation', 'clighterStructDecl', 'clighterClassDecl', 'clighterEnumDecl', 'clighterEnumConstantDecl', 'clighterTypeRef', 'clighterDeclRefExprEnum', 'clighterNamespace']
   let g:clighter_occurrences_mode=1
   hi link clighterMemberRefExprCall clighterMemberRefExprVar
-  autocmd FileType c,cpp,objc hi clighterMemberRefExprVar term=NONE cterm=NONE ctermfg=187 gui=NONE
-  autocmd FileType c,cpp,objc hi clighterMacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
-  autocmd FileType c,cpp,objc hi clighterNamespace term=NONE cterm=NONE ctermfg=60 gui=NONE
-  autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
+  augroup vimrc
+    autocmd FileType c,cpp,objc hi clighterMemberRefExprVar term=NONE cterm=NONE ctermfg=187 gui=NONE
+    autocmd FileType c,cpp,objc hi clighterMacroInstantiation term=NONE cterm=NONE ctermfg=5 gui=NONE
+    autocmd FileType c,cpp,objc hi clighterNamespace term=NONE cterm=NONE ctermfg=60 gui=NONE
+    autocmd FileType c,cpp,objc hi link clighterNamespaceRef clighterNamespace
+  augroup END
 endif
 " }}}
 
 
 " ---- detectindent ----
 "  {{{
-:autocmd BufReadPost * :DetectIndent
+augroup vimrc_detectindent
+  :autocmd BufReadPost * :DetectIndent
+augroup_END
 :let g:detectindent_preferred_expandtab = 1
 :let g:detectindent_preferred_indent = 4
 " }}}
@@ -463,7 +473,7 @@ noremap <Leader>ro :call rtags#ProjectOpen(expand('%:p'))<CR>
 " TMUX compatiblity for
 " keys combined with modifiers such as Shift, Control, and Alt.
 " See http://www.reddit.com/r/vim/comments/1a29vk/_/c8tze8p
-if &term =~ '^screen'
+if &term =~# '^screen'
   " Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
   execute "set t_kP=\e[5;*~"
   execute "set t_kN=\e[6;*~"
@@ -524,7 +534,7 @@ let g:validator_vim_checkers = ['vint']
 " --------
 
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
-if has("user_commands")
+if has('user_commands')
   command! -bang -nargs=? -complete=file W w<bang> <args>
   command! -bang -nargs=? -complete=file Wq wq<bang> <args>
   command! -bang -nargs=? -complete=file WQ wq<bang> <args>
@@ -538,7 +548,7 @@ if has("user_commands")
   command! -bang XA xa<bang>
 endif
 
-if !empty(glob("~/.vimrc.local"))
+if !empty(glob('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
 
