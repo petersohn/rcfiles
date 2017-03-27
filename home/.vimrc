@@ -116,7 +116,6 @@ Plugin        'bronson/vim-trailing-whitespace'
 Plugin        'bronson/vim-visual-star-search'
 Plugin    'vim-scripts/YankRing.vim'
 Plugin       'Valloric/YouCompleteMe'
-Plugin 'openscad.vim'
 
 call vundle#end()
 
