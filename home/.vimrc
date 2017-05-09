@@ -464,8 +464,7 @@ map <Leader>H :let @/ = ""<CR>
 
 
 " ---- vim-markdown ----
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'cpp']
-
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'cpp', 'c++=cpp']
 
 " ---- vim-rtags ----
 "  {{{
