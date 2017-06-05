@@ -145,6 +145,7 @@ augroup vimrc
 
   autocmd BufNewFile,BufRead *.md   set syntax=markdown
   autocmd FileType xml setlocal foldmethod=syntax
+  autocmd FileType cmake RainbowToggleOff
 augroup END
 
 
