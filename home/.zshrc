@@ -4,6 +4,7 @@ source_if_available() {
   fi
 }
 
+setopt histignorespace
 # FIX FOR OH MY ZSH GIT PROMPT SLOWNESS
 # http://marc-abramowitz.com/archives/2012/04/10/fix-for-oh-my-zsh-git-svn-prompt-slowness/
 NO_GITSTATUS=
