@@ -57,7 +57,7 @@ PER_DIRECTORY_HISTORY_DEFAULT_GLOBAL_HISTORY=true
 # Make solarized colors applied for directories as well (ls).
 eval `dircolors ~/dircolors-solarized/dircolors.ansi-universal`
 
-function gcd() {
+function git-cd() {
   local git_dir
   git_dir=$(git rev-parse --show-toplevel)
   local result=$?
@@ -65,6 +65,15 @@ function gcd() {
     return $result
   fi
   cd "$git_dir/$1"
+}
+
+function git() {
+  if [[ "$1" == cd ]]; then
+    shift
+    git-cd "$@"
+  else
+    command git "$@"
+  fi
 }
 
 #  Completion from tmux pane
