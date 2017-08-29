@@ -76,6 +76,10 @@ function git() {
   fi
 }
 
+function mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
 #  Completion from tmux pane
 _tmux_pane_words() {
   local expl
