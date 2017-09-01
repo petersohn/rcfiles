@@ -41,6 +41,7 @@ set history=10000
 set mouse=a
 set autoread
 set noswapfile
+set updatetime=500
 
 set title
 if match($TERM, '^screen') == 0
