@@ -135,18 +135,20 @@ colorscheme solarized
 set t_Co=256
 
 " Auto commands
-" Check whether a file has been changed by an other process then vim.
 augroup vimrc
   autocmd!
+" Check whether a file has been changed by an other process then vim.
   autocmd BufEnter * checktime
   autocmd CursorHold * checktime
   autocmd CursorHoldI * checktime
+
   " Automatically fix whitspace errors in case of C++ files.
   autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 
   autocmd BufNewFile,BufRead *.md   set syntax=markdown
   autocmd FileType xml setlocal foldmethod=syntax
   autocmd FileType cmake RainbowToggleOff
+  autocmd FileType qf wincmd J
 augroup END
 
 
