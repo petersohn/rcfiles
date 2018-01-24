@@ -115,7 +115,6 @@ Plugin          'tpope/vim-surround'
 Plugin   'tmux-plugins/vim-tmux'
 Plugin        'bronson/vim-trailing-whitespace'
 Plugin        'bronson/vim-visual-star-search'
-Plugin    'vim-scripts/YankRing.vim'
 Plugin       'Valloric/YouCompleteMe'
 
 call vundle#end()
