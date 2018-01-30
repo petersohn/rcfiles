@@ -538,6 +538,9 @@ let g:validator_cpp_checkers = []
 
 " --------
 
+nnoremap m ge
+nnoremap M gE
+
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has('user_commands')
   command! -bang -nargs=? -complete=file W w<bang> <args>
