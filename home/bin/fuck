@@ -1,0 +1,22 @@
+#!/bin/bash
+
+function hey {
+    echo -e '\rHey!'
+}
+
+trap hey SIGINT
+
+echo "Fucking $*..."
+
+progressChars=( '\' '|' '/' '-' )
+progress=0
+speed=$(( $RANDOM % 150 + 50 ))
+while [ $(( $RANDOM % 50 )) -ne 0 ]; do
+    echo -ne '\r' ${progressChars[$progress]}
+    progress=$(( ($progress + 1) % ${#progressChars[@]} ))
+    speed=$(( ($speed + ($RANDOM % 5 - 2) * 20 + 1000) % 1000 ))
+    sleep `printf '0.%03d' $speed`
+done
+
+echo -en '\r'
+echo "$* is fucked."
