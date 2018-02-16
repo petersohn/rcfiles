@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+
+import argparse
+
+parser = argparse.ArgumentParser(
+        description='The tautology club.')
+parser.add_argument('--first-rule', action='store_true',
+                    help='The first rule of the tautuology club.')
+parser.add_argument('--second-rule', action='store_true',
+                    help='The second rule of the tautuology club.')
+
+parser.parse_args()
+
+print('Yes.')
