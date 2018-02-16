@@ -72,11 +72,11 @@ Plugin    'vim-scripts/bash-support.vim'
 Plugin    'jlanzarotta/bufexplorer'
 Plugin        'ciaranm/detectindent'
 Plugin           'bkad/CamelCaseMotion'
-if v:version >= 800
-  Plugin        'bbchung/clighter8'
-else
-  Plugin        'bbchung/clighter'
-endif
+" if v:version >= 800
+"   Plugin        'bbchung/clighter8'
+" else
+"   Plugin        'bbchung/clighter'
+" endif
 "Plugin      'petersohn/clighter'
 Plugin         'vim-jp/cpp-vim'
 Plugin          'rhysd/committia.vim'

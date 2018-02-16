@@ -2,13 +2,18 @@
 
 import argparse
 
-parser = argparse.ArgumentParser(
-        description='The tautology club.')
-parser.add_argument('--first-rule', action='store_true',
-                    help='The first rule of the tautuology club.')
-parser.add_argument('--second-rule', action='store_true',
-                    help='The second rule of the tautuology club.')
+parser = argparse.ArgumentParser(description='The tautology club.')
+parser.add_argument(
+    '--first-rule', action='store_true',
+    help='The first rule of the tautuology club.')
+parser.add_argument(
+    '--second-rule', action='store_true',
+    help='The second rule of the tautuology club.')
 
-parser.parse_args()
+
+try:
+    parser.parse_args()
+except:
+    pass
 
 print('Yes.')
