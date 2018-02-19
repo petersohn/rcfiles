@@ -1,14 +1,28 @@
 #!/bin/bash
 
-command=$(basename "$0")
-proxy_command=$(readlink -e "$0")
+proxy_command="${BASH_SOURCE[0]}"
+command=$(basename "$proxy_command")
+real_proxy_command=$(readlink -e "$proxy_command")
+proxy_command_dir=$(dirname "$proxy_command")
+env_config_file="${proxy_command_dir}/${command}.env"
 
-echo "$(date '+%Y-%m-%d %T') $PWD: $*" >>~/"${command}.log"
+envs=
+
+if [[ -e "$env_config_file" ]]; then
+    envs='['
+    IFS=$'\n'
+    for env in $(<"$env_config_file"); do
+        envs+="${env}=${!env} "
+    done
+    unset IFS
+    envs+='] '
+fi
+
+echo "$(date '+%Y-%m-%d %T') $PWD: ${envs}$*" >>~/"${command}.log"
 
 for i in $(which -a "$command"); do
-    if [[ $(readlink -e "$i") != "$proxy_command" ]]; then
-        "$i" "$@"
-        exit $?
+    if [[ $(readlink -e "$i") != "$real_proxy_command" ]]; then
+        exec "$i" "$@"
     fi
 done
 exit 1
