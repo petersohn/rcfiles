@@ -163,11 +163,6 @@ bindkey -M viins 'jj' vi-cmd-mode
 # Enabling vim text-objects (ciw and alike) for vi-mode
 #source ~/.opp.zsh/opp.zsh
 
-ZSHRC_LOCAL=$HOME/.zshrc.local
-if [ -e $ZSHRC_LOCAL ]; then
-  source $ZSHRC_LOCAL
-fi
-
 export REPORTTIME=5
 
 HISTSIZE=1000000
@@ -181,3 +176,5 @@ source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 
 source_if_available ~/.vim/bundle/fzf/shell/completion.zsh
 source_if_available ~/.vim/bundle/fzf/shell/key-bindings.zsh
+
+source_if_available ~/.zshrc.local

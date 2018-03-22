@@ -43,6 +43,12 @@ set autoread
 set noswapfile
 set updatetime=500
 
+function s:SourceIfAvailable(filename)
+  if filereadable(a:filename)
+    exec "source " . a:filename
+  endif
+endfunction
+
 set title
 if match($TERM, '^screen') == 0
   set t_ts=k
@@ -64,58 +70,13 @@ filetype off " required!
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 
+let plugins_file = $HOME . "/.vim/plugins.vim"
+let plugins_local_file = $HOME . "/.vim/plugins.local.vim"
+
 Plugin 'gmarik/Vundle.vim'
 
-
-Plugin        'nacitar/a.vim'
-Plugin    'vim-scripts/bash-support.vim'
-Plugin    'jlanzarotta/bufexplorer'
-Plugin        'ciaranm/detectindent'
-Plugin           'bkad/CamelCaseMotion'
-" if v:version >= 800
-"   Plugin        'bbchung/clighter8'
-" else
-"   Plugin        'bbchung/clighter'
-" endif
-"Plugin      'petersohn/clighter'
-Plugin         'vim-jp/cpp-vim'
-Plugin          'rhysd/committia.vim'
-Plugin       'junegunn/fzf'
-Plugin       'junegunn/fzf.vim'
-Plugin            'sjl/gundo.vim'
-Plugin        'itchyny/lightline.vim'
-Plugin    'vim-scripts/lighttpd-syntax'
-Plugin      'tmhedberg/matchit'
-Plugin     'scrooloose/nerdtree'
-Plugin        'Xuyuanp/nerdtree-git-plugin'
-Plugin   'luochen1990/rainbow'
-Plugin         'mfukar/robotframework-vim'
-Plugin    'vim-scripts/openscad.vim'
-Plugin         'jaxbot/semantic-highlight.vim'
-Plugin     'scrooloose/syntastic'
-Plugin         'tomtom/tcomment_vim'
-Plugin        'solarnz/thrift.vim'
-Plugin        'maralla/validator.vim'
-Plugin           'moll/vim-bbye'
-Plugin    'ConradIrwin/vim-bracketed-paste'
-Plugin          'rhysd/vim-clang-format'
-Plugin 'nickhutchinson/vim-cmake-syntax'
-Plugin    'altercation/vim-colors-solarized'
-Plugin        'bronson/vim-crosshairs'
-Plugin 'justincampbell/vim-eighties'
-Plugin          'tpope/vim-fugitive'
-Plugin    'drmikehenry/vim-headerguard'
-Plugin          'tpope/vim-markdown'
-Plugin          'xolox/vim-misc'
-Plugin          'tpope/vim-obsession'
-Plugin          'tpope/vim-repeat'
-Plugin          'lyuts/vim-rtags'
-"Plugin     'petersohn/vim-rtags'
-Plugin          'tpope/vim-surround'
-Plugin   'tmux-plugins/vim-tmux'
-Plugin        'bronson/vim-trailing-whitespace'
-Plugin        'bronson/vim-visual-star-search'
-Plugin       'Valloric/YouCompleteMe'
+call s:SourceIfAvailable(plugins_file)
+call s:SourceIfAvailable(plugins_local_file)
 
 call vundle#end()
 
@@ -125,10 +86,10 @@ filetype plugin indent on " required!
 " http://stackoverflow.com/questions/12774141/strange-changing-background-color-in-vim-solarized
 ":set t_ut=
 let g:solarized_termtrans=1
-"let g:solarized_termcolors=256
-"let g:solarized_degrade=1
-"let g:solarized_contrast="high"
-"let g:solarized_visibility="high"
+let g:solarized_termcolors=256
+let g:solarized_degrade=1
+let g:solarized_contrast="high"
+let g:solarized_visibility="high"
 set background=dark
 colorscheme solarized
 set t_Co=256
@@ -556,7 +517,4 @@ if has('user_commands')
   command! -bang XA xa<bang>
 endif
 
-if !empty(glob('~/.vimrc.local'))
-  source ~/.vimrc.local
-endif
-
+call s:SourceIfAvailable($HOME . ".vimrc.local")
