@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+script_path="${BASH_SOURCE[0]}"
+command=$(basename "$script_path")
+real_script_path=$(readlink -e "$script_path")
+
+actual_command=
+
+for i in $(which -a "$command"); do
+    if [[ $(readlink -e "$i") != "$real_script_path" ]]; then
+        actual_command="$i"
+    fi
+done
+
+if [[ -z "$actual_command" ]]; then
+    echo "Command $0 not found." >&2
+    exit 1
+fi
+
+for param in "$@"; do
+    if [[ "$param" == --config || "$param" == --config=* ]]; then
+        exec "$actual_command" "$@"
+    fi
+done
+
+config_file=
+
+for f in setup.cfg tox.ini .flake8; do
+    if [[ -e "$f" ]]; then
+        config_file="$f"
+        break
+    fi
+done
+
+if [[ -z "$config_file" ]]; then
+    exec "$actual_command" "$@"
+fi
+
+exec "$actual_command" --config="$config_file" "$@"
