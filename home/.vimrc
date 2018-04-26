@@ -115,6 +115,15 @@ augroup END
 " ---- a.vim ----
 let g:alternateSearchPath='reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../..'
 
+" ---- AsyncRun ----
+let g:asyncrun_bell = 1
+let g:asyncrun_exit = "silent call system(\"notify-send \\\"vim asyncrun\\\" \\\"Returned \" . g:asyncrun_code . \" (\" . g:asyncrun_status . \")\\\"\")"
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+augroup asyncrun
+  autocmd User AsyncRunStart call asyncrun#quickfix_toggle(5, 1)
+  autocmd User AsyncRunStop if (g:asyncrun_code == 0) | call asyncrun#quickfix_toggle(5, 0) | endif
+augroup END
+nnoremap <silent> <F9> :call asyncrun#quickfix_toggle(15)<CR>
 
 " ---- CamelCaseMotion ----
 call camelcasemotion#CreateMotionMappings(',')
@@ -278,6 +287,7 @@ let g:NERDTreeIgnore = ['\.o$', '\.o-.*$', '\.pyc$', '^\..*\.sw.$', '^\.git$']
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeWinSize = 50
+let g:NERDTreeAutoDeleteBuffer = 1
 " }}}
 
 
@@ -499,8 +509,8 @@ let g:validator_cpp_checkers = []
 
 " --------
 
-nnoremap m ge
-nnoremap M gE
+" nnoremap m ge
+" nnoremap M gE
 
 "(idea from http://blog.sanctum.geek.nz/vim-command-typos/)
 if has('user_commands')
@@ -517,4 +527,4 @@ if has('user_commands')
   command! -bang XA xa<bang>
 endif
 
-call s:SourceIfAvailable($HOME . ".vimrc.local")
+call s:SourceIfAvailable($HOME . "/.vimrc.local")
