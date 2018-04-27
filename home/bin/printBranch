@@ -160,7 +160,7 @@ if ($ARGV[0] eq "color") {
 } elsif ($ARGV[0] eq "all") {
     print "$color\n$symbolColor\n$symbol\n$branchName\n";
 } else {
-    print $color, "(", $symbolColor, $symbol, $color, $branchName, ")", $Color_Off;
+    print "%{", $color, "%}(", "%{", $symbolColor, "%}", $symbol, "%{", $color, "%}", $branchName, ")", "%{", $Color_Off, "%}";
 }
 
 
