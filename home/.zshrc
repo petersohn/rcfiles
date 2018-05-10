@@ -19,8 +19,8 @@ HIST_STAMPS="yyyy-mm-dd"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-export MANPATH=$(manpath):$HOME/usr/share/man
-export PATH=$HOME/bin:$HOME/.vim/bundle/fzf/bin:$PATH
+export MANPATH="$(manpath):$HOME/usr/share/man"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/usr/bin:$HOME/.vim/bundle/fzf/bin:$PATH"
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 

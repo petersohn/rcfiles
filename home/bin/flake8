@@ -9,6 +9,7 @@ actual_command=
 for i in $(which -a "$command"); do
     if [[ $(readlink -e "$i") != "$real_script_path" ]]; then
         actual_command="$i"
+        break
     fi
 done
 
