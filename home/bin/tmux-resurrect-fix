@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd ~/.tmux/resurrect
+rm -f last
+ln -s $(ls tmux_resurrect_* | tail -n1) last
