@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+function notify() {
+    name="$1"
+    result="$2"
+
+    if [[ $result == 0 ]]; then
+        message="Command successful"
+        icon=good.svg
+    else
+        message="Command failed"
+        icon=bad.svg
+    fi
+
+    notify-send --icon="${HOME}/usr/share/images/${icon}" "$message" "$name"
+}
+
+"$@"
+result=$?
+notify "$*" "$result"
+exit "$result"

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:ns1="http://sozi.baierouge.fr" id="svg2160" sodipodi:docname="OK-1.svg" viewBox="0 0 41.641 37.43" sodipodi:version="0.32" version="1.0" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:version="0.48.0 r9654">
+  <sodipodi:namedview id="base" fit-margin-left="0" inkscape:zoom="11" height="64px" borderopacity="1.0" inkscape:current-layer="layer1" inkscape:cx="24.430039" inkscape:cy="18.514729" fit-margin-right="0" inkscape:grid-bbox="true" inkscape:window-maximized="0" showgrid="true" width="64px" inkscape:document-units="px" bordercolor="#666666" inkscape:window-x="44" inkscape:window-y="150" fit-margin-bottom="0" inkscape:window-width="1541" inkscape:pageopacity="0.0" inkscape:pageshadow="2" pagecolor="#ffffff" inkscape:window-height="810" fit-margin-top="0"/>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer" transform="translate(3.6336 -26.004)">
+    <path id="path3167" style="fill:#5cff53" inkscape:connector-curvature="0" d="m34.758 26.585c-9.3249 2.5083-17.627 10.014-19.25 19.781-3.925-2.606-7.2173-7.955-11.969-8.218-3.1368 1.633-10.434 5.866-4.2811 8.343 5.5045 4.278 13.751 8.131 15.062 15.563 2.689 2.5127 6.1669-1.059 8.9688-2 3.4741-5.6233-0.42848-13.37 2.9375-19.344 1.7386-5.634 7.8204-7.9146 11.281-12-0.0034-1.4831-1.3607-2.5102-2.75-2.125z"/>
+    <path id="path3777" style="stroke:#00a901;fill:none" inkscape:connector-curvature="0" d="m34.758 26.585c-9.3249 2.5083-17.627 10.014-19.25 19.781-3.925-2.606-7.2173-7.955-11.969-8.218-3.1368 1.633-10.434 5.866-4.2811 8.343 5.5045 4.278 13.751 8.131 15.062 15.563 2.689 2.5127 6.1669-1.059 8.9688-2 3.4741-5.6233-0.42848-13.37 2.9375-19.344 1.7386-5.634 7.8204-7.9146 11.281-12-0.0034-1.4831-1.3607-2.5102-2.75-2.125z"/>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>green OK / success symbol</dc:title>
+        <dc:date>2011-09-20T10:41:59</dc:date>
+        <dc:description>green OK / success symbol</dc:description>
+        <dc:source>https://openclipart.org/detail/161503/green-ok--success-symbol-by-antares42</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Antares42</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>OK</rdf:li>
+            <rdf:li>button</rdf:li>
+            <rdf:li>failure</rdf:li>
+            <rdf:li>green</rdf:li>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>not OK</rdf:li>
+            <rdf:li>red</rdf:li>
+            <rdf:li>success</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
