@@ -12,7 +12,10 @@ function notify() {
         icon=bad.svg
     fi
 
-    notify-send --icon="${HOME}/usr/share/images/${icon}" "$message" "$name"
+    notify-send \
+        --expire-time=10000 \
+        --icon="${HOME}/usr/share/images/${icon}" \
+        "$message" "$name"
 }
 
 "$@"
