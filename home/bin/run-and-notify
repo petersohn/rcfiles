@@ -16,7 +16,7 @@ function notify() {
         --expire-time=10000 \
         --icon="${HOME}/usr/share/images/${icon}" \
         "$message" "$name"
-    ( mplayer -really-quiet "${HOME}/usr/share/sounds/bell.mp3" & )
+    ( mplayer -really-quiet "${HOME}/usr/share/sounds/bell.mp3" >/dev/null 2>&1 & )
 }
 
 "$@"
