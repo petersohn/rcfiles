@@ -111,6 +111,17 @@ augroup vimrc
   autocmd FileType qf wincmd J
 augroup END
 
+" ---- termdebug ----
+packadd termdebug
+let g:termdebug_wide = 1
+nnoremap <silent> <F12> :Run<CR>
+nnoremap <silent> g<F12> :Stop<CR>
+nnoremap <silent> <F10> :Over<CR>
+nnoremap <silent> g<F10> :Step<CR>
+nnoremap <silent> <F9> :Continue<CR>
+nnoremap <silent> g<F9> :Finish<CR>
+nnoremap <silent> <F8> :Break<CR>
+nnoremap <silent> g<F8> :Delete<CR>
 
 " ---- a.vim ----
 let g:alternateSearchPath='reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../..'
@@ -123,7 +134,7 @@ augroup asyncrun
   autocmd User AsyncRunStart call asyncrun#quickfix_toggle(5, 1)
   autocmd User AsyncRunStop if (g:asyncrun_code == 0) | call asyncrun#quickfix_toggle(5, 0) | endif
 augroup END
-nnoremap <silent> <F9> :call asyncrun#quickfix_toggle(15)<CR>
+nnoremap <silent> <F6> :call asyncrun#quickfix_toggle(15)<CR>
 
 " ---- CamelCaseMotion ----
 call camelcasemotion#CreateMotionMappings(',')
