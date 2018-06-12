@@ -121,7 +121,11 @@ nnoremap <silent> g<F10> :Step<CR>
 nnoremap <silent> <F9> :Continue<CR>
 nnoremap <silent> g<F9> :Finish<CR>
 nnoremap <silent> <F8> :Break<CR>
-nnoremap <silent> g<F8> :Delete<CR>
+if v:version >= 801
+  nnoremap <silent> g<F8> :Clear<CR>
+else
+  nnoremap <silent> g<F8> :Delete<CR>
+endif
 
 " ---- a.vim ----
 let g:alternateSearchPath='reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../..'
