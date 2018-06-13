@@ -127,6 +127,28 @@ else
   nnoremap <silent> g<F8> :Delete<CR>
 endif
 
+" ---- Maximize window ----
+nnoremap <C-W>O :call MaximizeToggle()<CR>
+nnoremap <C-W>o :call MaximizeToggle()<CR>
+nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
+
+function! MaximizeToggle()
+  if exists("s:maximize_session")
+    exec "source " . s:maximize_session
+    call delete(s:maximize_session)
+    unlet s:maximize_session
+    let &hidden=s:maximize_hidden_save
+    unlet s:maximize_hidden_save
+  else
+    let s:maximize_hidden_save = &hidden
+    let s:maximize_session = tempname()
+    set hidden
+    exec "mksession! " . s:maximize_session
+    tabonly
+    only
+  endif
+endfunction
+
 " ---- a.vim ----
 let g:alternateSearchPath='reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../..'
 
