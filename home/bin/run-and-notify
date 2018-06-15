@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+media_dir="${HOME}/usr/share"
+
 function notify() {
     name="$1"
     result="$2"
@@ -7,18 +9,20 @@ function notify() {
     if [[ $result == 0 ]]; then
         message="Command successful"
         icon=good.svg
+        sound=bell.mp3
     else
         message="Command failed"
         icon=bad.svg
+        sound=buzz.mp3
     fi
 
     notify-send \
         --expire-time=10000 \
-        --icon="${HOME}/usr/share/images/${icon}" \
+        --icon="${media_dir}/images/${icon}" \
         "$message" "$name
 
 <i>$PWD</i>"
-    ( mplayer -really-quiet "${HOME}/usr/share/sounds/bell.mp3" >/dev/null 2>&1 & )
+    ( mplayer -really-quiet "${media_dir}/sounds/${sound}" >/dev/null 2>&1 & )
 }
 
 "$@"
