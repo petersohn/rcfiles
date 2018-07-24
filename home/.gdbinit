@@ -8,5 +8,6 @@ set demangle-style gnu-v3
 set print sevenbit-strings off
 set history save on
 set python print-stack full
+set print static-members no
 
 source ~/gdb/colors.py
