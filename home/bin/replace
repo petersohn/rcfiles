@@ -37,7 +37,10 @@ for file in "$@"; do
     while [ -e "$tmpFile" ]; do
         tmpFile+='~'
     done
-    sed "${sedArgs[@]}" "$file" >"$tmpFile"
+    if ! sed "${sedArgs[@]}" "$file" >"$tmpFile"; then
+        echo "Warning: failed to process file: $file" >&2
+        continue
+    fi
     if ! cmp --quiet "$file" "$tmpFile"; then
         rm -f "$file"
         mv "$tmpFile" "$file"
