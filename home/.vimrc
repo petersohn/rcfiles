@@ -464,6 +464,17 @@ highlight CursorLine ctermbg=8
 highlight ColorColumn ctermbg=8
 " }}}
 
+" ---- vim-easyclip ----
+"  {{{
+let g:EasyClipUseSubstituteDefaults = 1
+let g:EasyClipShareYanks = 1
+let g:EasyClipCopyExplicitRegisterToDefault = 1
+let g:EasyClipShareYanksDirectory = "/tmp"
+let g:EasyClipEnableBlackHoleRedirect = 0
+let g:EasyClipUseCutDefaults = 0
+let g:EasyClipUsePasteToggleDefaults = 0 " TODO: Enable it when fixed
+let g:EasyClipYankHistorySize = 10
+" }}}
 
 " ---- vim-eighties ----
 "  {{{
