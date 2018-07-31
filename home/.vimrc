@@ -442,6 +442,12 @@ let g:rainbow_conf = {
 let g:semanticTermColors = [27, 28, 93, 100, 33, 34, 99, 142, 39, 40, 129, 178, 45, 48, 207, 220]
 " }}}
 
+" ---- tabman ----
+"  {{{
+let g:tabman_specials = 1
+let g:tabman_width = 50
+" }}}
+
 
 " ---- syntastic ----
 "  {{{
