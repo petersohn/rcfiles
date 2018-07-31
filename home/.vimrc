@@ -472,7 +472,10 @@ highlight ColorColumn ctermbg=8
 
 " ---- vim-easyclip ----
 "  {{{
-let g:EasyClipUseSubstituteDefaults = 1
+let g:EasyClipUseSubstituteDefaults = 0
+nmap <silent> S <plug>SubstituteOverMotionMap
+nmap <silent> SS <plug>SubstituteLine
+xmap <silent> S <plug>XEasyClipPaste
 let g:EasyClipShareYanks = 1
 let g:EasyClipCopyExplicitRegisterToDefault = 1
 let g:EasyClipShareYanksDirectory = "/tmp"
