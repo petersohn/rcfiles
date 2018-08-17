@@ -67,18 +67,15 @@ let g:vundle_default_git_proto = 'git'
 
 " Vundle stuff
 filetype off " required!
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
+call plug#begin()
 
 let plugins_file = $HOME . "/.vim/plugins.vim"
 let plugins_local_file = $HOME . "/.vim/plugins.local.vim"
 
-Plugin 'gmarik/Vundle.vim'
-
 call s:SourceIfAvailable(plugins_file)
 call s:SourceIfAvailable(plugins_local_file)
 
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on " required!
 
@@ -109,6 +106,8 @@ augroup vimrc
   autocmd FileType xml setlocal foldmethod=syntax
   autocmd FileType cmake RainbowToggleOff
   autocmd FileType qf wincmd J
+  autocmd FileType text set formatoptions-=t
+  autocmd FileType c,cpp set formatoptions+=j
 augroup END
 
 " ---- termdebug ----

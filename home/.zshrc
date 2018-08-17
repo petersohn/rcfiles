@@ -20,7 +20,7 @@ HIST_STAMPS="yyyy-mm-dd"
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 export MANPATH="$(manpath):$HOME/usr/share/man"
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/usr/bin:$HOME/.vim/bundle/fzf/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/usr/bin:$HOME/.fzf/bin:$PATH"
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
@@ -175,7 +175,7 @@ alias ran=run-and-notify
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 
-source_if_available ~/.vim/bundle/fzf/shell/completion.zsh
-source_if_available ~/.vim/bundle/fzf/shell/key-bindings.zsh
+source_if_available ~/.fzf/shell/completion.zsh
+source_if_available ~/.fzf/shell/key-bindings.zsh
 
 source_if_available ~/.zshrc.local
