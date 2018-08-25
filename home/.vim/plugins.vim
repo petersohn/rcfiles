@@ -52,4 +52,4 @@ Plug          'tpope/vim-surround'
 Plug   'tmux-plugins/vim-tmux'
 Plug        'bronson/vim-trailing-whitespace'
 Plug        'bronson/vim-visual-star-search'
-Plug       'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --system-libclang'}
+Plug       'Valloric/YouCompleteMe', {'do': 'python2 ./install.py --clang-completer --system-libclang'}
