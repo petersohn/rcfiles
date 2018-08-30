@@ -36,7 +36,7 @@ set incsearch
 set foldmethod=marker
 set expandtab
 set list
-set listchars=tab:»\ 
+set listchars=tab:»\ ,eol:⏎
 set history=10000
 set mouse=a
 set autoread
