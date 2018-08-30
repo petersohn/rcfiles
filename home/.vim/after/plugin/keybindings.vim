@@ -17,10 +17,6 @@ map <Leader>] :cnext<CR>
 map <Leader>{ :lprev<CR>
 map <Leader>} :lnext<CR>
 nmap <silent> <Leader>g :vimgrep // **/*.[ch]*<CR>
-nnoremap <C-j> ddp
-nnoremap <C-k> ddkkp
-map <C-Down> <C-j>
-map <C-Up> <C-k>
 nmap Y y$
 nnoremap <silent> <Leader>J :%!python -m json.tool<CR>
 inoremap <Tab> <ESC>
