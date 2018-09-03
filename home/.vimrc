@@ -471,17 +471,17 @@ highlight ColorColumn ctermbg=8
 
 " ---- vim-easyclip ----
 "  {{{
-let g:EasyClipUseSubstituteDefaults = 0
-nmap <silent> S <plug>SubstituteOverMotionMap
-nmap <silent> SS <plug>SubstituteLine
-xmap <silent> S <plug>XEasyClipPaste
-let g:EasyClipShareYanks = 1
-let g:EasyClipCopyExplicitRegisterToDefault = 1
-let g:EasyClipShareYanksDirectory = "/tmp"
-let g:EasyClipEnableBlackHoleRedirect = 0
-let g:EasyClipUseCutDefaults = 0
-let g:EasyClipUsePasteToggleDefaults = 0 " TODO: Enable it when fixed
-let g:EasyClipYankHistorySize = 10
+" let g:EasyClipUseSubstituteDefaults = 0
+" nmap <silent> S <plug>SubstituteOverMotionMap
+" nmap <silent> SS <plug>SubstituteLine
+" xmap <silent> S <plug>XEasyClipPaste
+" let g:EasyClipShareYanks = 1
+" let g:EasyClipCopyExplicitRegisterToDefault = 1
+" let g:EasyClipShareYanksDirectory = "/tmp"
+" let g:EasyClipEnableBlackHoleRedirect = 0
+" let g:EasyClipUseCutDefaults = 0
+" let g:EasyClipUsePasteToggleDefaults = 0 " TODO: Enable it when fixed
+" let g:EasyClipYankHistorySize = 10
 " }}}
 
 " ---- vim-eighties ----
