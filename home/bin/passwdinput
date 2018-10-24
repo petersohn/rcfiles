@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo -n 'Password: ' >&2
+read -s password
+echo "$password"
