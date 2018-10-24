@@ -6,7 +6,7 @@ if [[ $# == 0 ]]; then
     echo -n 'E-mail: '
     read email
 else
-    email="$0"
+    email="$1"
 fi
 
 echo -n 'Password: '
