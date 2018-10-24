@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ $# == 0 ]]; then
+    echo -n 'E-mail: '
+    read email
+else
+    email="$0"
+fi
+
+echo -n 'Password: '
+read -s password
+echo
+
+echo -n 'TOTP: '
+read totp
+
+echo "$password" | tresorit-cli login --email "$email" --password-on-stdin --totp "$totp"
