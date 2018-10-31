@@ -455,6 +455,7 @@ let g:syntastic_cpp_checkers=['ycm']
 let g:syntastic_sh_checkers = []
 " let g:syntastic_sh_shellcheck_args = '-x'
 let g:syntastic_python_checkers = []
+let g:syntastic_xml_checkers = []
 let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_always_populate_loc_list = 1
@@ -560,6 +561,7 @@ let validator_sh_shellcheck_args = '-x -f gcc'
 let g:validator_vim_checkers = ['vint']
 let g:validator_c_checkers = []
 let g:validator_cpp_checkers = []
+let g:validator_xml_checkers = []
 " }}}
 
 
