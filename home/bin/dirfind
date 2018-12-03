@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+print_usage() {
+    cat <<_END_
+Find the PID of a process running in a directory. Use pgrep to find it.
+
+Usage: $0 -h
+       $0 [options] [-d dir] [pgrep options]
+_END_
+}
+
+dir=.
+
+while getopts ":hd:" Option; do
+    case $Option in
+    h)
+        print_usage >&2
+        exit
+        ;;
+    d)
+        dir="$OPTARG"
+        ;;
+    *)
+        print_usage >&2
+        exit 2
+    esac
+done
+
+shift $((OPTIND - 1))
+
+set -e
+
+dir=$(readlink -e "$dir")
+
+found=
+for pid in $(pidof "$@"); do
+    workdir=$(readlink -e "/proc/$pid/cwd")
+    if [[ "$workdir" == "$dir" ]]; then
+        echo "$pid"
+        found=1
+    fi
+done
+
+[[ -n "$found" ]]
