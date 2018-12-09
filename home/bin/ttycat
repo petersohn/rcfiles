@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+port="$1"
+stty -F "$port" ispeed 115200 ; stty -F "$port" raw -echo
+cat -v "$port"
