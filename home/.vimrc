@@ -562,6 +562,7 @@ let g:validator_vim_checkers = ['vint']
 let g:validator_c_checkers = []
 let g:validator_cpp_checkers = []
 let g:validator_xml_checkers = []
+let g:validator_perl_checkers = []
 " }}}
 
 
