@@ -556,7 +556,8 @@ map <Leader>y :YcmDiags<cr>
 " ---- validator ----
 "  {{{
 let g:validator_python_checkers = ['python', 'flake8']
-let g:validator_sh_checkers = ['sh', 'shellcheck']
+let g:validator_sh_checkers = []
+" let g:validator_sh_checkers = ['sh', 'shellcheck']
 let validator_sh_shellcheck_args = '-x -f gcc'
 let g:validator_vim_checkers = ['vint']
 let g:validator_c_checkers = []
