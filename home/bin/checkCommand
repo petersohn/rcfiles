@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+set -e
+
+print_usage() {
+    cat <<_END_
+Print the output of a command if it changes.
+
+Usage: $0 -h
+       $0 [options] command [args...]
+
+Options:
+    -h        This help message.
+    -n        The time interval between running the program in seconds. Default=1
+_END_
+}
+
+# -------- Main body --------
+
+delay=1
+while getopts ":hn:" Option; do
+    case $Option in
+    h)
+        print_usage
+        exit
+        ;;
+    n)
+        delay="$OPTARG"
+        ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+previous=
+
+while true; do
+    result=$("$@")
+    if [[ "$result" != "$previous" ]]; then
+        date '+%F %H:%M:%S'
+        echo "$result"
+        previous="$result"
+        sleep "$delay"
+    fi
+done
