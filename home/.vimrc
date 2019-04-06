@@ -106,7 +106,7 @@ augroup vimrc
   autocmd FileType xml setlocal foldmethod=syntax
   autocmd FileType cmake RainbowToggleOff
   autocmd FileType qf wincmd J
-  autocmd FileType text set formatoptions-=t
+  autocmd FileType text set formatoptions-=tc
   autocmd FileType c,cpp set formatoptions+=j
 augroup END
 
