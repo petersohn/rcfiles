@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ $# != 1 ]]; then
+    echo "Usage: $0 filename" >&2
+    exit 1
+fi
+
+file="$1"
+path=$(dirname "$file")
+tmpfile=$(mktemp --tmpdir="$path" tmpXXXXXXXX.json)
+python -m json.tool "$file" >"$tmpfile"
+mv "$tmpfile" "$file"
