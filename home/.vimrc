@@ -183,6 +183,16 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 let $FZF_DEFAULT_COMMAND = 'fd --hidden'
+
+let s:ag_options = ' --hidden --ignore .git '
+command! -bang -nargs=* Ag
+      \ call fzf#vim#ag(
+      \   <q-args>,
+      \   s:ag_options,
+      \  <bang>0 ? fzf#vim#with_preview('up:60%')
+      \        : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0
+      \ )
 " }}}
 
 
