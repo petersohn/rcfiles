@@ -193,6 +193,33 @@ command! -bang -nargs=* Ag
       \        : fzf#vim#with_preview('right:50%:hidden', '?'),
       \   <bang>0
       \ )
+
+command! -bang -nargs=* Agw
+      \ call fzf#vim#ag(
+      \   <q-args>,
+      \   s:ag_options . ' --word-regexp ',
+      \  <bang>0 ? fzf#vim#with_preview('up:60%')
+      \        : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0
+      \ )
+
+command! -bang -nargs=* Ags
+      \ call fzf#vim#ag(
+      \   <q-args>,
+      \   s:ag_options . ' --case-sensitive ',
+      \  <bang>0 ? fzf#vim#with_preview('up:60%')
+      \        : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0
+      \ )
+
+command! -bang -nargs=* Agsw
+      \ call fzf#vim#ag(
+      \   <q-args>,
+      \   s:ag_options . ' --case-sensitive --word-regexp ',
+      \  <bang>0 ? fzf#vim#with_preview('up:60%')
+      \        : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0
+      \ )
 " }}}
 
 
