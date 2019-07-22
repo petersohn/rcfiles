@@ -626,4 +626,6 @@ if has('user_commands')
   command! -bang XA xa<bang>
 endif
 
+command! Wsudo :execute ':silent w !sudo tee % > /dev/null' | :edit!
+
 call s:SourceIfAvailable($HOME . "/.vimrc.local")
