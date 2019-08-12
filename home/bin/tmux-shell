@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $0 name [dir]" >&2
+    exit 1
+fi
+
+set -e
+
+name="$1"
+
+dirargs=()
+if [[ $# -ge 2 ]]; then
+    dir="$2"
+    if [[ ! -d "$dir" ]]; then
+        echo "Invalid directory: $dir" >&2
+        exit 1
+    fi
+    dirargs=(-c $(readlink -e "$dir"))
+fi
+
+read rows cols < <(stty size)
+tmux new-session -d -s "$name" "${dirargs[@]}" -x "$cols" -y "$cols"
