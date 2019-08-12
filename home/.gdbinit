@@ -9,5 +9,13 @@ set print sevenbit-strings off
 set history save on
 set python print-stack full
 set print static-members no
+set auto-load local-gdbinit on
+set auto-load safe-path /
 
 source ~/gdb/colors.py
+
+# Dashboard
+source ~/gdb/gdb-dashboard/.gdbinit
+dashboard -layout !assembly expressions !history memory !registers source stack !threads
+dashboard stack -style limit 5
+dashboard stack -style compact True

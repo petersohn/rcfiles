@@ -1,0 +1,3 @@
+[submodule "home/gdb/gdb-dashboard"]
+	path = home/gdb/gdb-dashboard
+	url = https://github.com/cyrus-and/gdb-dashboard.git
