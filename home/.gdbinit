@@ -16,7 +16,7 @@ source ~/gdb/colors.py
 
 # Dashboard
 source ~/gdb/gdb-dashboard/.gdbinit
-dashboard -layout !assembly expressions !history memory !registers source stack !threads
+dashboard -layout !assembly expressions !history memory !registers source !stack !threads
 dashboard stack -style limit 5
 dashboard source -style context 10
 dashboard stack -style compact True
