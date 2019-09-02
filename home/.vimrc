@@ -82,13 +82,15 @@ filetype plugin indent on " required!
 " Solarized colorscheme
 " http://stackoverflow.com/questions/12774141/strange-changing-background-color-in-vim-solarized
 ":set t_ut=
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
-let g:solarized_degrade=1
-let g:solarized_contrast="high"
-let g:solarized_visibility="high"
+" let g:solarized_termtrans=1
+" let g:solarized_termcolors=256
+" let g:solarized_degrade=1
+" let g:solarized_contrast="high"
+" let g:solarized_visibility="high"
 set background=dark
-colorscheme solarized
+" colorscheme solarized
+
+colorscheme rigel
 set t_Co=256
 
 " Auto commands
@@ -226,7 +228,7 @@ command! -bang -nargs=* Agsw
 " ---- lightline ----
 " {{{
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'rigel',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'], ['obsession'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
