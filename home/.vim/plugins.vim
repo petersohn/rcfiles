@@ -12,6 +12,7 @@ Plug           'bkad/CamelCaseMotion'
 "Plug      'petersohn/clighter'
 Plug         'vim-jp/cpp-vim'
 Plug          'rhysd/committia.vim'
+Plug        'sainnhe/edge'
 Plug       'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-zsh' }
 Plug       'junegunn/fzf.vim'
 Plug            'sjl/gundo.vim'

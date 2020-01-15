@@ -87,10 +87,13 @@ filetype plugin indent on " required!
 " let g:solarized_degrade=1
 " let g:solarized_contrast="high"
 " let g:solarized_visibility="high"
+" set termguicolors
 set background=dark
 " colorscheme solarized
-
-colorscheme rigel
+"
+let g:edge_style = 'neon'
+let g:edge_disable_italic_comment = 1
+colorscheme edge
 set t_Co=256
 
 " Auto commands
@@ -228,7 +231,7 @@ command! -bang -nargs=* Agsw
 " ---- lightline ----
 " {{{
 let g:lightline = {
-      \ 'colorscheme': 'rigel',
+      \ 'colorscheme': 'edge',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'], ['obsession'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
@@ -399,7 +402,6 @@ else
   augroup END
 endif
 " }}}
-
 
 " ---- detectindent ----
 "  {{{
