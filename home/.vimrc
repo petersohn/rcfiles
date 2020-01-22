@@ -93,8 +93,9 @@ set background=dark
 "
 let g:edge_style = 'neon'
 let g:edge_disable_italic_comment = 1
-colorscheme edge
 set t_Co=256
+colorscheme edge
+hi Search ctermbg=240
 
 " Auto commands
 augroup vimrc
