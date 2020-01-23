@@ -96,6 +96,7 @@ let g:edge_disable_italic_comment = 1
 set t_Co=256
 colorscheme edge
 hi Search ctermbg=240
+hi MatchParen ctermbg=240
 
 " Auto commands
 augroup vimrc
