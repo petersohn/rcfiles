@@ -14,3 +14,4 @@ GPATH
 GTAGS
 GRTAGS
 GSYMS
+.mypy_cache
