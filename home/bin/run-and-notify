@@ -22,7 +22,7 @@ function notify() {
         "$message" "$name
 
 <i>$PWD</i>"
-    ( mplayer -really-quiet "${media_dir}/sounds/${sound}" >/dev/null 2>&1 & )
+    ( nohup mplayer -really-quiet "${media_dir}/sounds/${sound}" >/dev/null 2>&1 & )
 }
 
 "$@"
