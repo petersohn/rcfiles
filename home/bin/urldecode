@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+input=$(cat)
+url_encoded="${input//+/ }"
+printf '%b' "${url_encoded//%/\\x}"
