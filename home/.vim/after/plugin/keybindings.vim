@@ -21,4 +21,4 @@ nmap Y y$
 nnoremap <silent> <Leader>J :%!python -m json.tool<CR>
 inoremap <Tab> <ESC>
 vnoremap <Tab> <ESC>
-
+nmap <expr> gcc v:count? ":<c-u><cr>gc".(v:count1-1)."j" : ":TComment<CR>"
