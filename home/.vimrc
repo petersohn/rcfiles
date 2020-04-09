@@ -419,6 +419,7 @@ augroup_END
 "  {{{
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_close_on_revert = 1
+let g:gundo_prefer_python3 = 1
 " }}}
 
 
