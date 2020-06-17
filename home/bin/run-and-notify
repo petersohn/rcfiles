@@ -23,6 +23,10 @@ function notify() {
 
 <i>$PWD</i>"
     ( nohup mplayer -really-quiet "${media_dir}/sounds/${sound}" >/dev/null 2>&1 & )
+
+    if [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]]; then
+        echo -ne '\007'
+    fi
 }
 
 "$@"
