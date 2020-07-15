@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+import argparse
+import shutil
+import os
+
+
+def sync(local_filename, remote_filename):
+    if not os.path.exists(remote_filename):
+        shutil.copyfile(local_filename, remote_filename)
+        return
+    tmp_filename = remote_filename + ".tmp"
+    with open(local_filename, "r") as local:
+        with open(remote_filename, "r") as remote:
+            with open(tmp_filename, "w") as output:
+                while True:
+                    local_line = local.readline()
+                    remote_line = remote.readline()
+
+                    output.write(remote_line)
+                    if not local_line or \
+                            not remote_line or \
+                            local_line != remote_line:
+                        break
+
+                output.write(remote.read())
+                output.write(local_line)
+                output.write(local.read())
+    shutil.copyfile(tmp_filename, local_filename)
+    os.rename(tmp_filename, remote_filename)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description='Merge two history files (e.g. bash_history, zsh_history).')
+    parser.add_argument('local')
+    parser.add_argument('remote')
+    args = parser.parse_args()
+
+    sync(args.local, args.remote)
