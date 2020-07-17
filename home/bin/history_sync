@@ -10,9 +10,9 @@ def sync(local_filename, remote_filename):
         shutil.copyfile(local_filename, remote_filename)
         return
     tmp_filename = remote_filename + ".tmp"
-    with open(local_filename, "r") as local:
-        with open(remote_filename, "r") as remote:
-            with open(tmp_filename, "w") as output:
+    with open(local_filename, "rb") as local:
+        with open(remote_filename, "rb") as remote:
+            with open(tmp_filename, "wb") as output:
                 while True:
                     local_line = local.readline()
                     remote_line = remote.readline()
