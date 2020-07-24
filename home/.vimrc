@@ -636,5 +636,6 @@ if has('user_commands')
 endif
 
 command! Wsudo :execute ':silent w !sudo tee % > /dev/null' | :edit!
+map <F2> :Autoformat<CR>
 
 call s:SourceIfAvailable($HOME . "/.vimrc.local")
