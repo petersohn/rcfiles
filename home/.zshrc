@@ -92,6 +92,13 @@ _tmux_pane_words() {
   _wanted values expl 'words from current tmux pane' compadd -a w
 }
 
+function preexec {
+    # Update DISPLAY
+    if [ -n "$TMUX" ]; then
+        export $(tmux show-environment | grep "^DISPLAY")
+    fi
+}
+
 zle -C tmux-pane-words-prefix   complete-word _generic
 zle -C tmux-pane-words-anywhere complete-word _generic
 bindkey '^Xt' tmux-pane-words-prefix
