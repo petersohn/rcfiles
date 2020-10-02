@@ -370,6 +370,7 @@ let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeWinSize = 50
 let g:NERDTreeAutoDeleteBuffer = 1
+let g:NERDTreeCustomOpenArgs={'file':{'reuse':'currenttab'}}
 " }}}
 
 
