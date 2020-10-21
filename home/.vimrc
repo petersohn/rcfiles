@@ -8,6 +8,7 @@ set scrolloff=2
 set autoindent
 set tabstop=4
 set shiftwidth=4
+set expandtab
 set linebreak
 " Enable syntax highlighting
 syntax on
@@ -34,7 +35,6 @@ set hidden
 set hlsearch
 set incsearch
 set foldmethod=marker
-set expandtab
 set list
 set listchars=tab:»\ ,eol:⏎
 set history=10000
@@ -413,6 +413,8 @@ augroup vimrc_detectindent
 augroup_END
 :let g:detectindent_preferred_expandtab = 1
 :let g:detectindent_preferred_indent = 4
+:let g:detectindent_preferred_when_mixed = 0
+:let g:detectindent_only_expandtab = 1
 " }}}
 
 
