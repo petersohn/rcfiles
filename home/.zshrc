@@ -179,6 +179,8 @@ alias gy=NO_GITSTATUS=
 alias gn=NO_GITSTATUS="yes"
 alias tmux='TERM=screen-256color-bce LANG=en_US.UTF-8 nice -n 1 tmux -2'
 alias ran=run-and-notify
+alias gsm='git submodule'
+alias gsmu='git submodule update --init --recursive'
 eval $(thefuck --alias f)
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
