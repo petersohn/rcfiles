@@ -55,7 +55,7 @@ compinit
 PER_DIRECTORY_HISTORY_DEFAULT_GLOBAL_HISTORY=true
 
 # Make solarized colors applied for directories as well (ls).
-eval $(dircolors --sh ~/dircolors-solarized/dircolors.ansi-universal)
+# eval $(dircolors --sh ~/dircolors-solarized/dircolors.ansi-universal)
 
 function git-cd() {
   local git_dir
@@ -187,5 +187,7 @@ source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 
 source_if_available ~/.fzf/shell/completion.zsh
 source_if_available ~/.fzf/shell/key-bindings.zsh
+
+kitty + complete setup zsh | source /dev/stdin
 
 source_if_available ~/.zshrc.local
