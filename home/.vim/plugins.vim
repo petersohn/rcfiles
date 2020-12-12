@@ -2,7 +2,7 @@ Plug        'nacitar/a.vim'
 Plug    'skywind3000/asyncrun.vim'
 Plug    'vim-scripts/bash-support.vim'
 Plug    'jlanzarotta/bufexplorer'
-Plug        'petersohn/detectindent'
+Plug      'petersohn/detectindent'
 Plug           'bkad/CamelCaseMotion'
 " if v:version >= 800
 "   Plug        'bbchung/clighter8'
