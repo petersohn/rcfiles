@@ -5,8 +5,7 @@ source_if_available() {
 }
 
 setopt histignorespace
-# FIX FOR OH MY ZSH GIT PROMPT SLOWNESS
-# http://marc-abramowitz.com/archives/2012/04/10/fix-for-oh-my-zsh-git-svn-prompt-slowness/
+
 NO_GITSTATUS=
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
@@ -18,6 +17,8 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[comment]='fg=240,bold'
 
 export MANPATH="$(manpath):$HOME/usr/share/man"
 export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/usr/bin:$HOME/.fzf/bin:$PATH"
