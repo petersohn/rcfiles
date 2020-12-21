@@ -446,10 +446,7 @@ let g:rainbow_active = 1
 let g:rainbow_conf = {
     \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
     \   'ctermfgs': [
-    \       '27', '28', '93', '100',
-    \       '33', '34', '99', '142',
-    \       '39', '40', '129', '178',
-    \       '45', '48', '207', '220'],
+    \       '9', '10', '11', '12', '13', '14'],
     \   'operators': '_,_',
     \   'parentheses': [
     \       'start=/(/ end=/)/ fold',
