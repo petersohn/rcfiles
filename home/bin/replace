@@ -2,12 +2,12 @@
 
 print_usage() {
     cat <<_END_
-Run sed to a list of files. Unlike sed -i, only modify files when they are
-actually changed.
+Run a filter (e.g. sed) to a list of files. The program should print the output
+to the standard output. Only modify files when they are actually changed.
 
 Usage:
     $0 -h | --help
-    $0 sed_args -- files
+    $0 command [args] -- files
 _END_
 }
 
@@ -16,10 +16,10 @@ if [[ $1 == -h || $1 == --help ]]; then
     exit
 fi
 
-sedArgs=()
+command=()
 
 while [ $# -gt 0 ] && [ "$1" != '--' ]; do
-    sedArgs+=("$1")
+    command+=("$1")
     shift
 done
 
@@ -37,7 +37,7 @@ for file in "$@"; do
     while [ -e "$tmpFile" ]; do
         tmpFile+='~'
     done
-    if ! sed "${sedArgs[@]}" "$file" >"$tmpFile"; then
+    if ! "${command[@]}" "$file" >"$tmpFile"; then
         echo "Warning: failed to process file: $file" >&2
         continue
     fi
