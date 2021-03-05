@@ -11,6 +11,7 @@ set python print-stack full
 set print static-members no
 set auto-load local-gdbinit on
 set auto-load safe-path /
+set history size 100000
 
 source ~/gdb/colors.py
 
