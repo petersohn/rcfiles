@@ -30,12 +30,12 @@ response = urllib.request.urlopen(
     data=json.dumps(request).encode('UTF-8'))
 
 if response.status >= 300:
-    print(response.status, response.reason)
+    print(response.status, response.reason, file=sys.stderr)
     sys.exit(1)
 
 data = json.loads(response.read().decode('UTF-8'))
 
 if not data['ok']:
-    print(data['error'])
+    print(data['error'], file=sys.stderr)
     sys.exit(1)
 
