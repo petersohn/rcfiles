@@ -42,6 +42,7 @@ set mouse=a
 set autoread
 set noswapfile
 set updatetime=500
+set exrc
 
 function s:SourceIfAvailable(filename)
   if filereadable(a:filename)
@@ -405,18 +406,6 @@ else
   augroup END
 endif
 " }}}
-
-" ---- detectindent ----
-"  {{{
-augroup vimrc_detectindent
-  :autocmd BufReadPost * :DetectIndent
-augroup_END
-:let g:detectindent_preferred_expandtab = 1
-:let g:detectindent_preferred_indent = 4
-:let g:detectindent_preferred_when_mixed = 0
-:let g:detectindent_only_expandtab = 1
-" }}}
-
 
 " ---- Gundo ----
 "  {{{
