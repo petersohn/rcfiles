@@ -96,7 +96,7 @@ _tmux_pane_words() {
 function preexec {
     # Update DISPLAY
     if [ -n "$TMUX" ]; then
-        export $(tmux show-environment | grep "^DISPLAY")
+        eval $(tmux show-environment -s)
     fi
 }
 
