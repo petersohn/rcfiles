@@ -1,0 +1,7 @@
+#!/bin/bash
+
+IFS=$'\n' mounts=($(mount | sed -n -r 's/.* on (.*) type fuse.sshfs.*/\1/p'))
+killall -9 sshfs
+for dir in "${mounts[@]}"; do
+    fusermount -u "$dir"
+done
