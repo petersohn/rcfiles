@@ -1,0 +1,4 @@
+{
+    "clangd.arguments": ["--header-insertion=never"],
+    "suggest.autoTrigger": "never"
+}
