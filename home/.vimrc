@@ -431,58 +431,73 @@ let g:headerguard_use_cpp_comments = 1
 autocmd BufNewFile,BufReadPost /etc/lighttpd/*.conf,lighttpd.conf set filetype=lighttpd
 " }}}
 
-" {{{ lsp
+" {{{ coc
 
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    " nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+    \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-    function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction
-    inoremap <silent><expr> <C-@>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ asyncomplete#force_refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <c-@> coc#refresh()
 
-    let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-" refer to doc to add more commands
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
 endfunction
 
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
-let g:lsp_async_completion = 1
-let g:lsp_settings_filetype_cpp = 'clangd'
-let g:lsp_settings_filetype_python = 'pylsp-all'
-let g:lsp_settings_filetype_rust = 'rust-analyzer'
-let g:lsp_settings_filetype_typescript = 'typescript-language-server'
-let g:lsp_settings_filetype_javascript = 'typescript-language-server'
-let g:lsp_diagnostics_float_cursor = 1
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
-let g:asyncomplete_auto_popup = 0
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
 
- let g:lsp_settings = {
-  \   'clangd': { 'cmd': ['clangd', '--header-insertion=never'] },
-  \}
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " }}}
 
