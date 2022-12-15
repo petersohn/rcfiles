@@ -1,4 +1,5 @@
 {
     "clangd.arguments": ["--header-insertion=never"],
-    "suggest.autoTrigger": "never"
+    "suggest.autoTrigger": "never",
+    "inlayHint.enable": false
 }
