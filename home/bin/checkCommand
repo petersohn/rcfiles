@@ -35,11 +35,11 @@ shift $((OPTIND - 1))
 previous=
 
 while true; do
-    result=$("$@")
+    sleep "$delay"
+    result=$("$@") || continue
     if [[ "$result" != "$previous" ]]; then
         date '+%F %H:%M:%S'
         echo "$result"
         previous="$result"
-        sleep "$delay"
     fi
 done
