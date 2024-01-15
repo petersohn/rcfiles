@@ -2,7 +2,7 @@
 
 media_dir="${HOME}/usr/share"
 
-function notify() {
+function notify_linux() {
     name="$1"
     result="$2"
 
@@ -25,6 +25,38 @@ function notify() {
     ( nohup mplayer -really-quiet "${media_dir}/sounds/${sound}" >/dev/null 2>&1 & )
 
     if [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]]; then
+        echo -ne '\007'
+    fi
+}
+
+function notify_mac() {
+    name="$1"
+    result="$2"
+
+    if [[ $result == 0 ]]; then
+        message="Command successful"
+        icon=good.svg
+        sound=Glass
+    else
+        message="Command failed"
+        icon=bad.svg
+        sound=Basso
+    fi
+
+    terminal-notifier -title "$message" -subtitle "$name" -message "$PWD" \
+        -contentImage "${media_dir}/images/${icon}" -sound "$sound"
+}
+
+function which_() {
+    which "$@" >/dev/null 2>&1
+}
+
+function notify() {
+    if which_ notify-send; then
+        notify_linux "$@"
+    elif which_ terminal-notifier; then
+        notify_mac "$@"
+    else
         echo -ne '\007'
     fi
 }

@@ -21,7 +21,27 @@ typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[comment]='fg=240,bold'
 
 export MANPATH="$(manpath):$HOME/usr/share/man"
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/usr/bin:$HOME/.fzf/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/usr/bin:$HOME/.fzf/bin:$PATH:/opt/homebrew/bin"
+
+if [ -f "/opt/homebrew/bin/brew" ]
+then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+if [ -d "/opt/homebrew/opt/llvm/bin" ]
+then
+    export PATH="/opt/homebrew/opt/llvm/bin:${PATH}"
+fi
+
+if [ -d "/opt/homebrew/opt/qt@5/bin" ]
+then
+    export PATH="/opt/homebrew/opt/qt@5/bin:${PATH}"
+fi
+
+if [ -d "/opt/homebrew/opt/coreutils/libexec/gnubin" ]
+then
+    export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
+fi
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 

@@ -30,11 +30,11 @@ shift $((OPTIND - 1))
 
 set -e
 
-dir=$(readlink -e "$dir")
+dir=$(readlink -f "$dir")
 
 found=
-for pid in $(pidof "$@"); do
-    workdir=$(readlink -e "/proc/$pid/cwd")
+for pid in $(pgrep "$@"); do
+    workdir=$(readlink -f "/proc/$pid/cwd")
     if [[ "$workdir" == "$dir" ]]; then
         echo "$pid"
         found=1
