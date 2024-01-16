@@ -1,5 +1,13 @@
 {
-    "clangd.arguments": ["--header-insertion=never"],
-    "suggest.autoTrigger": "never",
-    "inlayHint.enable": false
+  "clangd.arguments": ["--header-insertion=never"],
+  "suggest.autoTrigger": "never",
+  "inlayHint.enable": false,
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "objc",
+    "objcpp",
+    "javascript",
+    "typescript",
+    "rust",
+  ]
 }
