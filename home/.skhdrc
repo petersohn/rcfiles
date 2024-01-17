@@ -1,6 +1,6 @@
 ctrl + cmd - f1: startstop.py -p ~/.mr3_pid.json mpv https://mr-stream.connectmedia.hu/4741/mr3.mp3
 
-cmd - j: yabai -m display --focus west
-cmd - k: yabai -m display --focus east
+cmd + shift - j: yabai -m display --focus west
+cmd + shift - k: yabai -m display --focus east
 ctrl + cmd - j: yabai -m window --display west --focus
 ctrl + cmd - k: yabai -m window --display east --focus
