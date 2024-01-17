@@ -1,44 +1,22 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-print_usage() {
-    cat <<_END_
-Find the PID of a process running in a directory. Use pgrep to find it.
+import argparse
+import os
+import psutil
+import re
 
-Usage: $0 -h
-       $0 [options] [-d dir] [pgrep options]
-_END_
-}
+parser = argparse.ArgumentParser()
+parser.add_argument('-d', '--dir')
+parser.add_argument('name')
 
-dir=.
+args = parser.parse_args()
 
-while getopts ":hd:" Option; do
-    case $Option in
-    h)
-        print_usage >&2
-        exit
-        ;;
-    d)
-        dir="$OPTARG"
-        ;;
-    *)
-        print_usage >&2
-        exit 2
-    esac
-done
+if args.dir is not None:
+    target_dir = os.path.abspath(args.dir)
+else:
+    target_dir = os.getcwd()
 
-shift $((OPTIND - 1))
-
-set -e
-
-dir=$(readlink -f "$dir")
-
-found=
-for pid in $(pgrep "$@"); do
-    workdir=$(readlink -f "/proc/$pid/cwd")
-    if [[ "$workdir" == "$dir" ]]; then
-        echo "$pid"
-        found=1
-    fi
-done
-
-[[ -n "$found" ]]
+for proc in psutil.process_iter():
+    with proc.oneshot():
+        if proc.name() == args.name and proc.cwd() == target_dir:
+            print(proc.pid)
