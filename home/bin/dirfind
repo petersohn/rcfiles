@@ -18,5 +18,5 @@ else:
 
 for proc in psutil.process_iter():
     with proc.oneshot():
-        if proc.name() == args.name and proc.cwd() == target_dir:
+        if proc.name().find(args.name) != -1 and proc.cwd() == target_dir:
             print(proc.pid)
