@@ -4,3 +4,4 @@ cmd + shift - j: yabai -m display --focus west
 cmd + shift - k: yabai -m display --focus east
 ctrl + cmd - j: yabai -m window --display west --focus
 ctrl + cmd - k: yabai -m window --display east --focus
+ctrl + cmd - m: yabai -m window --grid 1:1:0:0:1:1
