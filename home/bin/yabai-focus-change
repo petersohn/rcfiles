@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import subprocess
+import shutil
+import argparse
+import json
+
+parser = argparse.ArgumentParser(prog='sync-dir')
+parser.add_argument('direction', type=int)
+
+args = parser.parse_args()
+
+yabai_command = shutil.which('yabai')
+result = subprocess.run(
+    [yabai_command, '--message', 'query', '--windows', '--display'],
+    stdout=subprocess.PIPE, timeout=10)
+
+if result.returncode != 0:
+    sys.exit(result.returncode)
+
+windows = json.loads(result.stdout)
+windows.sort(key=lambda x: x['id'])
+
+active_window = -1
+for i, window in enumerate(windows):
+    if window['has-focus']:
+        active_window = i
+        break
+
+new_active_window = (active_window + args.direction) % len(windows)
+os.execv(
+    yabai_command,
+    [yabai_command, '--message', 'window', '--focus', str(windows[new_active_window]['id'])])
