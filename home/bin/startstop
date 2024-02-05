@@ -2,30 +2,43 @@
 
 import argparse
 import os
+import sys
 import psutil
 import json
 import traceback
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--pidfile', required=True)
-parser.add_argument('prog', nargs='+')
+parser.add_argument('--start', action='store_true')
+parser.add_argument('--stop', action='store_true')
+parser.add_argument('prog', nargs='*')
 
-args = parser.parse_args()
+def start(args):
+    if args.stop:
+        print('Not running.', file=sys.stderr)
+        return 1
 
-print(args)
-
-def start():
     pid = os.posix_spawnp(args.prog[0], args.prog, os.environ)
     proc = psutil.Process(pid)
     time = proc.create_time()
     with open(args.pidfile, 'w') as f:
         json.dump({'pid': pid, 'time': time}, f)
 
+    return 0
+
 
 def main():
+    args = parser.parse_args()
+    if args.start and args.stop:
+        print('Only one of --start and --stop is allowed', file=sys.stderr)
+        return 1
+
+    if not args.stop and not args.prog:
+        print('Prog is necessary when starting', file=sys.stderr)
+        return 1
+
     if not os.path.exists(args.pidfile):
-        start()
-        return
+        return start(args)
 
     try:
         with open(args.pidfile) as f:
@@ -35,19 +48,20 @@ def main():
     except (OSError, json.JSONDecodeError, KeyError):
         traceback.print_exc()
         os.remove(args.pidfile)
-        start()
-        return
+        return start(args)
 
     try:
         proc = psutil.Process(pid)
     except psutil.NoSuchProcess:
-        start()
-        return
+        return start(args)
 
     if proc.create_time() == time:
+        if args.start:
+            print('Already running.', file=sys.stderr)
+            return 1
         proc.terminate()
     else:
-        start()
+        return start(args)
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
