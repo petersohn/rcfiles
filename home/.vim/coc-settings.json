@@ -3,6 +3,7 @@
   "suggest.autoTrigger": "never",
   "inlayHint.enable": false,
   "coc.preferences.formatOnType": true,
+  "rust-analyzer.enable": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "objc",
     "objcpp",

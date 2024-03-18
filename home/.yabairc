@@ -5,6 +5,8 @@ yabai -m config \
     mouse_modifier               ctrl           \
     mouse_action1                move           \
     mouse_action2                resize         \
-    mouse_follows_focus          on             \
+    mouse_follows_focus          off             \
     focus_follows_mouse          autofocus      \
     mouse_drop_action            swap
+
+yabai -m rule --add app="zoom.us" focus_follows_mouse=off

@@ -21,3 +21,11 @@ dashboard -layout !assembly expressions !history memory !registers source !stack
 dashboard stack -style limit 5
 dashboard source -style context 10
 dashboard stack -style compact True
+
+python
+import sys
+import os
+sys.path.insert(0, os.path.join(os.environ['HOME'], 'workspace/libcxx-pretty-printers/src'))
+from libcxx.v1.printers import register_libcxx_printers
+register_libcxx_printers(None)
+end
