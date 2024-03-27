@@ -1,8 +1,8 @@
 {
   "clangd.arguments": ["--header-insertion=never"],
-  "suggest.autoTrigger": "never",
+  "suggest.autoTrigger": "trigger",
   "inlayHint.enable": false,
-  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnType": false,
   "rust-analyzer.enable": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "objc",
