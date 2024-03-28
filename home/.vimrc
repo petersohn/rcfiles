@@ -20,8 +20,6 @@ set ruler
 set showmatch
 " Changes special characters in search patterns (default)
 "set magic
-" Required to be able to use keypad keys and map missed escape sequences
-set esckeys
 "set timeoutlen=1000 ttimeoutlen=10
 " make backspace work like most other apps
 set backspace=2
@@ -110,7 +108,7 @@ augroup vimrc
   autocmd CursorHoldI * checktime
 
   " Automatically fix whitspace errors in case of C++ files.
-  autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
+  " autocmd BufWritePost *.hpp,*.cpp :FixWhitespace
 
   autocmd BufNewFile,BufRead *.md   set syntax=markdown
   autocmd FileType xml setlocal foldmethod=syntax
@@ -431,11 +429,12 @@ let g:headerguard_use_cpp_comments = 1
 autocmd BufNewFile,BufReadPost /etc/lighttpd/*.conf,lighttpd.conf set filetype=lighttpd
 " }}}
 
+if !has('nvim')
 " {{{ coc
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#insert()
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
     \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 inoremap <silent><expr> <c-@> coc#refresh()
@@ -500,6 +499,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " }}}
+endif
 
 " ---- rainbow ----
 "  {{{
@@ -623,14 +623,6 @@ if &term =~# '^screen'
   execute "set <xRight>=\e[1;*C"
   execute "set <xLeft>=\e[1;*D"
 endif
-" }}}
-
-
-" ---- YankRing ----
-"  {{{
-let g:yankring_min_element_length = 2
-let g:yankring_max_element_length = 4194304 " 4M
-nnoremap <silent> <Leader>p :YRShow<CR>
 " }}}
 
 " ---- validator ----

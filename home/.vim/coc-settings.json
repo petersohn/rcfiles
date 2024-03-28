@@ -1,5 +1,6 @@
 {
   "clangd.arguments": ["--header-insertion=never"],
+  "clangd.disableSnippetCompletion": true,
   "suggest.autoTrigger": "trigger",
   "inlayHint.enable": false,
   "coc.preferences.formatOnType": false,
@@ -9,6 +10,6 @@
     "objcpp",
     "javascript",
     "typescript",
-    "rust",
+    "rust"
   ]
 }

@@ -1,15 +1,13 @@
 Plug        'nacitar/a.vim'
+if !has('nvim')
 Plug    'skywind3000/asyncrun.vim'
+endif
 Plug    'vim-scripts/bash-support.vim'
 Plug    'jlanzarotta/bufexplorer'
 Plug           'bkad/CamelCaseMotion'
-" if v:version >= 800
-"   Plug        'bbchung/clighter8'
-" else
-"   Plug        'bbchung/clighter'
-" endif
-"Plug      'petersohn/clighter'
+if !has('nvim')
 Plug       'neoclide/coc.nvim', {'branch': 'release'}
+endif
 Plug         'vim-jp/cpp-vim'
 Plug          'rhysd/committia.vim'
 Plug       'chrisbra/csv.vim'
