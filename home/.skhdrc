@@ -1,5 +1,6 @@
 ctrl + cmd - f1: startstop --stop -p ~/.mr3_pid.json
 ctrl + cmd - f2: startstop --start -p ~/.mr3_pid.json mpv https://mr-stream.connectmedia.hu/4741/mr3.mp3
+ctrl + cmd - f3: startstop --start -p ~/.mr3_pid.json mpv https://mr-stream.connectmedia.hu/4691/mr9.mp3
 
 cmd + ctrl - j: yabai -m display --focus west
 cmd + ctrl - k: yabai -m display --focus east

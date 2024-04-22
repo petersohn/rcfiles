@@ -8,8 +8,6 @@
   "coc.preferences.formatOnSaveFiletypes": [
     "objc",
     "objcpp",
-    "javascript",
-    "typescript",
     "rust"
   ]
 }
