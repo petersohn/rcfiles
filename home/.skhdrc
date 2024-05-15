@@ -9,3 +9,4 @@ shift + cmd - k: yabai -m window --display east --focus
 ctrl + cmd - tab: yabai-focus-change 1
 ctrl + cmd + shift - tab: yabai-focus-change -1
 ctrl + cmd - m: yabai -m window --grid 1:1:0:0:1:1
+ctrl + cmd - r: yabai --restart-service

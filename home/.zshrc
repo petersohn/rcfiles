@@ -21,7 +21,6 @@ typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[comment]='fg=240,bold'
 
 export MANPATH="$(manpath):$HOME/usr/share/man"
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/usr/bin:$HOME/.fzf/bin:$PATH:/opt/homebrew/bin"
 
 if [ -f "/opt/homebrew/bin/brew" ]
 then
@@ -42,6 +41,8 @@ if [ -d "/opt/homebrew/opt/coreutils/libexec/gnubin" ]
 then
     export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
 fi
+
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/usr/bin:$HOME/.fzf/bin:$PATH"
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
@@ -198,6 +199,7 @@ alias ran=run-and-notify
 alias gsm='git submodule'
 alias gsmu='git submodule update --init --recursive'
 alias pipi='python -m pip install --user --break-system-packages'
+alias pn='pnpm'
 eval $(thefuck --alias f)
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
