@@ -34,7 +34,7 @@ def process_file(path, command):
         finally:
             os.close(tmp_fd)
 
-        if result.returncode != 0 and not filecmp.cmp(tmp_file_name, path, shallow=False):
+        if result.returncode == 0 and not filecmp.cmp(tmp_file_name, path, shallow=False):
             os.replace(tmp_file_name, path)
             tmp_file_name = None
     finally:
