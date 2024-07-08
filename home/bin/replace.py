@@ -27,21 +27,19 @@ def process_file(path, command):
                 stdin = open(path, mode='rb')
 
             try:
-                subprocess.run(command, stdin=stdin, stdout=tmp_fd)
+                result = subprocess.run(command, stdin=stdin, stdout=tmp_fd)
             finally:
                 if not has_filename:
                     stdin.close()
         finally:
             os.close(tmp_fd)
 
-        if not filecmp.cmp(tmp_file_name, path, shallow=False):
+        if result.returncode != 0 and not filecmp.cmp(tmp_file_name, path, shallow=False):
             os.replace(tmp_file_name, path)
-        else:
-            os.remove(tmp_file_name)
-    except:
+            tmp_file_name = None
+    finally:
         if tmp_file_name is not None:
             os.remove(tmp_file_name)
-        raise
 
 
 def do_process(path, command):
