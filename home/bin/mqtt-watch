@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+import paho.mqtt.client as mqtt
+import argparse
+import time
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--host', '-H', required=True)
+parser.add_argument('--port', '-p', type=int, default=1883)
+parser.add_argument('--keepalive', '-k', type=int, default=60)
+parser.add_argument('--username', '-u')
+parser.add_argument('--password', '-P')
+parser.add_argument('--topic', '-t', nargs='+')
+parser.add_argument('--ignore-topic', '-i', nargs='*')
+parser.add_argument('--timestamps', '-T', action='store_true')
+parser.add_argument('--encoding', '-e', default='utf-8')
+args = parser.parse_args()
+ignored_topics = set(args.ignore_topic)
+
+def on_connect(client, userdata, flags, reason_code, properties):
+    for topic in args.topic:
+        client.subscribe(topic)
+
+
+values = {}
+
+def on_message(client, userdata, msg):
+    if msg.topic in ignored_topics:
+        return
+    value = values.get(msg.topic)
+    if value != msg.payload:
+        prefix = time.strftime('%Y-%m-%d %H:%M:%S - ') if args.timestamps else ''
+        print('{}{} {}'.format(prefix, msg.topic, msg.payload.decode(args.encoding)))
+        values[msg.topic] = msg.payload
+
+
+mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+mqttc.on_connect = on_connect
+mqttc.on_message = on_message
+mqttc.username = args.username
+mqttc.password = args.password
+
+mqttc.connect(args.host, args.port, args.keepalive)
+
+mqttc.loop_forever()
