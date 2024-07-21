@@ -5,6 +5,7 @@
   "inlayHint.enable": false,
   "coc.preferences.formatOnType": false,
   "rust-analyzer.enable": true,
+  "rust-analyzer.cargo.buildScripts.enable": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "objc",
     "objcpp",
