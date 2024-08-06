@@ -37,31 +37,38 @@ def main():
         print('Prog is necessary when starting', file=sys.stderr)
         return 1
 
-    if not os.path.exists(args.pidfile):
-        return start(args)
+    lockfile = args.pidfile + '.lock'
+    lock = open(lockfile, 'x')
 
     try:
-        with open(args.pidfile) as f:
-            pid_data = json.load(f)
-            pid = pid_data['pid']
-            time = pid_data['time']
-    except (OSError, json.JSONDecodeError, KeyError):
-        traceback.print_exc()
-        os.remove(args.pidfile)
-        return start(args)
+        if not os.path.exists(args.pidfile):
+            return start(args)
 
-    try:
-        proc = psutil.Process(pid)
-    except psutil.NoSuchProcess:
-        return start(args)
+        try:
+            with open(args.pidfile) as f:
+                pid_data = json.load(f)
+                pid = pid_data['pid']
+                time = pid_data['time']
+        except (OSError, json.JSONDecodeError, KeyError):
+            traceback.print_exc()
+            os.remove(args.pidfile)
+            return start(args)
 
-    if proc.create_time() == time:
-        if args.start:
-            print('Already running.', file=sys.stderr)
-            return 1
-        proc.terminate()
-    else:
-        return start(args)
+        try:
+            proc = psutil.Process(pid)
+        except psutil.NoSuchProcess:
+            return start(args)
+
+        if proc.create_time() == time:
+            if args.start:
+                print('Already running.', file=sys.stderr)
+                return 1
+            proc.terminate()
+        else:
+            return start(args)
+    finally:
+        lock.close()
+        os.remove(lockfile)
 
 if __name__ == '__main__':
     sys.exit(main())
