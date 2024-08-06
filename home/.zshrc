@@ -27,6 +27,11 @@ then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+if [ -d "/opt/homebrew/opt/llvm@17/bin" ]
+then
+    export PATH="/opt/homebrew/opt/llvm@17/bin:${PATH}"
+fi
+
 if [ -d "/opt/homebrew/opt/llvm/bin" ]
 then
     export PATH="/opt/homebrew/opt/llvm/bin:${PATH}"
