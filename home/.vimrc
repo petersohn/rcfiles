@@ -9,7 +9,7 @@ set autoindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set linebreak
+set nolinebreak
 " Enable syntax highlighting
 syntax on
 " Select case-insenitiv search (not default)

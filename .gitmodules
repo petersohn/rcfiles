@@ -1,3 +1,6 @@
 [submodule "home/gdb/gdb-dashboard"]
 	path = home/gdb/gdb-dashboard
 	url = https://github.com/cyrus-and/gdb-dashboard.git
+[submodule "home/.config/nvim"]
+	path = home/.config/nvim
+	url = git@github.com:petersohn/kickstart.nvim.git
