@@ -138,7 +138,6 @@ require('lazy').setup({
   { 'tpope/vim-obsession' },
   { 'tpope/vim-speeddating' },
   { 'tpope/vim-surround' },
-  { 'tpope/vim-sleuth' },
   { 'tpope/vim-repeat' },
   {
     'bkad/CamelCaseMotion',

@@ -175,7 +175,15 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       capabilities.textDocument.completion.completionItem.snippetSupport = false
       local servers = {
-        clangd = {},
+        clangd = {
+          cmd = {
+            'clangd',
+            '--clang-tidy',
+            '--header-insertion=never',
+            '--completion-style=detailed',
+            '--background-index',
+          },
+        },
         -- gopls = {},
         basedpyright = {},
         rust_analyzer = {},

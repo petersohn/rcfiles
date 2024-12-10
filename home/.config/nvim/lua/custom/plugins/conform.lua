@@ -47,6 +47,7 @@ return {
       c = { 'clang-format' },
       cpp = { 'clang-format' },
       rust = { 'rustfmt' },
+      gn = { 'gn' },
     },
   },
 }
