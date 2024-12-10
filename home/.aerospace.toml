@@ -1,0 +1,18 @@
+start-at-login = true
+on-focus-changed = ['move-mouse window-lazy-center']
+
+[[on-window-detected]]
+check-further-callbacks = true
+run = 'layout floating'
+
+[mode.main.binding]
+cmd-ctrl-j = "focus-monitor left"
+cmd-ctrl-k = "focus-monitor right"
+cmd-ctrl-r = "reload-config"
+cmd-shift-j = "move-node-to-monitor --focus-follows-window left"
+cmd-shift-k = "move-node-to-monitor --focus-follows-window right"
+cmd-ctrl-m = "fullscreen"
+
+cmd-ctrl-f1 = "exec-and-forget ~/bin/startstop --stop -p ~/.mr3_pid.json"
+cmd-ctrl-f2 = "exec-and-forget ~/bin/startstop --start -p ~/.mr3_pid.json mpv https://mr-stream.connectmedia.hu/4741/mr3.mp3"
+cmd-ctrl-f3 = "exec-and-forget ~/bin/startstop --start -p ~/.mr3_pid.json mpv https://mr-stream.connectmedia.hu/4691/mr9.mp3"
