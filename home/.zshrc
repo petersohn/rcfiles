@@ -199,6 +199,7 @@ SAVEHIST=1000000
 
 alias gy=NO_GITSTATUS=
 alias gn=NO_GITSTATUS="yes"
+alias gdt='git difftool'
 alias tmux='TERM=screen-256color-bce LANG=en_US.UTF-8 nice -n 1 tmux -2'
 alias ran=run-and-notify
 alias gsm='git submodule'
