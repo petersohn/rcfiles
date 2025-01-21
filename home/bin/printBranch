@@ -2,7 +2,7 @@
 
 use strict;
 
-my $data = `git status -b --porcelain 2>/dev/null`;
+my $data = `git status -b --porcelain --untracked-files=no 2>/dev/null`;
 
 if ($? != 0) {
     exit 1;
