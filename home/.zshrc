@@ -200,6 +200,7 @@ SAVEHIST=1000000
 alias gy=NO_GITSTATUS=
 alias gn=NO_GITSTATUS="yes"
 alias gdt='git difftool'
+alias gmt='git mergetool'
 alias tmux='TERM=screen-256color-bce LANG=en_US.UTF-8 nice -n 1 tmux -2'
 alias ran=run-and-notify
 alias gsm='git submodule'
@@ -213,6 +214,6 @@ source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 source_if_available ~/.fzf/shell/completion.zsh
 source_if_available ~/.fzf/shell/key-bindings.zsh
 
-kitty + complete setup zsh | source /dev/stdin
+which -s kitty && kitty + complete setup zsh | source /dev/stdin
 
 source_if_available ~/.zshrc.local

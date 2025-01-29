@@ -146,7 +146,6 @@ require('lazy').setup({
     end,
   },
   { 'ngg/vim-gn' },
-  { 'ngg/vim-gn' },
   { 'zapling/mason-lock.nvim' },
 }, {
   ui = {
