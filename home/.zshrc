@@ -214,6 +214,6 @@ source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 source_if_available ~/.fzf/shell/completion.zsh
 source_if_available ~/.fzf/shell/key-bindings.zsh
 
-which -s kitty && kitty + complete setup zsh | source /dev/stdin
+which kitty >/dev/null && kitty + complete setup zsh | source /dev/stdin
 
 source_if_available ~/.zshrc.local
