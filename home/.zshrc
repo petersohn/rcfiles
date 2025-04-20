@@ -53,26 +53,28 @@ fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
 source $HOME/.zsh/antigen/antigen.zsh
 
-antigen use oh-my-zsh
+if [[ -z $ZSH_FAST ]]; then
+    antigen use oh-my-zsh
 
-antigen bundle git
-antigen bundle docker
-antigen bundle screen
-antigen bundle dircycle
-antigen bundle sudo
-antigen bundle zsh-users/zsh-completions
-antigen bundle history-substring-search
-antigen bundle petersohn/zsh-comp-gsettings
-antigen bundle zsh-users/zsh-syntax-highlighting
+    antigen bundle git
+    antigen bundle docker
+    antigen bundle screen
+    antigen bundle dircycle
+    antigen bundle sudo
+    antigen bundle zsh-users/zsh-completions
+    antigen bundle history-substring-search
+    antigen bundle petersohn/zsh-comp-gsettings
+    antigen bundle zsh-users/zsh-syntax-highlighting
 
-antigen theme petersohn/zsh-theme themes/zsh-theme
+    antigen theme petersohn/zsh-theme themes/zsh-theme
 
-source_if_available "$HOME/.antigen.local"
+    source_if_available "$HOME/.antigen.local"
 
-antigen apply
+    antigen apply
+    autoload -U compinit
+    compinit
+fi
 
-autoload -U compinit
-compinit
 
 PER_DIRECTORY_HISTORY_DEFAULT_GLOBAL_HISTORY=true
 

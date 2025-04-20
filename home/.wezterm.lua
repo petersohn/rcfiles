@@ -11,5 +11,17 @@ config.window_padding = {
 	top = 0,
 	bottom = 0,
 }
+config.keys = {
+	{
+		key = "1",
+		mods = "CMD|CTRL",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
+	{
+		key = "2",
+		mods = "CMD|CTRL",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
+}
 
 return config
