@@ -1,7 +1,10 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
-config.color_scheme = "Selenized Dark (Gogh)"
+local colors = wezterm.get_builtin_color_schemes()["Selenized Dark (Gogh)"]
+colors.brights[1] = "#445566"
+
+config.colors = colors
 config.font = wezterm.font("DejaVu Sans Mono", {})
 config.font_size = 12
 config.hide_tab_bar_if_only_one_tab = true
