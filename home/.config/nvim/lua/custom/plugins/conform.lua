@@ -49,6 +49,7 @@ return {
       cpp = { 'clang-format' },
       rust = { 'rustfmt' },
       gn = { 'gn' },
+      json = { 'jq' },
     },
   },
 }
