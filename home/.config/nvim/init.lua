@@ -123,7 +123,7 @@ require('lazy').setup({
   require 'custom.plugins.gp',
   require 'custom.plugins.gitsigns', -- adds gitsigns recommend keymaps
   require 'custom.plugins.neotest',
-  require 'custom.plugins.easy-dotnet',
+  -- require 'custom.plugins.easy-dotnet',
   require 'custom.plugins.decisive',
 
   -- Highlight todo, notes, etc in comments
