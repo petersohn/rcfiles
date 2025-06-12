@@ -61,6 +61,17 @@ return { -- Fuzzy Finder (files, lsp, etc)
             width = 0.9,
           },
         },
+        vimgrep_arguments = {
+          'rg',
+          '--hidden',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--trim',
+        },
         --path_display = {
         --  'smart',
         --},
