@@ -35,5 +35,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', 'cw', 'dwi')
 vim.keymap.set('n', 'cW', 'dWi')
+vim.keymap.set('i', '<C-Down>', '<C-n>', { noremap = true })
+vim.keymap.set('i', '<C-Up>', '<C-p>', { noremap = true })
 
 return {}

@@ -91,9 +91,6 @@ return {
 
     sources = {
       default = { 'lsp', 'buffer', 'path', 'snippets' },
-      lsp = {
-        fallback = {},
-      },
       providers = {
         buffer = {
           opts = {
@@ -134,4 +131,8 @@ return {
       },
     },
   },
+  --keys = {
+  --  { '<C-N>', mode = { 'i', 'c' }, false },
+  --  { '<C-P>', mode = { 'i', 'c' }, false },
+  --},
 }
