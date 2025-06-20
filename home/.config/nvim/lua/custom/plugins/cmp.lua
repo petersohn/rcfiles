@@ -102,6 +102,8 @@ return {
                 return vim.bo[bufnr].buftype == ''
               end, vim.api.nvim_list_bufs())
             end,
+            --max_sync_buffer_size = 10000000, -- will perform a synchronous search if below
+            --max_async_buffer_size = 50000000, -- will perform an asynchronous search if below
           },
         },
       },

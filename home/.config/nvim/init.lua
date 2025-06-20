@@ -78,6 +78,7 @@ vim.opt.autoread = true
 vim.opt.swapfile = false
 vim.opt.updatetime = 500
 vim.opt.colorcolumn = '81'
+vim.opt.termguicolors = true
 
 require 'custom.keymaps'
 require 'custom.commands'
@@ -115,7 +116,7 @@ require('lazy').setup({
   require 'custom.plugins.conform', -- Autoformat
   require 'custom.plugins.cmp', -- Autocompletion
   require 'custom.plugins.selenized',
-  require 'custom.plugins.mini', -- Collection of various small independent plugins/modules
+  --require 'custom.plugins.mini', -- Collection of various small independent plugins/modules
   require 'custom.plugins.treesitter', -- Highlight, edit, and navigate code
   require 'custom.plugins.a',
   require 'custom.plugins.oil',
