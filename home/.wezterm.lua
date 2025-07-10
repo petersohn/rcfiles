@@ -27,4 +27,6 @@ config.keys = {
 	},
 }
 
+config.hyperlink_rules = {}
+
 return config
