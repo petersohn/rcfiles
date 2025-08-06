@@ -102,8 +102,14 @@ return {
                 return vim.bo[bufnr].buftype == ''
               end, vim.api.nvim_list_bufs())
             end,
-            --max_sync_buffer_size = 10000000, -- will perform a synchronous search if below
-            --max_async_buffer_size = 50000000, -- will perform an asynchronous search if below
+            -- Maximum total number of characters (in an individual buffer) for which buffer completion runs synchronously. Above this, asynchronous processing is used.
+            max_sync_buffer_size = 50000,
+            -- Maximum total number of characters (in an individual buffer) for which buffer completion runs asynchronously. Above this, the buffer will be skipped.
+            max_async_buffer_size = 500000,
+            -- Maximum text size across all buffers (default: 500KB)
+            max_total_buffer_size = 2000000,
+            -- Order in which buffers are retained for completion, up to the max total size limit (see above)
+            retention_order = { 'focused', 'visible', 'recency', 'largest' },
           },
         },
       },
@@ -132,6 +138,10 @@ return {
         border = 'single',
       },
     },
+  },
+
+  cmdline = {
+    enabled = false,
   },
   --keys = {
   --  { '<C-N>', mode = { 'i', 'c' }, false },
