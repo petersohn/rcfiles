@@ -131,20 +131,20 @@ require('lazy').setup({
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   {
-    'numToStr/Comment.nvim',
-    opts = {
-      padding = false,
-    },
+   'numToStr/Comment.nvim',
+   opts = {
+     padding = false,
+   },
   },
   { 'tpope/vim-obsession' },
   { 'tpope/vim-speeddating' },
   { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
   {
-    'bkad/CamelCaseMotion',
-    init = function()
-      vim.g.camelcasemotion_key = ','
-    end,
+   'bkad/CamelCaseMotion',
+   init = function()
+     vim.g.camelcasemotion_key = ','
+   end,
   },
   { 'ngg/vim-gn' },
   { 'zapling/mason-lock.nvim' },
