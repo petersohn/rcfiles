@@ -1,0 +1,7 @@
+[tool.basedpyright]
+reportAny = false
+reportExplicitAny = false
+reportUnknownArgumentType = false
+reportUnknownLambdaType = false
+reportImplicitStringConcatenation = false
+reportUnnecessaryComparison = false

@@ -8,12 +8,12 @@ import json
 import traceback
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-p', '--pidfile', required=True)
-parser.add_argument('--start', action='store_true')
-parser.add_argument('--stop', action='store_true')
-parser.add_argument('prog', nargs='*')
+_ = parser.add_argument('-p', '--pidfile', required=True)
+_ = parser.add_argument('--start', action='store_true')
+_ = parser.add_argument('--stop', action='store_true')
+_ = parser.add_argument('prog', nargs='*')
 
-def start(args):
+def start(args: argparse.Namespace):
     if args.stop:
         print('Not running.', file=sys.stderr)
         return 1
