@@ -1,74 +1,132 @@
 #!/usr/bin/env python3
 
 import argparse
+import io
 import os
 import sys
 import psutil
 import json
 import traceback
-
-parser = argparse.ArgumentParser()
-_ = parser.add_argument('-p', '--pidfile', required=True)
-_ = parser.add_argument('--start', action='store_true')
-_ = parser.add_argument('--stop', action='store_true')
-_ = parser.add_argument('prog', nargs='*')
-
-def start(args: argparse.Namespace):
-    if args.stop:
-        print('Not running.', file=sys.stderr)
-        return 1
-
-    pid = os.posix_spawnp(args.prog[0], args.prog, os.environ)
-    proc = psutil.Process(pid)
-    time = proc.create_time()
-    with open(args.pidfile, 'w') as f:
-        json.dump({'pid': pid, 'time': time}, f)
-
-    return 0
+from typing import Any
 
 
-def main():
-    args = parser.parse_args()
-    if args.start and args.stop:
-        print('Only one of --start and --stop is allowed', file=sys.stderr)
-        return 1
+class FileLock:
+    def __init__(self, path: str):
+        self.path = path
+        self.lock: io.IOBase | None = None
 
-    if not args.stop and not args.prog:
-        print('Prog is necessary when starting', file=sys.stderr)
-        return 1
+    def __enter__(self):
+        self.lock = open(self.path, 'x')
 
-    lockfile = args.pidfile + '.lock'
-    lock = open(lockfile, 'x')
+    def __exit__(self, exc_type: Any, exc_value: Any, traceback: Any):
+        if self.lock is not None:
+            self.lock.close()
+            os.remove(self.path)
 
-    try:
-        if not os.path.exists(args.pidfile):
-            return start(args)
+
+class StartStop:
+    def __init__(self):
+        self.prog: list[str] = []
+        self.pidfile: str = ''
+
+    def add_config_file(self, path: str) -> None:
+        with open(path) as f:
+            obj: dict[str, Any] = json.load(f)
+        assert type(obj) == dict, "Invalid config file"
+        self._parse_prog(obj.get("program"))
+        self._parse_pidfile(obj.get("pidfile"))
+
+    def _parse_pidfile(self, pidfile: Any) -> None:
+        if pidfile is None:
+            return
+        assert type(pidfile) is str, "Invalid config file"
+        assert pidfile != "", "Pidfile cannot be empty"
+        self.pidfile = pidfile
+
+    def _parse_prog(self, prog: Any) -> None:
+        if prog is None:
+            return
+
+        if type(prog) is list:
+            for item in prog:
+                assert type(item) is str, "Invalid config file"
+            self.prog = prog
+        else:
+            assert type(prog) is str, "Invalid config file"
+            self.prog = ["sh", "-c", prog]
+
+    def pidfile_lock(self):
+        return FileLock(self.pidfile + ".lock")
+
+    def check_process(self) -> psutil.Process | None:
+        if not os.path.exists(self.pidfile):
+            return None
 
         try:
-            with open(args.pidfile) as f:
+            with open(self.pidfile) as f:
                 pid_data = json.load(f)
                 pid = pid_data['pid']
                 time = pid_data['time']
         except (OSError, json.JSONDecodeError, KeyError):
             traceback.print_exc()
-            os.remove(args.pidfile)
-            return start(args)
+            os.remove(self.pidfile)
+            return None
 
         try:
             proc = psutil.Process(pid)
         except psutil.NoSuchProcess:
-            return start(args)
+            return None
 
-        if proc.create_time() == time:
+        return proc if proc.create_time() == time else None
+
+    def start(self) -> None:
+        pid = os.posix_spawnp(self.prog[0], self.prog, os.environ)
+        proc = psutil.Process(pid)
+        time = proc.create_time()
+        with open(self.pidfile, 'w') as f:
+            json.dump({'pid': pid, 'time': time}, f)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    _ = parser.add_argument('-p', '--pidfile')
+    _ = parser.add_argument('--start', action='store_true')
+    _ = parser.add_argument('--stop', action='store_true')
+    _ = parser.add_argument('--config', nargs='*')
+    _ = parser.add_argument('prog', nargs='*')
+
+    args = parser.parse_args()
+    if args.start and args.stop:
+        print('Only one of --start and --stop is allowed', file=sys.stderr)
+        return 1
+
+    start_stop = StartStop()
+    for path in args.config:
+        start_stop.add_config_file(path)
+    if args.prog:
+        start_stop.prog = args.prog
+    if args.pidfile:
+        start_stop.pidfile = args.pidfile
+
+    if not args.stop and not start_stop.prog:
+        print('Prog is necessary when starting', file=sys.stderr)
+        return 1
+
+    with start_stop.pidfile_lock():
+        process = start_stop.check_process()
+        if process is None:
+            if args.stop:
+                print('Not running.', file=sys.stderr)
+                return 1
+            start_stop.start()
+        else:
             if args.start:
                 print('Already running.', file=sys.stderr)
                 return 1
-            proc.terminate()
-        else:
-            return start(args)
-    finally:
-        lock.close()
-        os.remove(lockfile)
+            process.terminate()
+
+    return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())
