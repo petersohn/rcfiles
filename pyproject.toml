@@ -5,3 +5,6 @@ reportUnknownArgumentType = false
 reportUnknownLambdaType = false
 reportImplicitStringConcatenation = false
 reportUnnecessaryComparison = false
+
+[tool.black]
+line-length = 80
