@@ -1,0 +1,4 @@
+# startstop
+psutil
+watchdog
+paho-mqtt
