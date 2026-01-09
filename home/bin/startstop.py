@@ -204,6 +204,12 @@ class StartStop:
                     print("Already running.", file=sys.stderr)
                     return 1
                 process.terminate()
+                try:
+                    _ = process.wait(5)
+                except psutil.TimeoutExpired:
+                    process.kill()
+                    _ = process.wait(1)
+                os.remove(self.pidfile)
 
         return 0
 
@@ -294,32 +300,36 @@ class StartStop:
 
         status_to_send: bool | None = None
         if self.sent_status is None or self.set_status is not None:
-            with self.pidfile_lock():
-                if (
-                    self.last_process is not None
-                    and self.last_process.is_running()
-                ):
-                    process = self.last_process
-                    is_running = True
-                else:
-                    process = self.check_process()
-                    self.last_process = process
-                    is_running = process is not None
+            try:
+                with self.pidfile_lock():
+                    if (
+                        self.last_process is not None
+                        and self.last_process.is_running()
+                    ):
+                        process = self.last_process
+                        is_running = True
+                    else:
+                        process = self.check_process()
+                        self.last_process = process
+                        is_running = process is not None
 
-                print("is_running={}".format(is_running), file=sys.stderr)
-                if self.sent_status != is_running:
-                    status_to_send = is_running
+                    print("is_running={}".format(is_running), file=sys.stderr)
+                    if self.sent_status != is_running:
+                        status_to_send = is_running
 
-                if is_running and self.set_status is False:
-                    print("Stop", file=sys.stderr)
-                    assert process is not None
-                    process.terminate()
-                    self.process_to_stop = process
-                    self.process_stop_time = time.time()
-                elif not is_running and self.set_status is True:
-                    print("Start", file=sys.stderr)
-                    self.start()
-                self.set_status = None
+                    if is_running and self.set_status is False:
+                        print("Stop", file=sys.stderr)
+                        assert process is not None
+                        process.terminate()
+                        self.process_to_stop = process
+                        self.process_stop_time = time.time()
+                    elif not is_running and self.set_status is True:
+                        print("Start", file=sys.stderr)
+                        self.start()
+                    self.set_status = None
+            except FileExistsError:
+                print("Pidfile is locked.", file=sys.stderr)
+                self.delay = 0.1
 
         if self.process_to_stop is not None:
             assert self.process_stop_time is not None
