@@ -1,0 +1,35 @@
+[push]
+    default = simple
+[core]
+    editor = nvim
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[delta]
+    plus-style = "syntax #012800"
+    minus-style = "syntax #340001"
+    syntax-theme = Monokai Extended
+    navigate = true
+    side-by-style = false
+    line-numbers = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[pull]
+	rebase = true
+[color]
+	ui = auto
+
+[difftool "nvim"]
+    cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+
+[mergetool "nvim"]
+    cmd = "nvim -d $MERGED $LOCAL $BASE $REMOTE -c 'wincmd J | wincmd ='"
+
+[include]
+    path = .gitconfig.local
