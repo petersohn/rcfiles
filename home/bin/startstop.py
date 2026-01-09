@@ -286,17 +286,12 @@ class StartStop:
         assert self.mqtt_client is not None
 
         if self.last_process is not None:
-            if not self.last_process.is_running():
+            try:
+                _ = self.last_process.wait(0)
                 self.last_process = None
                 self.sent_status = None
-            else:
-                if self.last_process.status() in [
-                    psutil.STATUS_ZOMBIE,
-                    psutil.STATUS_DEAD,
-                ]:
-                    _ = self.last_process.wait(0)
-                    self.last_process = None
-                    self.sent_status = None
+            except psutil.TimeoutExpired:
+                pass
 
         status_to_send: bool | None = None
         if self.sent_status is None or self.set_status is not None:
