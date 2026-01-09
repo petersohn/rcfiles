@@ -1,5 +1,6 @@
 import argparse
 from ast import Call
+import time
 import io
 import os
 import sys
@@ -7,6 +8,7 @@ import psutil
 import json
 import traceback
 import threading
+import signal
 from typing import Any, final, Callable, override
 import paho.mqtt.client as mqttc
 import paho.mqtt.enums as mqtte
@@ -96,7 +98,10 @@ class StartStop:
         self.sent_status: bool | None = None
         self.set_status: bool | None = None
         self.last_process: psutil.Process | None = None
+        self.process_to_stop: psutil.Process | None = None
+        self.process_stop_time: float | None = None
         self.delay = 0
+        self.need_to_exit = False
         self.condition = threading.Condition()
 
         self.mqtt_client: mqttc.Client | None = None
@@ -202,7 +207,16 @@ class StartStop:
 
         return 0
 
-    def run_mqtt(self):
+    def stop_mqtt(self) -> None:
+        with self.condition:
+            self.need_to_exit = True
+            self.condition.notify_all()
+
+    def wake_up(self) -> None:
+        with self.condition:
+            self.condition.notify()
+
+    def run_mqtt(self) -> None:
         assert (
             self.mqtt_host
             and self.mqtt_command_topic
@@ -241,6 +255,8 @@ class StartStop:
         try:
             while True:
                 with self.condition:
+                    if self.need_to_exit:
+                        return
                     try:
                         if self.mqtt_connected:
                             self._loop()
@@ -252,16 +268,13 @@ class StartStop:
                         traceback.print_exc(file=sys.stderr)
                         self.delay = 1
 
-                    print("delay={}".format(self.delay), file=sys.stderr)
                     _ = self.condition.wait(self.delay)
         except KeyboardInterrupt:
-            print("Interrupted.")
+            print("Interrupted.", file=sys.stderr)
         finally:
             observer.stop()
             log_mqtt_error(self.mqtt_client.loop_stop())
             observer.join()
-
-        return 0
 
     def _loop(self):
         assert self.mqtt_client is not None
@@ -278,8 +291,6 @@ class StartStop:
                     _ = self.last_process.wait(0)
                     self.last_process = None
                     self.sent_status = None
-
-        self.delay = 0
 
         status_to_send: bool | None = None
         if self.sent_status is None or self.set_status is not None:
@@ -303,15 +314,31 @@ class StartStop:
                     print("Stop", file=sys.stderr)
                     assert process is not None
                     process.terminate()
-                    self.delay = 0.5
+                    self.process_to_stop = process
+                    self.process_stop_time = time.time()
                 elif not is_running and self.set_status is True:
                     print("Start", file=sys.stderr)
                     self.start()
-                    self.delay = 1
                 self.set_status = None
 
-        if self.delay == 0:
-            self.delay = 2 if self.last_process is not None else 60
+        if self.process_to_stop is not None:
+            assert self.process_stop_time is not None
+
+            if self.process_to_stop != self.last_process:
+                self.process_to_stop = None
+                self.process_stop_time = None
+            elif time.time() - self.process_stop_time > 5:
+                self.process_to_stop.kill()
+
+        if self.process_to_stop is not None:
+            self.delay = 0.1
+        elif (
+            self.last_process is not None
+            and self.last_process.ppid() != os.getpid()
+        ):
+            self.delay = 1
+        else:
+            self.delay = 60
 
         if status_to_send is not None:
             self.sent_status = None
@@ -431,7 +458,16 @@ def main() -> int:
         return 1
 
     if start_stop.mqtt_host:
-        return start_stop.run_mqtt()
+        _ = signal.signal(signal.SIGCHLD, lambda *_: start_stop.wake_up())
+        thread = threading.Thread(target=start_stop.run_mqtt)
+        thread.start()
+        try:
+            thread.join()
+        except KeyboardInterrupt:
+            print("Interrupted.", file=sys.stderr)
+            start_stop.stop_mqtt()
+            thread.join()
+        return 0
 
     return start_stop.start_or_stop(args.start, args.stop)
 
