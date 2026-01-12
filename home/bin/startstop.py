@@ -335,7 +335,10 @@ class StartStop:
             elif time.time() - self.process_stop_time > 5:
                 self.process_to_stop.kill()
 
-        if self.process_to_stop is not None:
+        if (
+            self.process_to_stop is not None
+            and self.process_to_stop.ppid() != os.getpid()
+        ):
             self.delay = 0.1
         elif (
             self.last_process is not None
