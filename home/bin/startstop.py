@@ -1,5 +1,4 @@
 import argparse
-from ast import Call
 import time
 import io
 import os
@@ -98,8 +97,7 @@ class StartStop:
         self.sent_status: bool | None = None
         self.set_status: bool | None = None
         self.last_process: psutil.Process | None = None
-        self.process_to_stop: psutil.Process | None = None
-        self.process_stop_time: float | None = None
+        self.process_to_stop: tuple[psutil.Process, float] | None = None
         self.delay = 0
         self.need_to_exit = False
         self.condition = threading.Condition()
@@ -316,8 +314,7 @@ class StartStop:
                         print("Stop", file=sys.stderr)
                         assert process is not None
                         process.terminate()
-                        self.process_to_stop = process
-                        self.process_stop_time = time.time()
+                        self.process_to_stop = (process, time.time())
                     elif not is_running and self.set_status is True:
                         print("Start", file=sys.stderr)
                         self.start()
@@ -327,23 +324,24 @@ class StartStop:
                 self.delay = 0.1
 
         if self.process_to_stop is not None:
-            assert self.process_stop_time is not None
+            process, stop_time = self.process_to_stop
 
-            if self.process_to_stop != self.last_process:
+            if process != self.last_process:
                 self.process_to_stop = None
-                self.process_stop_time = None
-            elif time.time() - self.process_stop_time > 5:
-                self.process_to_stop.kill()
+            elif time.time() - stop_time > 5:
+                print("Stop timeout, killing.", file=sys.stderr)
+                process.kill()
 
         if (
             self.process_to_stop is not None
-            and self.process_to_stop.ppid() != os.getpid()
+            and self.process_to_stop[0].ppid() != os.getpid()
+            and time.time() - self.process_to_stop[1] < 6
         ):
             self.delay = 0.1
         elif (
             self.last_process is not None
             and self.last_process.ppid() != os.getpid()
-        ):
+        ) or self.process_to_stop is not None:
             self.delay = 1
         else:
             self.delay = 60
