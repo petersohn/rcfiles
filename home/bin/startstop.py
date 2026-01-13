@@ -183,11 +183,11 @@ class StartStop:
         return proc if proc.create_time() == time else None
 
     def start(self) -> None:
-        pid = os.posix_spawnp(self.prog[0], self.prog, os.environ)
-        proc = psutil.Process(pid)
+        proc = psutil.Popen(self.prog)
         time = proc.create_time()
         with open(self.pidfile, "w") as f:
-            json.dump({"pid": pid, "time": time}, f)
+            json.dump({"pid": proc.pid, "time": time}, f)
+        self.last_process = proc
 
     def start_or_stop(self, start: bool, stop: bool) -> int:
         with self.pidfile_lock():
