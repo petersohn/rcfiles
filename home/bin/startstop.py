@@ -78,6 +78,12 @@ class FileModifyEventHandler(fsevents.FileSystemEventHandler):
             self.callback()
 
 
+DELAY_DEFAULT = 60
+DELAY_RETRY = 1
+DELAY_FAST_RETRY = 0.1
+DELAY_RUN_CHECK = 1
+
+
 @final
 class StartStop:
     def __init__(self):
@@ -98,7 +104,6 @@ class StartStop:
         self.set_status: bool | None = None
         self.last_process: psutil.Process | None = None
         self.process_to_stop: tuple[psutil.Process, float] | None = None
-        self.delay = 0
         self.need_to_exit = False
         self.condition = threading.Condition()
 
@@ -261,18 +266,8 @@ class StartStop:
                 while True:
                     if self.need_to_exit:
                         return
-                    try:
-                        if self.mqtt_connected:
-                            self._loop()
-                        else:
-                            self.delay = 60
-                    except KeyboardInterrupt:
-                        raise
-                    except Exception:
-                        traceback.print_exc(file=sys.stderr)
-                        self.delay = 1
-
-                    _ = self.condition.wait(self.delay)
+                    delay = self._loop()
+                    _ = self.condition.wait(delay)
         except KeyboardInterrupt:
             print("Interrupted.", file=sys.stderr)
         finally:
@@ -280,7 +275,18 @@ class StartStop:
             log_mqtt_error(self.mqtt_client.loop_stop())
             observer.join()
 
-    def _loop(self):
+    def _loop(self) -> float:
+        try:
+            if not self.mqtt_connected:
+                return DELAY_DEFAULT
+            return self._loop_inner()
+        except KeyboardInterrupt:
+            raise
+        except Exception:
+            traceback.print_exc(file=sys.stderr)
+            return 1
+
+    def _loop_inner(self) -> float:
         assert self.mqtt_client is not None
 
         if self.last_process is not None:
@@ -292,6 +298,7 @@ class StartStop:
                 pass
 
         status_to_send: bool | None = None
+        delay: float | None = None
         if self.sent_status is None or self.set_status is not None:
             try:
                 with self.pidfile_lock():
@@ -325,7 +332,7 @@ class StartStop:
                     self.set_status = None
             except FileExistsError:
                 print("Pidfile is locked.", file=sys.stderr)
-                self.delay = 0.1
+                delay = DELAY_FAST_RETRY
 
         if self.process_to_stop is not None:
             process, stop_time = self.process_to_stop
@@ -336,20 +343,6 @@ class StartStop:
                 print("Stop timeout, killing.", file=sys.stderr)
                 process.kill()
 
-        if (
-            self.process_to_stop is not None
-            and self.process_to_stop[0].ppid() != os.getpid()
-            and time.time() - self.process_to_stop[1] < 6
-        ):
-            self.delay = 0.1
-        elif (
-            self.last_process is not None
-            and self.last_process.ppid() != os.getpid()
-        ) or self.process_to_stop is not None:
-            self.delay = 1
-        else:
-            self.delay = 60
-
         if status_to_send is not None:
             self.sent_status = None
             _ = self.mqtt_client.publish(
@@ -358,6 +351,22 @@ class StartStop:
                 retain=self.mqtt_status_retain,
             )
             self.sent_status = status_to_send
+
+        if delay is not None:
+            return delay
+        if (
+            self.process_to_stop is not None
+            and self.process_to_stop[0].ppid() != os.getpid()
+            and time.time() - self.process_to_stop[1] < 6
+        ):
+            return DELAY_FAST_RETRY
+        elif (
+            self.last_process is not None
+            and self.last_process.ppid() != os.getpid()
+        ) or self.process_to_stop is not None:
+            return DELAY_RUN_CHECK
+        else:
+            return DELAY_DEFAULT
 
     def on_connect(
         self,
