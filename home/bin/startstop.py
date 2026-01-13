@@ -257,8 +257,8 @@ class StartStop:
         observer.start()
 
         try:
-            while True:
-                with self.condition:
+            with self.condition:
+                while True:
                     if self.need_to_exit:
                         return
                     try:
