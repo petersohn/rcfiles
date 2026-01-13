@@ -317,7 +317,11 @@ class StartStop:
                         self.process_to_stop = (process, time.time())
                     elif not is_running and self.set_status is True:
                         print("Start", file=sys.stderr)
-                        self.start()
+                        # Workaround for Linux: if started from this thread,
+                        # the SIGCHLD will be received from this thread too.
+                        t = threading.Thread(target=self.start)
+                        t.start()
+                        t.join()
                     self.set_status = None
             except FileExistsError:
                 print("Pidfile is locked.", file=sys.stderr)
