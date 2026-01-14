@@ -324,8 +324,7 @@ class StartStop:
                         self.process_to_stop = (process, time.time())
                     elif not is_running and self.set_status is True:
                         print("Start", file=sys.stderr)
-                        # Workaround for Linux: if started from this thread,
-                        # the SIGCHLD will be received from this thread too.
+                        # Workaround for https://github.com/python/cpython/issues/66094
                         t = threading.Thread(target=self.start)
                         t.start()
                         t.join()
