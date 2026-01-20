@@ -213,9 +213,13 @@ eval $(thefuck --alias f)
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 
-source_if_available ~/.fzf/shell/completion.zsh
-source_if_available ~/.fzf/shell/key-bindings.zsh
-
 which kitty >/dev/null && kitty + complete setup zsh | source /dev/stdin
 
 source_if_available ~/.zshrc.local
+
+if [[ -z "$FZF_PATH" ]]; then
+    FZF_PATH="${HOME}/.fzf/shell"
+fi
+
+source_if_available "${FZF_PATH}/completion.zsh"
+source_if_available "${FZF_PATH}/key-bindings.zsh"
