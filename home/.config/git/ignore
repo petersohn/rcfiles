@@ -8,10 +8,10 @@ callgrind.out.*
 ycm_jsondb_config.py
 ycm_jsondb_core.py
 compile_commands.json
-.clang-format
 Session.vim
 GPATH
 GTAGS
 GRTAGS
 GSYMS
 .mypy_cache
+.nvim.lua

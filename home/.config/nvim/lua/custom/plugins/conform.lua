@@ -1,3 +1,5 @@
+local call_if_function = require("utils.call_if_function")
+
 return {
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
@@ -29,7 +31,7 @@ return {
           format_on_save_types[k] = v
         end
       end
-      if not format_on_save_types[vim.bo[bufnr].filetype] then
+      if not call_if_function(format_on_save_types[vim.bo[bufnr].filetype], bufnr) then
         return false
       end
       return {
