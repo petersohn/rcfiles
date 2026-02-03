@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+
+import subprocess
+import threading
+import json
+import sys
+import traceback
+from typing import Any, final
+
+
+def execute_command(args: list[str]) -> bytes:
+    args.insert(0, "pactl")
+    result = subprocess.run(args, capture_output=True, timeout=2)
+    if result.returncode != 0:
+        raise RuntimeError(f"Failed to run command: {args}")
+    return result.stdout
+
+
+def execute_query(args: list[str]) -> Any:
+    args.insert(0, "--format=json")
+    return json.loads(execute_command(args))
+
+
+@final
+class Monitor:
+    def __init__(self, value_type: str) -> None:
+        self.value_type = value_type
+        self.default_sink_id: int | None = None
+        self.process: subprocess.Popen[bytes] | None = None
+
+    def get_default_sink_info(self, force_get_default: bool) -> Any:
+        default_sink_name: str | None = None
+        if force_get_default:
+            self.default_sink_id = None
+        if self.default_sink_id is None:
+            default_sink_name = (
+                execute_command(["get-default-sink"]).decode().rstrip()
+            )
+
+        sinks = execute_query(["list", "sinks"])
+        if type(sinks) != list:
+            raise RuntimeError("Error in input: sinks should be a list")
+
+        for sink in sinks:
+            if (
+                self.default_sink_id is not None
+                and sink["index"] == self.default_sink_id
+            ):
+                return sink
+            if sink["name"] == default_sink_name:
+                self.default_sink_id = sink["index"]
+                return sink
+
+        raise RuntimeError(f"Could not find default sink: {default_sink_name}")
+
+    def print_volume(self, force_get_default: bool) -> None:
+        try:
+            sink = self.get_default_sink_info(force_get_default)
+            volumes = [v[self.value_type] for v in sink["volume"].values()]
+            if sink["mute"]:
+                print(volumes[0], "mute")
+            else:
+                print(volumes[0])
+        except Exception:
+            traceback.print_exc(file=sys.stderr)
+
+    def run(self) -> None:
+        self.print_volume(True)
+        self.process = subprocess.Popen(
+            ["pactl", "--format=json", "subscribe"], stdout=subprocess.PIPE
+        )
+
+        try:
+            assert self.process.stdout is not None
+            for line in self.process.stdout:
+                try:
+                    event = json.loads(line)
+                    is_on_default_sink = (
+                        event["on"] == "sink"
+                        and event["index"] == self.default_sink_id
+                    )
+                    if event["on"] == "server" or (
+                        is_on_default_sink and event["event"] == "remove"
+                    ):
+                        self.print_volume(True)
+                    elif is_on_default_sink:
+                        self.print_volume(False)
+
+                except Exception:
+                    traceback.print_exc(file=sys.stderr)
+                    self.print_volume(True)
+        finally:
+            _ = self.process.wait()
+
+    def stop(self):
+        if self.process:
+            self.process.terminate()
+
+
+def run(value_type: str) -> int:
+    monitor = Monitor(value_type)
+    thread = threading.Thread(target=monitor.run)
+    thread.start()
+    try:
+        for line in sys.stdin:
+            try:
+                line = line.rstrip()
+                words = [w.lower() for w in line.split()]
+                if words[0] == "mute":
+                    _ = execute_command(
+                        ["set-sink-mute", "@DEFAULT_SINK@", words[1]]
+                    )
+                elif words[0] == "volume":
+                    _ = execute_command(
+                        ["set-sink-volume", "@DEFAULT_SINK@", words[1]]
+                    )
+                else:
+                    print("Invalid command:", line, file=sys.stderr)
+            except KeyboardInterrupt:
+                return 0
+            except Exception:
+                print("Error executing:", line, file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
+    finally:
+        monitor.stop()
+        thread.join()
+
+    return 0
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    _ = parser.add_argument(
+        "--value_type",
+        choices=["value", "value_percent", "db"],
+        default="value",
+        help="The format in which the current volume is printed.",
+    )
+    args = parser.parse_args()
+    sys.exit(run(args.value_type))
