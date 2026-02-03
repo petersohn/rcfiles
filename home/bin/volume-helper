@@ -116,11 +116,11 @@ def run(value_type: str) -> int:
                     )
                 else:
                     print("Invalid command:", line, file=sys.stderr)
-            except KeyboardInterrupt:
-                return 0
             except Exception:
                 print("Error executing:", line, file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
+    except KeyboardInterrupt:
+        pass
     finally:
         monitor.stop()
         thread.join()
