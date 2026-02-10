@@ -61,13 +61,15 @@ class Monitor:
                 print(volumes[0], "mute")
             else:
                 print(volumes[0])
+            sys.stdout.flush()
         except Exception:
             traceback.print_exc(file=sys.stderr)
 
     def run(self) -> None:
         self.print_volume(True)
         self.process = subprocess.Popen(
-            ["pactl", "--format=json", "subscribe"], stdout=subprocess.PIPE
+            ["pactl", "--format=json", "subscribe"],
+            stdout=subprocess.PIPE,
         )
 
         try:
@@ -86,6 +88,8 @@ class Monitor:
                     elif is_on_default_sink:
                         self.print_volume(False)
 
+                except KeyboardInterrupt:
+                    return
                 except Exception:
                     traceback.print_exc(file=sys.stderr)
                     self.print_volume(True)
@@ -99,31 +103,7 @@ class Monitor:
 
 def run(value_type: str) -> int:
     monitor = Monitor(value_type)
-    thread = threading.Thread(target=monitor.run)
-    thread.start()
-    try:
-        for line in sys.stdin:
-            try:
-                line = line.rstrip()
-                words = [w.lower() for w in line.split()]
-                if words[0] == "mute":
-                    _ = execute_command(
-                        ["set-sink-mute", "@DEFAULT_SINK@", words[1]]
-                    )
-                elif words[0] == "volume":
-                    _ = execute_command(
-                        ["set-sink-volume", "@DEFAULT_SINK@", words[1]]
-                    )
-                else:
-                    print("Invalid command:", line, file=sys.stderr)
-            except Exception:
-                print("Error executing:", line, file=sys.stderr)
-                traceback.print_exc(file=sys.stderr)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        monitor.stop()
-        thread.join()
+    monitor.run()
 
     return 0
 
