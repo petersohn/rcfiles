@@ -284,7 +284,7 @@ class StartStop:
             raise
         except Exception:
             traceback.print_exc(file=sys.stderr)
-            return 1
+            return DELAY_RETRY
 
     def _loop_inner(self) -> float:
         assert self.mqtt_client is not None
@@ -321,7 +321,7 @@ class StartStop:
                         print("Stop", file=sys.stderr)
                         assert process is not None
                         process.terminate()
-                        self.process_to_stop = (process, time.time())
+                        self.process_to_stop = (process, time.monotonic())
                     elif not is_running and self.set_status is True:
                         print("Start", file=sys.stderr)
                         # Workaround for https://github.com/python/cpython/issues/66094
@@ -338,7 +338,7 @@ class StartStop:
 
             if process != self.last_process:
                 self.process_to_stop = None
-            elif time.time() - stop_time > 5:
+            elif time.monotonic() - stop_time > 5:
                 print("Stop timeout, killing.", file=sys.stderr)
                 process.kill()
 
@@ -356,7 +356,7 @@ class StartStop:
         if (
             self.process_to_stop is not None
             and self.process_to_stop[0].ppid() != os.getpid()
-            and time.time() - self.process_to_stop[1] < 6
+            and time.monotonic() - self.process_to_stop[1] < 6
         ):
             return DELAY_FAST_RETRY
         elif (
