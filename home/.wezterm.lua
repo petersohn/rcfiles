@@ -9,22 +9,27 @@ config.font = wezterm.font("DejaVu Sans Mono", {})
 config.font_size = 12
 config.hide_tab_bar_if_only_one_tab = true
 config.window_padding = {
-	left = 0,
-	right = 0,
-	top = 0,
-	bottom = 0,
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0,
 }
 config.keys = {
-	{
-		key = "1",
-		mods = "CMD|CTRL",
-		action = wezterm.action.DisableDefaultAssignment,
-	},
-	{
-		key = "2",
-		mods = "CMD|CTRL",
-		action = wezterm.action.DisableDefaultAssignment,
-	},
+    {
+        key = "1",
+        mods = "CMD|CTRL",
+        action = wezterm.action.DisableDefaultAssignment,
+    },
+    {
+        key = "2",
+        mods = "CMD|CTRL",
+        action = wezterm.action.DisableDefaultAssignment,
+    },
+    {
+        key = "Enter",
+        mods = "ALT",
+        action = wezterm.action.DisableDefaultAssignment,
+    },
 }
 
 config.hyperlink_rules = {}
