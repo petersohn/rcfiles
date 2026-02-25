@@ -2,6 +2,14 @@
 
 media_dir="${HOME}/usr/share"
 
+function play_sound() {
+    if which mpv 2>/dev/null 2>&1; then
+        ( nohup mpv -really-quiet "$1" >/dev/null 2>&1 & )
+    elif which mplayer 2>/dev/null 2>&1; then
+        ( nohup mplayer -really-quiet "$1" >/dev/null 2>&1 & )
+    fi
+}
+
 function notify_linux() {
     name="$1"
     result="$2"
@@ -22,7 +30,7 @@ function notify_linux() {
         "$message" "$name
 
 <i>$PWD</i>"
-    ( nohup mplayer -really-quiet "${media_dir}/sounds/${sound}" >/dev/null 2>&1 & )
+    play_sound ${media_dir}/sounds/${sound}
 
     if [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         echo -ne '\007'
