@@ -89,10 +89,12 @@ class Monitor:
                         self.print_volume(False)
 
                 except KeyboardInterrupt:
-                    return
+                    raise
                 except Exception:
                     traceback.print_exc(file=sys.stderr)
                     self.print_volume(True)
+        except KeyboardInterrupt:
+            self.stop()
         finally:
             _ = self.process.wait()
 
