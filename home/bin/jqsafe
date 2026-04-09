@@ -1,0 +1,280 @@
+#!/usr/bin/env python3
+
+import os
+import select
+import signal
+import subprocess
+import sys
+import tempfile
+import threading
+from typing import IO, Optional, Protocol
+
+
+class InputSource(Protocol):
+    stream: IO[bytes]
+
+    def has_eof(self) -> bool:
+        ...
+
+    def wait_for_data(self) -> None:
+        ...
+
+    def close(self) -> None:
+        ...
+
+
+def usage(prog: str) -> None:
+    print(f"Usage: {prog} [jq options] <filter> [file]", file=sys.stderr)
+    print(
+        "Reads newline-delimited JSON and keeps going after jq parse errors.",
+        file=sys.stderr,
+    )
+
+
+def parse_args(argv: list[str]) -> tuple[Optional[list[str]], Optional[str], Optional[int]]:
+    jq_args: list[str] = []
+    file_args: list[str] = []
+    filter_seen = False
+    i = 0
+
+    while i < len(argv):
+        arg = argv[i]
+
+        if filter_seen:
+            file_args.append(arg)
+            i += 1
+            continue
+
+        if arg in ("-h", "--help"):
+            usage(sys.argv[0])
+            return None, None, 0
+
+        if arg == "--":
+            i += 1
+            if i >= len(argv):
+                usage(sys.argv[0])
+                return None, None, 1
+            jq_args.append(argv[i])
+            filter_seen = True
+            i += 1
+            continue
+
+        if arg in ("--arg", "--argjson", "--argfile"):
+            if i + 2 >= len(argv):
+                usage(sys.argv[0])
+                return None, None, 1
+            jq_args.extend(argv[i : i + 3])
+            i += 3
+            continue
+
+        if arg in ("--from-file", "--rawfile", "--slurpfile", "--indent", "-f", "-L"):
+            if i + 1 >= len(argv):
+                usage(sys.argv[0])
+                return None, None, 1
+            jq_args.extend(argv[i : i + 2])
+            i += 2
+            continue
+
+        if arg.startswith("-f") or arg.startswith("-L"):
+            jq_args.append(arg)
+            i += 1
+            continue
+
+        if arg.startswith("--") or arg.startswith("-"):
+            jq_args.append(arg)
+            i += 1
+            continue
+
+        jq_args.append(arg)
+        filter_seen = True
+        i += 1
+
+    if not filter_seen:
+        usage(sys.argv[0])
+        return None, None, 1
+
+    if len(file_args) > 1:
+        usage(sys.argv[0])
+        return None, None, 1
+
+    return jq_args, file_args[0] if file_args else None, None
+
+
+def input_has_eof(stream: IO[bytes]) -> bool:
+    if stream.seekable():
+        position = stream.tell()
+        end = stream.seek(0, os.SEEK_END)
+        stream.seek(position, os.SEEK_SET)
+        return position == end
+
+    poller = select.poll()
+    poller.register(stream.fileno(), select.POLLIN | select.POLLHUP | select.POLLERR)
+    events = poller.poll(0)
+    if not events:
+        return False
+
+    _, mask = events[0]
+    if mask & select.POLLERR:
+        return True
+
+    return bool(mask & select.POLLHUP) and not bool(mask & select.POLLIN)
+
+
+class DirectInput:
+    stream: IO[bytes]
+
+    def __init__(self, stream: IO[bytes]) -> None:
+        self.stream = stream
+
+    def has_eof(self) -> bool:
+        return input_has_eof(self.stream)
+
+    def wait_for_data(self) -> None:
+        return
+
+    def close(self) -> None:
+        self.stream.close()
+
+
+class SpoolInput:
+    source_stream: IO[bytes]
+    reader: IO[bytes]
+    writer: IO[bytes]
+    stream: IO[bytes]
+    path: str
+    size: int
+    finished: bool
+    error: Optional[OSError]
+    condition: threading.Condition
+    thread: threading.Thread
+
+    def __init__(self, source_stream: IO[bytes]) -> None:
+        self.source_stream = source_stream
+        fd, self.path = tempfile.mkstemp(prefix="jqsafe.")
+        os.close(fd)
+        self.reader = open(self.path, "rb", buffering=0)
+        self.writer = open(self.path, "wb", buffering=0)
+        self.stream = self.reader
+        self.size = 0
+        self.finished = False
+        self.error = None
+        self.condition = threading.Condition()
+        self.thread = threading.Thread(target=self._spool, daemon=True)
+        self.thread.start()
+
+    def _spool(self) -> None:
+        try:
+            while True:
+                chunk = self.source_stream.read(65536)
+                if not chunk:
+                    break
+                self.writer.write(chunk)
+                self.writer.flush()
+                with self.condition:
+                    self.size += len(chunk)
+                    self.condition.notify_all()
+        except OSError as exc:
+            with self.condition:
+                self.error = exc
+                self.condition.notify_all()
+        finally:
+            self.writer.close()
+            self.source_stream.close()
+            with self.condition:
+                self.finished = True
+                self.condition.notify_all()
+
+    def has_eof(self) -> bool:
+        position = self.reader.tell()
+        with self.condition:
+            if self.error is not None:
+                raise self.error
+            return self.finished and position == self.size
+
+    def wait_for_data(self) -> None:
+        position = self.reader.tell()
+        with self.condition:
+            while self.error is None and not self.finished and self.size <= position:
+                self.condition.wait()
+            if self.error is not None:
+                raise self.error
+
+    def close(self) -> None:
+        self.reader.close()
+        if not self.finished:
+            self.source_stream.close()
+            self.thread.join(timeout=0.1)
+        try:
+            os.unlink(self.path)
+        except FileNotFoundError:
+            pass
+
+
+def run_jq(jq_args: list[str], input_source: InputSource) -> int:
+    status = 0
+
+    while True:
+        process = subprocess.Popen(["jq", *jq_args], stdin=input_source.stream)
+        try:
+            returncode = process.wait()
+        except KeyboardInterrupt:
+            if process.poll() is None:
+                try:
+                    process.send_signal(signal.SIGINT)
+                except ProcessLookupError:
+                    pass
+                try:
+                    process.wait()
+                except KeyboardInterrupt:
+                    if process.poll() is None:
+                        process.kill()
+                        process.wait()
+            return 130
+
+        if returncode == 0:
+            if input_source.has_eof():
+                return status
+            input_source.wait_for_data()
+            continue
+
+        if returncode == -signal.SIGINT:
+            return 130
+
+        status = 1
+        if returncode < 4 or input_source.has_eof():
+            return status
+        input_source.wait_for_data()
+
+
+def open_input_source(path: Optional[str]) -> InputSource:
+    if path is None:
+        stream = os.fdopen(os.dup(sys.stdin.fileno()), "rb", buffering=0)
+    else:
+        stream = open(path, "rb", buffering=0)
+
+    if stream.seekable():
+        return DirectInput(stream)
+    return SpoolInput(stream)
+
+
+def main() -> int:
+    jq_args, input_path, exit_code = parse_args(sys.argv[1:])
+    if exit_code is not None:
+        return exit_code
+
+    input_source: Optional[InputSource] = None
+    try:
+        input_source = open_input_source(input_path)
+        return run_jq(jq_args, input_source)
+    except OSError as exc:
+        print(exc, file=sys.stderr)
+        return 1
+    except KeyboardInterrupt:
+        return 130
+    finally:
+        if input_source is not None:
+            input_source.close()
+
+
+if __name__ == "__main__":
+    sys.exit(main())
