@@ -67,7 +67,16 @@ def parse_args(argv: list[str]) -> tuple[Optional[list[str]], Optional[str], Opt
             i += 3
             continue
 
-        if arg in ("--from-file", "--rawfile", "--slurpfile", "--indent", "-f", "-L"):
+        if arg in ("--from-file", "-f"):
+            if i + 1 >= len(argv):
+                usage(sys.argv[0])
+                return None, None, 1
+            jq_args.extend(argv[i : i + 2])
+            filter_seen = True
+            i += 2
+            continue
+
+        if arg in ("--rawfile", "--slurpfile", "--indent", "-L"):
             if i + 1 >= len(argv):
                 usage(sys.argv[0])
                 return None, None, 1
@@ -75,7 +84,13 @@ def parse_args(argv: list[str]) -> tuple[Optional[list[str]], Optional[str], Opt
             i += 2
             continue
 
-        if arg.startswith("-f") or arg.startswith("-L"):
+        if arg.startswith("-f"):
+            jq_args.append(arg)
+            filter_seen = True
+            i += 1
+            continue
+
+        if arg.startswith("-L"):
             jq_args.append(arg)
             i += 1
             continue
