@@ -2,6 +2,6 @@
 
 set -e
 
-cd ~/.tmux/resurrect
+cd ~/.tmux/resurrect || cd ~/.local/share/tmux/resurrect
 rm -f last
 ln -s $(ls tmux_resurrect_* | tail -n1) last

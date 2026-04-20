@@ -8,6 +8,7 @@ return {
   config = function()
     -- ensure basic parser are installed
     local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+    local blacklist = { 'dockerfile' }
     require('nvim-treesitter').install(parsers)
 
     ---@param buf integer
@@ -50,7 +51,7 @@ return {
         if vim.tbl_contains(installed_parsers, language) then
           -- enable the parser if it is installed
           treesitter_try_attach(buf, language)
-        elseif vim.tbl_contains(available_parsers, language) then
+        elseif vim.tbl_contains(available_parsers, language) and not vim.tbl_contains(blacklist, language) then
           -- if a parser is available in `nvim-treesitter` auto install it, and enable it after the installation is done
           require('nvim-treesitter').install(language):await(function()
             treesitter_try_attach(buf, language)
