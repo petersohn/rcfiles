@@ -9,7 +9,14 @@ return {
     -- ensure basic parser are installed
     local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
     local blacklist = { 'dockerfile' }
+    local max_buffer_size = 10 * 1024 * 1024
     require('nvim-treesitter').install(parsers)
+
+    ---@param buf integer
+    local function is_large_buffer(buf)
+      local ok, size = pcall(vim.api.nvim_buf_get_offset, buf, vim.api.nvim_buf_line_count(buf))
+      return ok and size > max_buffer_size
+    end
 
     ---@param buf integer
     ---@param language string
@@ -40,6 +47,10 @@ return {
     vim.api.nvim_create_autocmd('FileType', {
       callback = function(args)
         local buf, filetype = args.buf, args.match
+
+        if is_large_buffer(buf) then
+          return
+        end
 
         local language = vim.treesitter.language.get_lang(filetype)
         if not language then
