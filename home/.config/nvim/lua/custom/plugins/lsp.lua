@@ -207,6 +207,14 @@ return {
         --
 
         lua_ls = {},
+
+        stylua = {
+          cmd = {
+            'stylua',
+            '--lsp',
+            '--search-parent-directories',
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed

@@ -1,4 +1,4 @@
-local call_if_function = require("utils.call_if_function")
+local call_if_function = require 'utils.call_if_function'
 
 return {
   'stevearc/conform.nvim',
