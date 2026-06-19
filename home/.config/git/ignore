@@ -15,3 +15,5 @@ GRTAGS
 GSYMS
 .mypy_cache
 .nvim.lua
+
+**/.claude/settings.local.json
