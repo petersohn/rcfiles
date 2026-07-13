@@ -1,20 +1,21 @@
 import argparse
-import time
 import io
-import os
-import sys
-import psutil
 import json
-import traceback
-import threading
+import os
 import signal
-from typing import Any, final, Callable, override
+import sys
+import threading
+import time
+import traceback
+from typing import Any, Callable, final, override
+
 import paho.mqtt.client as mqttc
 import paho.mqtt.enums as mqtte
-import paho.mqtt.reasoncodes as mqttr
 import paho.mqtt.properties as mqttp
-from watchdog.observers import Observer
+import paho.mqtt.reasoncodes as mqttr
+import psutil
 import watchdog.events as fsevents
+from watchdog.observers import Observer
 
 
 @final
@@ -180,6 +181,8 @@ class StartStop:
             os.remove(self.pidfile)
             return None
 
+        print(pid, time)
+
         try:
             proc = psutil.Process(pid)
         except psutil.NoSuchProcess:
@@ -197,6 +200,7 @@ class StartStop:
     def start_or_stop(self, start: bool, stop: bool) -> int:
         with self.pidfile_lock():
             process = self.check_process()
+            print(process)
             if process is None:
                 if stop:
                     print("Not running.", file=sys.stderr)
