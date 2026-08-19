@@ -181,8 +181,6 @@ class StartStop:
             os.remove(self.pidfile)
             return None
 
-        print(pid, time)
-
         try:
             proc = psutil.Process(pid)
         except psutil.NoSuchProcess:
@@ -200,7 +198,6 @@ class StartStop:
     def start_or_stop(self, start: bool, stop: bool) -> int:
         with self.pidfile_lock():
             process = self.check_process()
-            print(process)
             if process is None:
                 if stop:
                     print("Not running.", file=sys.stderr)
