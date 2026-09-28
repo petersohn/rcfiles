@@ -33,10 +33,3 @@
 
 [include]
     path = .gitconfig.local
-[safe]
-	directory = /Users/petersohn/workspace/protex/greengrass-components2
-	directory = /Users/petersohn/workspace/protex/greengrass-components2
-	directory = /Users/petersohn/workspace/protex/greengrass-components
-	directory = /Users/petersohn/workspace/protex/greengrass-components2
-	directory = /Users/petersohn/workspace/protex/greengrass-components2
-	directory = /Users/petersohn/workspace/protex/greengrass-components2
