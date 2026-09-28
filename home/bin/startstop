@@ -5,6 +5,10 @@ set -e
 script_dir=$(readlink -f "$(dirname "$0")")
 venv_path="${script_dir}/startstop.venv" 
 
+if [[ -e "$venv_path" && ! -x "${venv_path}/bin/python" ]]; then
+    rm -rf "$venv_path"
+fi
+
 if [[ ! -e "$venv_path" ]]; then
     python -m virtualenv "$venv_path"
     source "${venv_path}/bin/activate"
